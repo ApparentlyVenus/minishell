@@ -6,12 +6,14 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/27 22:10:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/27 22:16:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
-# define TOKENIZE_H
+# define TOKENIZER_H
+
+#include "../../inc/minishell.h"
 
 typedef enum e_token_type
 {
