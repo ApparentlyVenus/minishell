@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/27 22:20:06 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/27 22:21:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,4 @@
 # include <readline/readline.h>     // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>      // add_history, rl_clear_history
 
-/* Parsing */
-/* ... */
 #endif
