@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 23:02:41 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 23:05:49 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,5 @@ t_token	*tokenize_input(char *input)
 		}
 		token = token->next;
 	}
+	return (token);
 }
