@@ -1,0 +1,42 @@
+# Documentation brought to you by yitani
+
+typedef struct s_env
+{
+    char            *key; 		// this is the PATH
+    char            *value; 	// the value of said PATH
+	int				equal;		// flag for if there is an equal in the env variable;
+    struct s_env    *next;
+}   t_env;
+
+
+env_init(char **envp);
+
+get_env_value(t_env *, char *key);
+
+set_env_value(t_env *, char *key, char *value);
+
+unset_env_value(t_env *, char *key);
+
+char **to_envp(t_env *); (needed for execve)
+
+char *expand_variables(char *input_line, t_env *env);
+
+_________________________________________________________________________________
+
+ENV variables we must handle :
+PATH   				// to execute commands
+PWD    				// current working directory -> updated after cd 
+OLDPWD 				//previous directory -> used with cd -
+HOME   				// cd with no arguments -> also for ~ implementation
+_ 					// holds last executed command -> updates every execve
+TERM 				// not to be handled but must be present in env for execve to used
+SHLVL	 			// shell level -> optional
+_________________________________________________________________________________
+
+commands to implement :
+env 				// all environment variables
+pwd 				// showing current directory
+export				// add or change any variables
+unset				// removes variables
+cd 					// uses | PWD | OLDPWD | HOME
+echo $VAR 			// using any variable -> we need to be able to export it | updaate it | unset it
