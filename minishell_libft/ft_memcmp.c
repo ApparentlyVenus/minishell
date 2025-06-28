@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Created: 2025/05/21 11:55:58 by yitani            #+#    #+#             */
+/*   Updated: 2025/05/22 21:55:02 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#include"libft.h"
 
-typedef enum e_token_type
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_IN,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_OUT_APPEND,
-    TOKEN_HERDOC,
-}	t_token_type;
+	size_t				i;
+	const unsigned char	*s01;
+	const unsigned char	*s02;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_token	*next;
-}	t_token;
-
-#endif
+	s01 = (const unsigned char *)s1;
+	s02 = (const unsigned char *)s2;
+	i = 0;
+	while (i < n)
+	{
+		if (s01[i] != s02[i])
+		{
+			return (s01[i] - s02[i]);
+		}
+		i++;
+	}
+	return (0);
+}

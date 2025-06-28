@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Created: 2025/05/21 21:36:10 by yitani            #+#    #+#             */
+/*   Updated: 2025/05/22 21:35:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#include"libft.h"
 
-typedef enum e_token_type
+void	ft_putnbr_fd(int n, int fd)
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_IN,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_OUT_APPEND,
-    TOKEN_HERDOC,
-}	t_token_type;
+	long	nb;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_token	*next;
-}	t_token;
-
-#endif
+	nb = n;
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nb = -nb;
+	}
+	if (nb >= 10)
+		ft_putnbr_fd(nb / 10, fd);
+	ft_putchar_fd(nb % 10 + '0', fd);
+}

@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Created: 2025/05/21 11:55:39 by yitani            #+#    #+#             */
+/*   Updated: 2025/05/22 22:22:04 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
-
-typedef enum e_token_type
+int	ft_atoi(const char *str)
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_IN,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_OUT_APPEND,
-    TOKEN_HERDOC,
-}	t_token_type;
+	int	i;
+	int	minus;
+	int	result;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_token	*next;
-}	t_token;
-
-#endif
+	i = 0;
+	minus = 1;
+	result = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+	{
+		i++;
+	}
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+		{
+			minus = minus * -1;
+		}
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * minus);
+}

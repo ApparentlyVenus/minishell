@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/27 22:21:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/28 01:42:09 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/* C libraries */
 
 # include <stdio.h>                 // printf, perror
 # include <stdlib.h>                // malloc, free, exit, getenv
@@ -29,5 +31,15 @@
 # include <sys/ioctl.h>             // ioctl (terminal size, etc.)
 # include <readline/readline.h>     // readline, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>      // add_history, rl_clear_history
+
+/* structures and tokens */
+
+# include "tokenizer.h"
+
+/* minishell utils / helper functions */
+
+# include "../minishell_libft/libft.h"	// libft functions
+
+# include "input_handling.h"		// input handling
 
 #endif

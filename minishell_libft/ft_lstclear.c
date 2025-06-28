@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Created: 2025/05/24 01:36:32 by yitani            #+#    #+#             */
+/*   Updated: 2025/05/24 01:50:59 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#include"libft.h"
 
-typedef enum e_token_type
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_IN,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_OUT_APPEND,
-    TOKEN_HERDOC,
-}	t_token_type;
+	t_list	*temp;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_token	*next;
-}	t_token;
-
-#endif
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		del((*lst)->content);
+		free(*lst);
+		*lst = temp;
+	}
+	*lst = NULL;
+}

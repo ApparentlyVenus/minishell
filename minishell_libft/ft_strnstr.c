@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Created: 2025/05/20 22:30:56 by yitani            #+#    #+#             */
+/*   Updated: 2025/05/23 01:07:59 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZER_H
-# define TOKENIZER_H
+#include"libft.h"
 
-typedef enum e_token_type
+char	*ft_strnstr(const char *str, const char *to_find, size_t len)
 {
-    TOKEN_WORD,
-    TOKEN_PIPE,
-    TOKEN_REDIR_IN,
-    TOKEN_REDIR_OUT,
-    TOKEN_REDIR_OUT_APPEND,
-    TOKEN_HERDOC,
-}	t_token_type;
+	size_t	i;
+	size_t	j;
 
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_token	*next;
-}	t_token;
-
-#endif
+	i = 0;
+	if (*to_find == '\0')
+	{
+		return ((char *) str);
+	}
+	while (str[i] && i < len)
+	{
+		j = 0;
+		while (i + j < len && str[i + j] == to_find[j] && to_find[j] != '\0')
+		{
+			j++;
+		}
+		if (to_find[j] == '\0')
+		{
+			return ((char *) str + i);
+		}
+		i++;
+	}
+	return (0);
+}
