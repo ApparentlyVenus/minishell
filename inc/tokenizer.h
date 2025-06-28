@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 00:22:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 19:46:31 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
-	int				single_quotes;
-	int				double_quotes;
+	int				single_quotes; // omar.. habibe..
+	int				double_quotes; // what the actual fuck !? also why !?
 	struct s_token	*next;
 }	t_token;
 
