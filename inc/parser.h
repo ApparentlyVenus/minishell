@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 22:38:42 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 01:00:02 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ typedef struct s_redir
     struct s_redir  *next;
 }   t_redir;
 
-typedef struct s_command
+typedef struct s_arg
+{
+    char            *value;
+    struct s_arg    *next;
+}   t_arg;
+
+typedef struct s_cmd
 {
     char    **args;
     t_redir *redirs;
-}   t_command;
+}   t_cmd;
 
 typedef enum e_node_type
 {
@@ -45,8 +51,20 @@ typedef enum e_node_type
 typedef struct s_node
 {
     t_node_type     type;
+    struct s_cmd    *cmd;
     struct s_node   *left;
     struct s_node   *right;
 }   t_node;
+
+
+// parsing
+t_node  *parse_pipeline(t_token **tokens);
+t_node  *parse_command(t_token **tokens);
+t_redir *parse_redir(t_token **tokens);
+
+// redirection utils
+int     is_redir(t_token *token);
+void    append_redir(t_redir **list, t_redir *new_redir);
+t_redir *create_redir_node(int type, char *filename);
 
 #endif

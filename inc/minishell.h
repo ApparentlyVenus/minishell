@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 22:44:53 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 01:01:01 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 /* structures and tokens */
 
 # include "tokenizer.h"
+# include "parser.h"
 
 /* minishell utils / helper functions */
 
