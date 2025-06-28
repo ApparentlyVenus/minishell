@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/28 22:44:32 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 23:00:51 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_token
 // functions
 
 int		is_operator(char c); // checking if its an operator
+void	skip_spaces(char *input, int *pos); // slipping spaces
 int		is_word_char(char c); // checking if its a word
 int		get_input(char *stash); // getting the first prompt
 char	*extract_word(char *input, int *pos); // extracting the word
