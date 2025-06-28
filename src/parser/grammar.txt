@@ -1,0 +1,34 @@
+# SYNTAX:
+#
+#   rulename    ::= defintion
+#   rules       -> lowercase
+#   token       -> uppercase
+
+input       ::= pipeline
+pipeline    ::= command ('|' pipeline)?
+
+# the question mark means its optional:
+# a pipeline might contain a pipe 
+# and another pipeline, or it might not
+
+command     ::= WORD* redir*
+
+# here the (*) means there might be zero or more words
+# example:  ls -l /etc  -> 3 words
+#           echo hello  -> 2 words
+#           < file.txt  -> 0 words
+
+redir       ::= ('<'|'>'|'>>'|'<<') WORD
+
+# RECURSIVE DESCENT METHOD:
+#
+#   -> top down parsing methodology:
+#   -> each rule has its own function (pase_pipeline, parse_input, ect..)
+#   -> each function will call the functions defined in it
+#   -> example:     parse_pipeline 
+#                       |
+#                       |-> parse_command -> parse_redir
+#                       |-> parse_pipeline
+#                               |
+#                               |-> parse_command -> parse_redir
+
