@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 01:42:09 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 22:44:53 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@
 
 # include "../minishell_libft/libft.h"	// libft functions
 
-# include "input_handling.h"		// input handling
 
 #endif
