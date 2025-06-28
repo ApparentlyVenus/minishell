@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 20:28:17 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 22:32:49 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	is_quotes(char c)
 	return (c == '\'' || c == '\"');
 }
 
-int	is_closed(char *input)
+int	is_closed(char *input , int pos)
 {
 	int		i;
 	char	q;
 	int		is_word;
 
 	is_word = 0;
-	i = 0;
+	i = pos;
 	if (input[i] == '\'' || input[i] == '\"')
 	{
 		q = input[i];

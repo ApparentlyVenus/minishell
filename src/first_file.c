@@ -6,12 +6,12 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 20:39:54 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/28 22:40:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // im displaying "minishell$" at the start of every prompt;
-// eza the user enters CTRL + D this will put buffer to NULL
+// if the user enters CTRL + D this will put buffer to NULL
 // thats why we should clean up and exit;
 // clean up and exit doest have anything specified yet,
 // it should contain the struct and all memory allocations;
@@ -91,27 +91,27 @@ t_token	*clean_word_token(char *word)
 	return (token);
 }
 
-t_token	*extract_operator_token(char *input, int pos)
+t_token	*extract_operator_token(char *input, int *pos)
 {
 	t_token	*token;
 
-	while (input[pos])
+	while (input[*pos])
 	{
-		if (input[pos] == '>' && input[pos + 1] == '>')
-			return (token->value = ft_substr(input, pos, 2),\
-			token->type = TOKEN_REDIR_OUT_APPEND, token);
-		else if (input[pos] == '>')
-			return (token->value = ft_substr(input, pos, 1),\
-			token->type = TOKEN_REDIR_OUT, token);
-		else if (input[pos] == '|')
-			return (token->value = ft_substr(input, pos, 1),\
-			token->type = TOKEN_PIPE, token);
-		else if (input[pos] == '<' && input[pos + 1] == '<')
-			return (token->value = ft_substr(input, pos, 2),\
-			token->type = TOKEN_HERDOC, token);
-		else if (input[pos] == '<')
-			return (token->value = ft_substr(input, pos, 1),\
-			token->type = TOKEN_REDIR_IN, token);
+		if (input[*pos] == '>' && input[*pos + 1] == '>')
+			return (token->value = ft_substr(input, *pos, 2),\
+			token->type = TOKEN_REDIR_OUT_APPEND, (*pos) += 2, token);
+		else if (input[*pos] == '>')
+			return (token->value = ft_substr(input, *pos, 1),\
+			token->type = TOKEN_REDIR_OUT, (*pos)++, token);
+		else if (input[*pos] == '|')
+			return (token->value = ft_substr(input, *pos, 1),\
+			token->type = TOKEN_PIPE, (*pos)++, token);
+		else if (input[*pos] == '<' && input[*pos + 1] == '<')
+			return (token->value = ft_substr(input, *pos, 2),\
+			token->type = TOKEN_HERDOC, (*pos) += 2, token);
+		else if (input[*pos] == '<')
+			return (token->value = ft_substr(input, *pos, 1),\
+			token->type = TOKEN_REDIR_IN, (*pos)++, token);
 	}
 }
 
@@ -128,17 +128,18 @@ t_token	*tokenize_input(char *input)
 			i++;
 		if (is_operator(input[i]))
 			token = extract_operator_token(input, i);
-		else if (is_quotes(input[i]) && is_closed(input))
+		else if (is_quotes(input[i]) && is_closed(input, i))
 		{
 			word = extract_word(input, i);
 			token = clean_word_token(word);
 		}
-		else if (is_quotes(input[i]) && !(is_closed(input)))
+		else if (is_quotes(input[i]) && !(is_closed(input, i)))
 			ft_handle_later();
-		else
+		else if (is_word_char(input[i]))
 		{
 			word = extract_word(input, i);
 			token = clean_word_token(word);
 		}
+		token = token->next;
 	}
 }
