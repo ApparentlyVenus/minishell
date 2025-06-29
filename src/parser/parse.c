@@ -6,22 +6,28 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 07:09:42 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 08:33:17 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// t_node  *parse_input(t_token **tokens)
-// {
-//     t_node  *left;
-
-//     left = parse_pipeline(tokens);
-//     if (!left)
-//         return (NULL);
-//     while ((*tokens) && (*tokens)->type == )
-//     return (ast);
-// }
+t_node  *parse_input(t_token **tokens)
+{
+    t_node  *ast;
+    
+    if (!tokens || !*tokens)
+        return (NULL);
+    ast = parse_pipeline(tokens);
+    if (!ast)
+        return (NULL);
+    if (*tokens)
+    {
+        free_node_list(ast);
+        return (NULL);
+    }
+    return (ast);
+}
 
 t_node  *parse_pipeline(t_token **tokens)
 {
@@ -45,7 +51,9 @@ t_node  *parse_pipeline(t_token **tokens)
     }
     return (left);
 }
-
+/*
+**
+*/
 t_node  *parse_command(t_token **tokens)
 {
     int     count;
