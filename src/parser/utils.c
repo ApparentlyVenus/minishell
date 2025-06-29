@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 08:47:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 09:25:36 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int add_arg_list(t_arg **list, char *value)
     if (!new)
         return (0);
     new->value = ft_strdup(value);
+    if (!new->value)
+        return (free(new), 0);
     new->next = NULL;
     if (!*list)
         *list = new;
@@ -61,10 +63,10 @@ char **process_args(t_arg *arg_list, int count)
 
     argv = (char **)malloc(sizeof(char *) * (count + 1));
     if (!argv)
-        return (NULL);
+        return (free_arg(arg_list), NULL);
     i = 0;
     current = arg_list;
-    while (temp)
+    while (current)
     {
         argv[i++] = current->value;
         temp = current;

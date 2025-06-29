@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:27:03 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 08:44:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 09:22:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	free_cmd(t_cmd *cmd)
 	if (!cmd)
 		return ;
 	free_split(cmd->args);
-	free_redir_list(cmd->redirs);
+	free_redir(cmd->redirs);
 	free(cmd);
 }
 
-void	free_redir_list(t_redir *redir)
+void	free_redir(t_redir *redir)
 {
 	t_redir	*tmp;
 
@@ -54,12 +54,25 @@ void	free_redir_list(t_redir *redir)
 	}
 }
 
-void	free_node_list(t_node *node)
+void	free_arg(t_arg *arg_list)
+{
+	t_arg *temp;
+	
+	while (arg_list)
+	{
+		temp = arg_list->next;
+		free(arg_list->value);
+		free(arg_list);
+		arg_list = temp;
+	}
+}
+
+void	free_node(t_node *node)
 {
 	if (!node)
 		return ;
-	free_node_list(node->left);
-	free_node_list(node->right);
+	free_node(node->left);
+	free_node(node->right);
 	free_cmd(node->cmd);
 	free(node);
 }

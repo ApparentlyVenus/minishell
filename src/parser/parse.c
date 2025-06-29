@@ -6,11 +6,15 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 08:33:17 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 09:15:40 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*  
+**  call pipeline, if there are trailing tokens free and return NULL
+*/
 
 t_node  *parse_input(t_token **tokens)
 {
@@ -23,11 +27,17 @@ t_node  *parse_input(t_token **tokens)
         return (NULL);
     if (*tokens)
     {
-        free_node_list(ast);
+        free_node(ast);
         return (NULL);
     }
     return (ast);
 }
+
+/*
+**  parse left side, if there are extra tokens start parsing right side.
+**  if there is a right side, create a pipeline node with both left and right.
+**  if no extra tokens, return left as is.
+*/
 
 t_node  *parse_pipeline(t_token **tokens)
 {
@@ -46,14 +56,21 @@ t_node  *parse_pipeline(t_token **tokens)
         *tokens = current->next;
         right = parse_pipeline(tokens);
         if (!right)
-            return (NULL);
+            return (free_node(left), NULL);
         return (create_pipe_node(left, right));
     }
     return (left);
 }
+
 /*
+**  we need to build both a list of arguments and a list of redirections,
+**  eventually we are going to convert the list of arguments to a double array
+**  using the process_args function
 **
+**  first: parse words into arguments 
+**  
 */
+
 t_node  *parse_command(t_token **tokens)
 {
     int     count;
@@ -67,7 +84,7 @@ t_node  *parse_command(t_token **tokens)
     while (*tokens && (*tokens)->type == TOKEN_WORD)
     {
         if (!add_arg_list(&arg_list, (*tokens)->value));
-            return (NULL);
+            return (free_arg(arg_list), NULL);
         count++;
         *tokens = (*tokens)->next;
     }
@@ -75,7 +92,7 @@ t_node  *parse_command(t_token **tokens)
     {
         redir = parse_redir(tokens);
         if (!redir)
-            return (NULL);
+            return (free_arg(arg_list), free_redir(redir_list), (NULL));
         append_redir(&redir_list, redir);
     }
     if (count == 0 && !redir_list)
@@ -94,7 +111,7 @@ t_redir *parse_redir(t_token **tokens)
     *tokens = (*tokens)->next;
     if (!*tokens || (*tokens)->type != TOKEN_WORD)
         return (NULL);
-    filename = (*tokens)->value;
+    filename = ft_strdup((*tokens)->value);
     *tokens = (*tokens)->next;
     return (create_redir_node(type, filename));
 }
