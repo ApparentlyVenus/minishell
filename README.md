@@ -12,7 +12,7 @@ Handle double quotes (" ").
 Handle single quotes (' ').
 ----------------------------------------------------------------------
 Handle environment variables ($).
-Handle signals (ctrl + C, ctrl + D, ctrl + l).
+Handle signals (ctrl + C, ctrl + D, ctrl + \).
 ----------------------------------------------------------------------
 Implement :
 echo.

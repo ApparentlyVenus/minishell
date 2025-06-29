@@ -8,12 +8,12 @@ typedef struct s_env
     struct s_env    *next;
 }   t_env;
 
-
-env_init(char **envp);
-
-get_env_value(t_env *, char *key);
-
-set_env_value(t_env *, char *key, char *value);
+						 /
+env_init(char **envp); \/
+									 /
+get_env_value(t_env *, char *key); \/
+												  /
+set_env_value(t_env *, char *key, char *value); \/
 
 unset_env_value(t_env *, char *key);
 

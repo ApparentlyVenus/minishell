@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 06:57:10 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 08:41:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,47 @@ char	*get_env_value(t_env *env, char *key)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+void	handle_new_key(t_env *env, char *key, char *value)
+{
+	t_env	*new_key;
+
+	if (!key)
+		return ;
+	else
+	{
+		new_key = malloc(sizeof(t_env));
+		new_key->key = ft_strdup(key);
+		if (!value)
+			new_key->value = NULL;
+		else
+			new_key->value = ft_strdup(value);
+		new_key->equal = (value != NULL);
+		new_key->next = NULL;
+		ft_lstadd_back(&env, new_key);
+	}
+}
+
+void	set_env_value(t_env *env, char *key, char *value)
+{
+	t_env	*new_key;
+
+	if (!key)
+		return ;
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			env->equal = (value != NULL);
+			free(env->value);
+			if (!value)
+				env->value = NULL;
+			else
+				env->value = ft_strdup(value);
+			return ;
+		}
+		env = env->next;
+	}
+	handle_new_key(env, key, value);
 }
