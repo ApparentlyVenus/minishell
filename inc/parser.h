@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 06:42:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 07:06:45 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_cmd
 typedef enum e_node_type
 {
     NODE_CMD,
-    NODE_PIPE
+    NODE_PIPE,
+    NODE_SEQUENCE
 }   t_node_type;
 
 typedef struct s_node
