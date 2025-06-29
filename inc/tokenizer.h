@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 05:16:51 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 08:56:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef enum e_token_type
     TOKEN_REDIR_OUT,
     TOKEN_REDIR_OUT_APPEND,
     TOKEN_HERDOC,
+	TOKEN_OR,
+	TOKEN_AND,
+	TOKEN_WILDCARD,
 }	t_token_type;
 
 typedef struct s_token

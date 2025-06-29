@@ -6,38 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 05:13:43 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 09:07:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// im displaying "minishell$" at the start of every prompt;
-// if the user enters CTRL + D this will put buffer to NULL
-// thats why we should clean up and exit;
-// clean up and exit doest have anything specified yet,
-// it should contain the struct and all memory allocations;
-
 #include "minishell.h"
-
-int	get_input(char *stash)
-{
-	char	*buffer;
-
-	buffer = NULL;
-	buffer = readline("minishell$ ");
-	if (!buffer)
-	{
-		return (clean_up_and_exit());
-	}
-	if (ft_strlen(buffer) > 0)
-	{
-		add_history(buffer);
-		ft_strlcpy(stash, buffer, ft_strlen(buffer));
-		free(buffer);
-		return (1);
-	}
-	else
-		return (0);
-}
 
 // in a shell a word can contain anything gher hol el seperators / tokens;
 // even if mafi space bayneton its still a token, example :
@@ -102,6 +75,19 @@ t_token	*clean_word_token(char *word)
 	return (token);
 }
 
+t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
+{
+	if (input[*pos] == '|')
+		return (token->value = ft_substr(input, *pos, 1),\
+		token->type = TOKEN_PIPE, (*pos)++, token);
+	else if (input[*pos] == '*')
+		return (token->value = ft_substr(input, *pos, 1),\
+		token->type = TOKEN_WILDCARD, (*pos)++, token);
+	else if (input[*pos] == '&' && input[*pos + 1] == '&')
+		return (token->value = ft_substr(input, *pos, 1),\
+		token->type = TOKEN_AND, (*pos) += 2, token);
+}
+
 t_token	*extract_operator_token(char *input, int *pos)
 {
 	t_token	*token;
@@ -116,15 +102,17 @@ t_token	*extract_operator_token(char *input, int *pos)
 		else if (input[*pos] == '>')
 			return (token->value = ft_substr(input, *pos, 1),\
 			token->type = TOKEN_REDIR_OUT, (*pos)++, token);
-		else if (input[*pos] == '|')
-			return (token->value = ft_substr(input, *pos, 1),\
-			token->type = TOKEN_PIPE, (*pos)++, token);
+		else if (input[*pos] == '|' && input[*pos + 1] == '|')
+			return (token->value = ft_substr(input, *pos, 2),\
+			token->type = TOKEN_OR, (*pos) += 2, token);
 		else if (input[*pos] == '<' && input[*pos + 1] == '<')
 			return (token->value = ft_substr(input, *pos, 2),\
 			token->type = TOKEN_HERDOC, (*pos) += 2, token);
 		else if (input[*pos] == '<')
 			return (token->value = ft_substr(input, *pos, 1),\
 			token->type = TOKEN_REDIR_IN, (*pos)++, token);
+		else
+			return (extract_bonus_token(input, pos, token));
 	}
 }
 

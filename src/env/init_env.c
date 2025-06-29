@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 08:41:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 17:28:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	env_init(t_env **env_list, char **envp)
 		{
 			new_node->equal = 1;
 			new_node->value = ft_strdup(equal_sign + 1);
-			new_node->key = ft_substr(envp[i], 0, ft_strlen(envp[i]) - ft_strlen(new_node->value));
+			new_node->key = ft_substr(envp[i], 0, equal_sign - envp[i]);
 		}
 		else
 		{
@@ -47,7 +47,7 @@ char	*get_env_value(t_env *env, char *key)
 		return (NULL);
 	while (env)
 	{
-		if (ft_strcmp(env->key, key, ft_strlen(key)) == 0)
+		if (ft_strcmp(env->key, key) == 0)
 			return (env->value);
 		env = env->next;
 	}
@@ -95,4 +95,31 @@ void	set_env_value(t_env *env, char *key, char *value)
 		env = env->next;
 	}
 	handle_new_key(env, key, value);
+}
+
+void	unset_env_value(t_env **env, char *key)
+{
+	t_env	*prev;
+	t_env	*curr;
+
+	prev = NULL;
+	curr = *env;
+	if (!env || !*env || !key)
+		return ;
+	while (curr)
+	{
+		if (ft_strcmp(curr->key, key) == 0)
+		{
+			if (prev == NULL)
+				*env = curr->next;
+			else
+				prev->next = curr->next;
+			free(curr->key);
+			free(curr->value);
+			free(curr);
+			return ;
+		}
+		prev = curr;
+		curr = curr->next;
+	}
 }

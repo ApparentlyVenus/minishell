@@ -6,18 +6,19 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 22:59:33 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 08:58:00 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	is_word_char(char c)
 {
-    return (c != ' ' && c != '|' && c != '<' && c != '>');
+    return (c != ' ' && c != '|' && c != '<' &&
+		c != '>' && c != '&' && c != '*');
 }
 
 int	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>');
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '*');
 }
 
 int	is_quotes(char c)
