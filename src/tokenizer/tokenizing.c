@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/28 23:05:49 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/29 05:13:43 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,24 @@ char	*extract_word(char *input, int *pos)
 t_token	*clean_word_token(char *word)
 {
 	t_token	*token;
+	char	*trimmed;
 
+	token = malloc(sizeof(t_token));
 	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
-		word = ft_strtrim(word, '\'');
+	{
+		char *trimmed = ft_strtrim(word, '\'');
+		free(word);
+		word = trimmed;
+	}
 	else if (word[0] == '\"' && word[ft_strlen(word) - 1] == '\"')
-		word = ft_strtrim(word, '\"');
+	{
+		char *trimmed = ft_strtrim(word, '\"');
+		free(word);
+		word = trimmed;
+	}
 	token->value = word;
 	token->type = TOKEN_WORD;
+	token->next = NULL;
 	return (token);
 }
 
@@ -95,6 +106,8 @@ t_token	*extract_operator_token(char *input, int *pos)
 {
 	t_token	*token;
 
+	token = malloc(sizeof(t_token));
+	token->next = NULL;
 	while (input[*pos])
 	{
 		if (input[*pos] == '>' && input[*pos + 1] == '>')
@@ -115,10 +128,10 @@ t_token	*extract_operator_token(char *input, int *pos)
 	}
 }
 
-t_token	*tokenize_input(char *input)
+void	tokenize_input(char *input, t_token **token)
 {
 	int		i;
-	t_token	*token;
+	t_token	*new_token;
 	char	*word;
 
 	i = 0;
@@ -126,20 +139,20 @@ t_token	*tokenize_input(char *input)
 	{
 		skip_spaces(input, &i);
 		if (is_operator(input[i]))
-			token = extract_operator_token(input, &i);
+			new_token = extract_operator_token(input, &i);
 		else if (is_quotes(input[i]) && is_closed(input, i))
 		{
 			word = extract_word(input, &i);
-			token = clean_word_token(word);
+			new_token = clean_word_token(word);
 		}
 		else if (is_quotes(input[i]) && !(is_closed(input, i)))
 			ft_handle_later();
 		else if (is_word_char(input[i]))
 		{
 			word = extract_word(input, &i);
-			token = clean_word_token(word);
+			new_token = clean_word_token(word);
 		}
-		token = token->next;
+		ft_lstadd_back(token, new_token);
+		new_token = NULL;
 	}
-	return (token);
 }

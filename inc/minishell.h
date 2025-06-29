@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 01:01:01 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 03:47:10 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,8 @@
 
 # include "../minishell_libft/libft.h"	// libft functions
 
+/* ENV variables */
+
+# include "env.h"
 
 #endif
