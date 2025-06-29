@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 07:06:45 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 08:31:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,31 @@ typedef struct s_node
 }   t_node;
 
 
-// parsing
-t_node  *parse_pipeline(t_token **tokens);
-t_node  *create_pipe_node(t_node *left, t_node *right);
-t_node  *parse_command(t_token **tokens);
-t_node  *create_cmd_node(char **argv, t_redir *redir_list);
-t_redir *parse_redir(t_token **tokens);
+// main parsing functions
 
-// redirection utils
-int     is_redir(t_token *token);
-void    append_redir(t_redir **list, t_redir *new_redir);
+t_node  *parse_input(t_token **tokens);
+
+// parsing helpers
+
+t_node  *parse_pipeline(t_token **tokens);
+t_node  *parse_command(t_token **tokens);
+t_redir *parse_redir(t_token **tokens);
+t_node  *create_pipe_node(t_node *left, t_node *right);
+t_node  *create_cmd_node(char **argv, t_redir *redir_list);
 t_redir *create_redir_node(int type, char *filename);
 
-// command arguments utils
-int add_arg_list(t_arg **list, char *value);
-char **process_args(t_arg *arg_list, int count);
+// utils
+
+int     is_redir(t_token *token);
+void    append_redir(t_redir **list, t_redir *new_redir);
+int     add_arg_list(t_arg **list, char *value);
+char    **process_args(t_arg *arg_list, int count);
+
+// frees
+
+void	free_split(char **args);
+void	free_cmd(t_cmd *cmd);
+void	free_redir_list(t_redir *redir);
+void	free_node_list(t_node *node);
 
 #endif
