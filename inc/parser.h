@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 01:00:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 06:42:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,18 @@ typedef struct s_node
 
 // parsing
 t_node  *parse_pipeline(t_token **tokens);
+t_node  *create_pipe_node(t_node *left, t_node *right);
 t_node  *parse_command(t_token **tokens);
+t_node  *create_cmd_node(char **argv, t_redir *redir_list);
 t_redir *parse_redir(t_token **tokens);
 
 // redirection utils
 int     is_redir(t_token *token);
 void    append_redir(t_redir **list, t_redir *new_redir);
 t_redir *create_redir_node(int type, char *filename);
+
+// command arguments utils
+int add_arg_list(t_arg **list, char *value);
+char **process_args(t_arg *arg_list, int count);
 
 #endif
