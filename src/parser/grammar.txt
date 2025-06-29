@@ -1,3 +1,5 @@
+# Documentation brought to you by Odana
+
 # SYNTAX:
 #
 #   rulename    ::= defintion
@@ -11,12 +13,16 @@ pipeline    ::= command ('|' pipeline)?
 # a pipeline might contain a pipe 
 # and another pipeline, or it might not
 
-command     ::= WORD* redir*
+command     ::= WORD+ redir* | redir+
 
 # here the (*) means there might be zero or more words
+# and the (+) means there must be at least 1 word
 # example:  ls -l /etc  -> 3 words
 #           echo hello  -> 2 words
-#           < file.txt  -> 0 words
+#           < file.txt  -> 0 words it's just a redir
+
+# when parsing the command we have to make sure to implement left assosiative parsing
+# this means that when parsing a | b | c, th strcuture needs to be (a | b) | c and not a | (b | c)
 
 redir       ::= ('<'|'>'|'>>'|'<<') WORD
 
@@ -31,5 +37,3 @@ redir       ::= ('<'|'>'|'>>'|'<<') WORD
 #                       |-> parse_pipeline
 #                               |
 #                               |-> parse_command -> parse_redir
-
-# Documentation brought to you by Odana
