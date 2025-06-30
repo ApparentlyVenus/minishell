@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 08:31:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/06/29 09:07:24 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char    **process_args(t_arg *arg_list, int count);
 
 void	free_split(char **args);
 void	free_cmd(t_cmd *cmd);
-void	free_redir_list(t_redir *redir);
-void	free_node_list(t_node *node);
-
+void	free_redir(t_redir *redir);
+void	free_node(t_node *node);
+void    free_arg(t_arg *arg_list);
 #endif

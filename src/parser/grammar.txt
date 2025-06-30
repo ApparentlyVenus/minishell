@@ -1,39 +1,40 @@
-# Documentation brought to you by Odana
+Documentation brought to you by odana
 
-# SYNTAX:
-#
-#   rulename    ::= defintion
-#   rules       -> lowercase
-#   token       -> uppercase
+SYNTAX:
 
-input       ::= pipeline
-pipeline    ::= command ('|' pipeline)?
+   rulename    ::= defintion
+   rules       -> lowercase
+   token       -> uppercase
 
-# the question mark means its optional:
-# a pipeline might contain a pipe 
-# and another pipeline, or it might not
+# input       ::= pipeline
+# pipeline    ::= command ('|' command)*
 
-command     ::= WORD+ redir* | redir+
+the question mark means its optional:
+a pipeline might contain a pipe 
+and another pipeline, or it might not
 
-# here the (*) means there might be zero or more words
-# and the (+) means there must be at least 1 word
-# example:  ls -l /etc  -> 3 words
-#           echo hello  -> 2 words
-#           < file.txt  -> 0 words it's just a redir
+# command     ::= WORD+ redir* | redir+
 
-# when parsing the command we have to make sure to implement left assosiative parsing
-# this means that when parsing a | b | c, th strcuture needs to be (a | b) | c and not a | (b | c)
+here the (*) means there might be zero or more redirs
+and the (+) means there must be at least 1 word
+example:  ls -l /etc  -> 3 words
+          echo hello  -> 2 words
+          < file.txt  -> 0 words it's just a redir
 
-redir       ::= ('<'|'>'|'>>'|'<<') WORD
+when parsing the command we have to make sure to implement left assosiative parsing
+this means that when parsing a | b | c, th strcuture needs to be (a | b) | c and not a | (b | c)
 
-# RECURSIVE DESCENT METHOD:
-#
-#   -> top down parsing methodology:
-#   -> each rule has its own function (pase_pipeline, parse_input, ect..)
-#   -> each function will call the functions defined in it
-#   -> example:     parse_pipeline 
-#                       |
-#                       |-> parse_command -> parse_redir
-#                       |-> parse_pipeline
-#                               |
-#                               |-> parse_command -> parse_redir
+# redir       ::= ('<'|'>'|'>>'|'<<') WORD
+
+LEFT ASSOSIATIVE PARSING METHOD:
+  -> top down parsing methodology:
+  -> each rule has its own function (pase_pipeline, parse_input, ect..)
+  -> each function will call the functions defined in it
+  -> parsing mimics shell behavior as it parses nodes on the left first, 
+      then any trailing commands are left on the right
+  -> example:     parse_pipeline 
+                      |
+                      |-> parse_command -> parse_redir
+                      |-> parse_command -> parse_redir
+                      |
+                      etc..
