@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 08:58:00 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/01 00:54:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	is_closed(char *input , int pos)
 
 	is_word = 0;
 	i = pos;
+	if (!input[i])
+		return (0);
 	if (input[i] == '\'' || input[i] == '\"')
 	{
 		q = input[i];
