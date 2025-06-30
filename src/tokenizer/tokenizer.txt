@@ -1,0 +1,82 @@
+Great question! Here are my recommendations for additional validation and improvements:
+Additional Invalid Cases to Handle
+1. Redirection Validation
+c// Invalid cases:
+"ls > > file"           // consecutive redirections
+"ls >"                  // missing filename
+"ls < "                 // missing filename  
+"ls >> << file"         // mixed redirect types
+"< > file"              // redirect without command
+2. Heredoc Validation
+c// Invalid cases:
+"<< EOF <<"            // heredoc followed by another redirect
+"<< "                  // missing delimiter
+"<<"                   // missing delimiter entirely
+3. Logical Operators (if implementing)
+c// Invalid cases:
+"ls && "               // trailing logical operator
+"&& ls"                // leading logical operator  
+"ls && && pwd"         // consecutive logical operators
+"ls | && pwd"          // mixed pipe and logical operators
+4. Quote Validation
+c// Invalid cases:
+"echo 'unclosed"       // unclosed single quote
+"echo \"unclosed"      // unclosed double quote
+"echo 'mixed\""        // mixed quote types
+Code Improvements
+1. Enhanced Error Handling in Parser
+c// Add specific error messages
+typedef enum e_parse_error {
+    PARSE_OK,
+    PARSE_UNEXPECTED_TOKEN,
+    PARSE_MISSING_FILENAME,
+    PARSE_SYNTAX_ERROR
+} t_parse_error;
+
+t_parse_error parse_command_with_validation(t_token **tokens, t_node **result);
+2. Tokenizer Validation Enhancement
+c// Add validation flags to your tokenizer
+typedef struct s_tokenizer_state {
+    int quote_state;      // track quote nesting
+    int pipe_count;       // consecutive pipes
+    int redir_expects_word; // expecting filename after redirect
+} t_tokenizer_state;
+3. Improved Memory Management
+Consider adding a cleanup function that's called on any parse error:
+cvoid cleanup_parse_state(t_arg *args, t_redir *redirs, t_node *partial_tree) {
+    free_arg(args);
+    free_redir(redirs);
+    free_node(partial_tree);
+}
+4. Parser State Validation
+Add validation in parse_command():
+c// After parsing redirections, validate the command has content
+if (count == 0 && !redir_list) {
+    // This catches empty commands like just whitespace
+    return (NULL);
+}
+
+// Validate redirection chains
+if (!validate_redir_chain(redir_list)) {
+    return (cleanup_and_return_null(...));
+}
+5. Wildcard Handling
+Since you have TOKEN_WILDCARD, consider:
+c// Validate wildcard usage
+"echo *"               // valid
+"echo **"              // might be invalid depending on your implementation
+"echo * *"             // multiple wildcards
+Recommended Validation Flow
+
+Tokenization Phase: Basic syntax validation (quotes, basic structure)
+Post-Tokenization: Semantic validation (consecutive operators, missing arguments)
+Parse Phase: Structural validation (proper command formation)
+
+Error Recovery Strategy
+Consider implementing error recovery rather than just failing:
+c// Instead of returning NULL, return an error node
+t_node *create_error_node(char *error_msg) {
+    // Create a special error node that can be handled gracefully
+}
+This approach lets you provide better error messages to users and potentially continue parsing other parts of the command line.
+Would you like me to elaborate on any of these validation strategies or help you implement specific validation functions?
