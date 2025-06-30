@@ -1,4 +1,4 @@
-General requirements :
+# General requirements :
 ----------------------------------------------------------------------
 Run command with absolute path.
 Run command with relative path.
