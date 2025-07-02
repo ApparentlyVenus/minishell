@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsed_environment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/30 21:48:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 21:39:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,17 @@ char	**to_envp(t_env *env)
 	count = valid_entries_count(env);
 	curr = env;
 	envp = malloc(sizeof(char *) * (count + 1));
-	while (i < count && env)
+	while (i < count && curr)
 	{
-		if (env->equal == 1)
+		if (curr->equal == 1)
 		{
-			temp[0] = ft_strjoin(env->key, "=");
-			temp[1] = ft_strjoin(temp[0], env->value);
+			temp[0] = ft_strjoin(curr->key, "=");
+			temp[1] = ft_strjoin(temp[0], curr->value);
 			envp[i] = temp[1];
 			free(temp[0]);
 			i++;
 		}
-		env = env->next;
+		curr = curr->next;
 	}
 	envp[i] = NULL;
 	return(envp);

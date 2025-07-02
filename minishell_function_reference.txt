@@ -1,0 +1,92 @@
+
+============================
+1. Readline / History (libreadline)
+============================
+- readline: Reads a line of user input with editing and history support.
+- add_history: Adds a line to the command history.
+- rl_clear_history: Clears the entire readline history.
+- rl_on_new_line: Prepares the display for a new input line.
+- rl_replace_line: Replaces the contents of the current input line.
+- rl_redisplay: Refreshes the prompt line visually (after updates).
+
+============================
+2. Basic C Functions (stdlib, stdio, unistd)
+============================
+- printf: Print formatted output to stdout.
+- malloc: Dynamically allocates memory.
+- free: Frees previously allocated memory.
+- write: Writes data to a file descriptor (e.g. stdout).
+
+============================
+3. File I/O (unistd, fcntl)
+============================
+- access: Checks if a file exists and/or is accessible (used before execve).
+- open: Opens a file and returns a file descriptor.
+- read: Reads data from a file descriptor.
+- close: Closes a file descriptor.
+- unlink: Deletes a file from the filesystem.
+
+============================
+4. Process Control (unistd, sys/wait, signal)
+============================
+- fork: Creates a new child process.
+- wait: Waits for any child process to finish.
+- waitpid: Waits for a specific process to finish.
+- wait3, wait4: Extended versions of wait (can give usage stats).
+- kill: Sends a signal to a process (e.g., SIGINT).
+- exit: Exits the current process with a status.
+
+============================
+5. Signal Handling
+============================
+- signal: Sets a simple signal handler.
+- sigaction: Advanced signal handling (recommended).
+- sigemptyset: Initializes a signal set to empty.
+- sigaddset: Adds a signal to a signal set.
+
+============================
+6. Directory Management
+============================
+- opendir: Opens a directory stream (like ls).
+- readdir: Reads entries in a directory one by one.
+- closedir: Closes an open directory stream.
+
+============================
+7. Environment & Paths
+============================
+- getcwd: Gets the current working directory (used in pwd).
+- chdir: Changes the working directory (used in cd).
+- getenv: Gets an environment variable .
+
+============================
+8. File Metadata
+============================
+- stat: Gets metadata about a file (follow symlinks).
+- lstat: Like stat, but does not follow symlinks.
+- fstat: Gets file info from an open file descriptor.
+
+============================
+9. Terminal/TTY Handling (termios, termcap)
+============================
+- isatty: Checks if a file descriptor is a terminal.
+- ttyname: Gets terminal name for a file descriptor.
+- ttyslot: Gets the index of the current tty in /etc/ttys.
+- ioctl: Performs low-level control of devices.
+- tcsetattr: Sets terminal attributes (e.g. canonical mode).
+- tcgetattr: Gets terminal attributes.
+
+============================
+10. Termcap (text display in terminal)
+============================
+- tgetent: Initializes the termcap entry for the current terminal.
+- tgetflag: Checks for boolean terminal capabilities.
+- tgetnum: Gets a numeric terminal capability.
+- tgetstr: Gets a string capability (e.g., clear screen).
+- tgoto: Computes cursor movement escape sequence.
+- tputs: Outputs a termcap string to the terminal.
+
+============================
+11. Error Reporting
+============================
+- strerror: Converts errno to a human-readable string.
+- perror: Prints an error message with errno.

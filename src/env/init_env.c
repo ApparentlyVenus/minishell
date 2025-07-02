@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/30 21:48:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 21:39:33 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	env_init(t_env **env_list, char **envp)
 		{
 			new_node->equal = 0;
 			new_node->value = NULL;
-			new_node->key = envp[i];
+			new_node->key = strdup(envp[i]);
 		}
 		new_node->next = NULL;
 		ft_lstadd_back(env_list, new_node);
@@ -54,7 +54,7 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
-void	handle_new_key(t_env *env, char *key, char *value)
+void	handle_new_key(t_env **env, char *key, char *value)
 {
 	t_env	*new_key;
 
@@ -70,7 +70,7 @@ void	handle_new_key(t_env *env, char *key, char *value)
 			new_key->value = ft_strdup(value);
 		new_key->equal = (value != NULL);
 		new_key->next = NULL;
-		ft_lstadd_back(&env, new_key);
+		ft_lstadd_back(env, new_key);
 	}
 }
 
@@ -94,7 +94,7 @@ void	set_env_value(t_env *env, char *key, char *value)
 		}
 		env = env->next;
 	}
-	handle_new_key(env, key, value);
+	handle_new_key(&env, key, value);
 }
 
 void	unset_env_value(t_env **env, char *key)

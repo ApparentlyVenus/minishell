@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/30 21:48:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 21:39:19 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*expand_token_value_1(char *value, t_env *env, int *i)
 	char	*var_value;
 
 	start = i[0];
-	while (ft_isalnum(value[i[0]] || value[i[0]] == '_'))
+	while (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 		i[0]++;
 	var_name = ft_substr(value, i[1], i[0] - i[1]);
 	var_value = get_env_value(env, var_name);
