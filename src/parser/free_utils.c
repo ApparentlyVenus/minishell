@@ -6,11 +6,11 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:27:03 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 09:22:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 17:46:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 /*
 ** the thing here with freeing is that to free a tree you need to call

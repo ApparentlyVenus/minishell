@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 00:43:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 03:46:27 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 17:49:35 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token)
 {
