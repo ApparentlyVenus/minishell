@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/01 00:48:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 03:43:38 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*extract_word(char *input, int *pos); // extracting the word
 t_token	*clean_word_token(char *word); // cleaning up the word from remaining quotes
 int		is_closed(char *input , int pos); // omar 🧘🏼‍♂️ hay la na3rif if single quotes are closed
 int		is_quotes(char c); // omarrr eza its even a quote in the first place
-void	tokenize_input(char *input, t_token **token); // tokenizing the input
+t_token	**tokenize_input(char *input, t_token **token); // tokenizing the input
 t_token	*extract_operator_token(char *input, int *pos); // tokenizing the operators
 void	free_tokens(t_token **head); // free **struct
 t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token); // all for words combined

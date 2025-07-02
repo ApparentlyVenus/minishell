@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 00:43:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/01 00:52:52 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 03:46:27 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token)
 {
-	if (is_quotes(input[*i]) && is_closed(input, i))
+	if (is_quotes(input[*i]) && is_closed(input, *i))
 	{
 		word = extract_word(input, *i);
 		new_token = clean_word_token(word);
 	}
-	else if (is_quotes(input[*i]) && !(is_closed(input, i)))
+	else if (is_quotes(input[*i]) && !(is_closed(input, *i)))
 		return (NULL);
 	else if (is_word_char(input[*i]))
 	{
