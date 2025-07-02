@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   commands_implementation.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/29 06:57:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/03 00:24:57 by yitani           ###   ########.fr       */
+/*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/03 00:20:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	get_pwd(void)
 {
-	int	i;
+	char	*path;
 
-	i = 0;
-	while (s1[i] || s2[i])
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
-		i++;
-	}
-	return (0);
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (0);
+	write(1, path, ft_strlen(path));
+	write(1, "\n", 1);
+	free(path);
+	return (1);
 }

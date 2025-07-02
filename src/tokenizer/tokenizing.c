@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 23:58:49 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:23:55 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,17 @@ t_token	*clean_word_token(char *word)
 t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 {
 	if (input[*pos] == '|')
-		return (token->value = ft_substr(input, *pos, 1),\
-		token->type = TOKEN_PIPE, (*pos)++, token);
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_PIPE, (*pos)++, token);
 	else if (input[*pos] == '*')
-		return (token->value = ft_substr(input, *pos, 1),\
-		token->type = TOKEN_WILDCARD, (*pos)++, token);
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_WILDCARD, (*pos)++, token);
 	else if (input[*pos] == '&' && input[*pos + 1] == '&')
-		return (token->value = ft_substr(input, *pos, 2),\
-		token->type = TOKEN_AND, (*pos) += 2, token);
+		return (token->value = ft_substr(input, *pos, 2),
+			token->type = TOKEN_AND, (*pos) += 2, token);
 	else if (input[*pos] == '<')
-		return (token->value = ft_substr(input, *pos, 1),\
-		token->type = TOKEN_REDIR_IN, (*pos)++, token);
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_REDIR_IN, (*pos)++, token);
 	else
 	{
 		free(token);
@@ -109,17 +109,17 @@ t_token	*extract_operator_token(char *input, int *pos)
 	while (input[*pos])
 	{
 		if (input[*pos] == '>' && input[*pos + 1] == '>')
-			return (token->value = ft_substr(input, *pos, 2),\
-			token->type = TOKEN_REDIR_OUT_APPEND, (*pos) += 2, token);
+			return (token->value = ft_substr(input, *pos, 2),
+				token->type = TOKEN_REDIR_OUT_APPEND, (*pos) += 2, token);
 		else if (input[*pos] == '>')
-			return (token->value = ft_substr(input, *pos, 1),\
-			token->type = TOKEN_REDIR_OUT, (*pos)++, token);
+			return (token->value = ft_substr(input, *pos, 1),
+				token->type = TOKEN_REDIR_OUT, (*pos)++, token);
 		else if (input[*pos] == '|' && input[*pos + 1] == '|')
-			return (token->value = ft_substr(input, *pos, 2),\
-			token->type = TOKEN_OR, (*pos) += 2, token);
+			return (token->value = ft_substr(input, *pos, 2),
+				token->type = TOKEN_OR, (*pos) += 2, token);
 		else if (input[*pos] == '<' && input[*pos + 1] == '<')
-			return (token->value = ft_substr(input, *pos, 2),\
-			token->type = TOKEN_HERDOC, (*pos) += 2, token);
+			return (token->value = ft_substr(input, *pos, 2),
+				token->type = TOKEN_HERDOC, (*pos) += 2, token);
 		else
 			token = extract_bonus_token(input, pos, token);
 		if (!token)

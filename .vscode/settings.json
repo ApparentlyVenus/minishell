@@ -1,7 +1,0 @@
-{
-    "comments.visible": true,
-    "better-comments.multilineComments": true,
-    "files.associations": {
-        "minishell.h": "c"
-    }
-}

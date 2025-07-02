@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 00:43:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 23:58:42 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:21:31 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token)
 
 void	free_tokens(t_token **head)
 {
-	t_token *current;
-	t_token *next;
+	t_token	*current;
+	t_token	*next;
 
 	if (!head || !*head)
-		return;
+		return ;
 	current = *head;
 	while (current)
 	{

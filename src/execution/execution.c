@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/03 00:50:36 by yitani           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/execution.h"
 
 /*
 ** EXECUTION MODULE - Handles command execution in minishell
-** 
+**
 ** This module manages:
 ** 1. Counting commands in a pipeline
 ** 2. Setting up pipes for inter-process communication
@@ -14,7 +26,7 @@
 
 /*
 ** count_commands - Recursively counts commands in the AST
-** 
+**
 ** For a pipeline like "ls | grep txt | wc -l", this returns 3
 ** The AST is left-associative: ((ls | grep) | wc)
 */
@@ -31,7 +43,7 @@ int	count_commands(t_node *node)
 
 /*
 ** allocate_pipes - Creates pipe pairs for inter-process communication
-** 
+**
 ** For n commands, we need (n-1) pipes
 ** Each pipe has 2 file descriptors: [0] for reading, [1] for writing
 ** Example: "cmd1 | cmd2 | cmd3" needs 2 pipes
@@ -82,7 +94,7 @@ void	free_pipes(int **pipes, int cmd_count)
 
 /*
 ** get_nth_command - Retrieves the nth command node from pipeline
-** 
+**
 ** Navigates the left-associative AST to find a specific command
 ** Used to iterate through commands in execution order
 */
@@ -107,7 +119,7 @@ t_node	*get_nth_command(t_node *node, int n)
 
 /*
 ** setup_execution_context - Initializes execution environment
-** 
+**
 ** Sets up the context structure with:
 ** - Command count
 ** - Pipe array
@@ -139,7 +151,7 @@ t_exec	*setup_execution_context(t_node *cmd_list, t_env *env_list)
 
 /*
 ** execute_single_command - Handles execution of one command
-** 
+**
 ** This function:
 ** 1. Checks if command is built-in or external
 ** 2. Sets up pipes and redirections
@@ -150,7 +162,6 @@ static void	execute_single_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 {
 	setup_pipes(ctx, cmd_index);
 	setup_redirections(cmd_node->cmd);
-	
 	if (get_builtin_type(cmd_node->cmd->args[0]) != BUILTIN_NONE)
 	{
 		execute_builtin(cmd_node, ctx);
@@ -165,7 +176,7 @@ static void	execute_single_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 
 /*
 ** execute_pipeline - Main execution function
-** 
+**
 ** Process flow:
 ** 1. Set up execution context
 ** 2. Fork child process for each command
@@ -206,7 +217,7 @@ void	execute_pipeline(t_node *cmd_list, t_env *env_list)
 
 /*
 ** execute_external_command - Executes external programs
-** 
+**
 ** Steps:
 ** 1. Check if command has '/' (absolute/relative path)
 ** 2. If not, search in PATH environment variable
@@ -220,12 +231,10 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 
 	cmd = cmd_node->cmd->args[0];
 	envp = convert_env_to_array(ctx->env_list);
-	
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
 	else
 		path = find_command_in_path(cmd, ctx->env_list);
-	
 	if (!path)
 	{
 		ft_putstr_fd(cmd, 2);
@@ -239,7 +248,7 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 
 /*
 ** find_command_in_path - Searches for executable in PATH
-** 
+**
 ** Returns full path to executable or NULL if not found
 */
 static char	*find_command_in_path(char *cmd, t_env *env_list)
@@ -273,7 +282,7 @@ static char	*find_command_in_path(char *cmd, t_env *env_list)
 
 /*
 ** get_builtin_type - Identifies built-in commands
-** 
+**
 ** Returns the type of built-in command or BUILTIN_NONE
 */
 t_builtin_type	get_builtin_type(const char *cmd_name)
@@ -299,10 +308,10 @@ t_builtin_type	get_builtin_type(const char *cmd_name)
 
 /*
 ** setup_pipes - Configures pipe connections for a command
-** 
+**
 ** Pipeline flow: cmd1 | cmd2 | cmd3
 ** - cmd1: stdout -> pipe[0][1]
-** - cmd2: stdin <- pipe[0][0], stdout -> pipe[1][1]  
+** - cmd2: stdin <- pipe[0][0], stdout -> pipe[1][1]
 ** - cmd3: stdin <- pipe[1][0]
 */
 void	setup_pipes(t_exec *ctx, int cmd_index)
@@ -311,9 +320,8 @@ void	setup_pipes(t_exec *ctx, int cmd_index)
 
 	if (cmd_index > 0)
 		dup2(ctx->pipes[cmd_index - 1][0], STDIN_FILENO);
-	if (cmd_index < ctx->cmd_count - 1) 
+	if (cmd_index < ctx->cmd_count - 1)
 		dup2(ctx->pipes[cmd_index][1], STDOUT_FILENO);
-	
 	i = 0;
 	while (i < ctx->cmd_count - 1)
 	{
@@ -325,7 +333,7 @@ void	setup_pipes(t_exec *ctx, int cmd_index)
 
 /*
 ** setup_redirections - Handles file redirections
-** 
+**
 ** Supports: < (input), > (output), >> (append)
 ** TODO: Implement heredoc (<<)
 */
@@ -394,7 +402,7 @@ void	close_all_pipes(t_exec *ctx)
 
 /*
 ** wait_for_all_children - Waits for all child processes
-** 
+**
 ** Returns the exit code of the last command in the pipeline
 ** This mimics bash behavior where pipeline exit code = last command
 */

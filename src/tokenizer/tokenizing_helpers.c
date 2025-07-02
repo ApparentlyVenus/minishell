@@ -6,14 +6,14 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 04:13:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:22:19 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	is_word_char(char c)
 {
-    return (c != ' ' && c != '|' && c != '<' &&
-		c != '>' && c != '&');
+	return (c != ' ' && c != '|' && c != '<'
+		&& c != '>' && c != '&');
 }
 
 int	is_operator(char c)
@@ -32,7 +32,7 @@ void	skip_spaces(char *input, int *pos)
 		(*pos)++;
 }
 
-int	is_closed(char *input , int pos)
+int	is_closed(char *input, int pos)
 {
 	int		i;
 	char	q;

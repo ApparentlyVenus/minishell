@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 21:39:19 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:20:43 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*expand_token_value_1(char *value, t_env *env, int *i)
 	else
 		var_value = ft_strdup(var_value);
 	free(var_name);
-	return(var_value);
+	return (var_value);
 }
 
 char	*expand_token_value_1_5(char *dest, const char *to_append)
@@ -42,8 +42,8 @@ char	*expand_token_value_1_5(char *dest, const char *to_append)
 
 char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 {
-	char *expanded;
-	char *temp;
+	char	*expanded;
+	char	*temp;
 
 	if (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 	{

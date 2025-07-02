@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:27:03 by odana             #+#    #+#             */
-/*   Updated: 2025/07/02 17:46:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/03 00:48:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 ** the thing here with freeing is that to free a tree you need to call
 ** the left and right branches recursively
 ** and because we have multiple we need a function for each struct
-!! each struct's free function will call the free function of the structs inside it
+!! each struct's free function will call the free 
+	function of the structs inside it
 */
 
 void	free_split(char **args)
@@ -56,8 +57,8 @@ void	free_redir(t_redir *redir)
 
 void	free_arg(t_arg *arg_list)
 {
-	t_arg *temp;
-	
+	t_arg	*temp;
+
 	while (arg_list)
 	{
 		temp = arg_list->next;

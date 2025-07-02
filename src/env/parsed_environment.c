@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 21:39:40 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:21:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ char	**to_envp(t_env *env)
 		curr = curr->next;
 	}
 	envp[i] = NULL;
-	return(envp);
+	return (envp);
 }

@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 23:58:58 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:24:10 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	redirection_validation(t_token **token)
 
 	prev = NULL;
 	current = (*token);
-	
 	while (current)
 	{
 		if (is_redirection(current->type)

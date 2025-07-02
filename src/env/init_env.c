@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 21:39:33 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:20:53 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	env_init(t_env **env_list, char **envp)
 {
-	int	i;
+	int		i;
 	t_env	*new_node;
 	char	*equal_sign;
 
