@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 04:00:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/02 04:17:06 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 04:31:10 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,17 @@ int	is_logic_op(t_token_type type)
 int	has_wildcard(char *word)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (word)
 	{
 		if (word[i] == '*')
-			return (1);
+		{
+			count++;
+		}
 		i++;
 	}
-	return (0);
+	return (count);
 }
