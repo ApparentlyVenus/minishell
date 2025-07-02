@@ -21,7 +21,7 @@ typedef enum e_builtin_type {
 typedef struct s_exec {
     int     cmd_count;      // Number of commands in the pipeline
     int     **pipes;        // Array of pipe file descriptors
-    pid_t   *pids;          // Array of child process IDs
+    pid_t   *pids;          // Array of child process IDsz
     int     last_exit_code; // Exit code of the last command
     t_env   *env_list;      // Pointer to environment variable list
 }   t_exec;
