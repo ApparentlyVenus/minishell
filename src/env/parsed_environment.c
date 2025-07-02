@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsed_environment.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/30 18:46:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/06/30 21:48:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 int	valid_entries_count(t_env *env)
 {

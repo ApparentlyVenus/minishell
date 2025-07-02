@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 09:07:32 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 17:49:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 // in a shell a word can contain anything gher hol el seperators / tokens;
 // even if mafi space bayneton its still a token, example :
@@ -57,15 +57,19 @@ t_token	*clean_word_token(char *word)
 	char	*trimmed;
 
 	token = malloc(sizeof(t_token));
+	token->single_quotes = 0;
+	token->double_quotes = 0;
 	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
 	{
-		char *trimmed = ft_strtrim(word, '\'');
+		token->single_quotes = 1;
+		trimmed = ft_strtrim(word, '\'');
 		free(word);
 		word = trimmed;
 	}
 	else if (word[0] == '\"' && word[ft_strlen(word) - 1] == '\"')
 	{
-		char *trimmed = ft_strtrim(word, '\"');
+		token->double_quotes = 1;
+		trimmed = ft_strtrim(word, '\"');
 		free(word);
 		word = trimmed;
 	}
@@ -84,8 +88,16 @@ t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 		return (token->value = ft_substr(input, *pos, 1),\
 		token->type = TOKEN_WILDCARD, (*pos)++, token);
 	else if (input[*pos] == '&' && input[*pos + 1] == '&')
-		return (token->value = ft_substr(input, *pos, 1),\
+		return (token->value = ft_substr(input, *pos, 2),\
 		token->type = TOKEN_AND, (*pos) += 2, token);
+	else if (input[*pos] == '<')
+		return (token->value = ft_substr(input, *pos, 1),\
+		token->type = TOKEN_REDIR_IN, (*pos)++, token);
+	else
+	{
+		free(token);
+		return (NULL);
+	}
 }
 
 t_token	*extract_operator_token(char *input, int *pos)
@@ -108,15 +120,16 @@ t_token	*extract_operator_token(char *input, int *pos)
 		else if (input[*pos] == '<' && input[*pos + 1] == '<')
 			return (token->value = ft_substr(input, *pos, 2),\
 			token->type = TOKEN_HERDOC, (*pos) += 2, token);
-		else if (input[*pos] == '<')
-			return (token->value = ft_substr(input, *pos, 1),\
-			token->type = TOKEN_REDIR_IN, (*pos)++, token);
 		else
-			return (extract_bonus_token(input, pos, token));
+			token = extract_bonus_token(input, pos, token);
+		if (!token)
+			return (NULL);
+		else
+			return (token);
 	}
 }
 
-void	tokenize_input(char *input, t_token **token)
+t_token	**tokenize_input(char *input, t_token **token)
 {
 	int		i;
 	t_token	*new_token;
@@ -128,19 +141,15 @@ void	tokenize_input(char *input, t_token **token)
 		skip_spaces(input, &i);
 		if (is_operator(input[i]))
 			new_token = extract_operator_token(input, &i);
-		else if (is_quotes(input[i]) && is_closed(input, i))
+		if (is_quotes(input[i]) || is_word_char(input[i]))
+			new_token = handle_any_word(input, word, &i, new_token);
+		if (!new_token)
 		{
-			word = extract_word(input, &i);
-			new_token = clean_word_token(word);
-		}
-		else if (is_quotes(input[i]) && !(is_closed(input, i)))
-			ft_handle_later();
-		else if (is_word_char(input[i]))
-		{
-			word = extract_word(input, &i);
-			new_token = clean_word_token(word);
+			free_tokens(token);
+			return (NULL);
 		}
 		ft_lstadd_back(token, new_token);
 		new_token = NULL;
 	}
+	return (token);
 }

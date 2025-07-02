@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 08:56:23 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 04:35:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,19 @@ char	*extract_word(char *input, int *pos); // extracting the word
 t_token	*clean_word_token(char *word); // cleaning up the word from remaining quotes
 int		is_closed(char *input , int pos); // omar 🧘🏼‍♂️ hay la na3rif if single quotes are closed
 int		is_quotes(char c); // omarrr eza its even a quote in the first place
-void	tokenize_input(char *input, t_token **token); // tokenizing the input
+t_token	**tokenize_input(char *input, t_token **token); // tokenizing the input
 t_token	*extract_operator_token(char *input, int *pos); // tokenizing the operators
+void	free_tokens(t_token **head); // free **struct
+t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token); // all for words combined
+
+int		has_wildcard(char *word);
+int		is_logic_op(t_token_type type);
+int		has_wildcard(char *word);
+
+int		redirection_validation(t_token **token);
+int		pipe_validation(t_token **token);
+int		valid_heredoc(t_token **token);
+int		valid_logic_op(t_token **token);
+int		valid_wildcard(t_token **token);
 
 #endif

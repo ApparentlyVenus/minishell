@@ -6,11 +6,11 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/06/30 21:10:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 17:46:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 /*  
 **  call pipeline, if there are trailing tokens free and return NULL

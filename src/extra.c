@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/06/29 09:00:36 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/02 17:52:55 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // clean up and exit doest have anything specified yet,
 // it should contain the struct and all memory allocations;
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 int	get_input(char *stash)
 {

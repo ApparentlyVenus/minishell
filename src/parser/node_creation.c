@@ -6,11 +6,11 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:33:54 by odana             #+#    #+#             */
-/*   Updated: 2025/06/29 09:18:44 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/02 17:46:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 t_node  *create_pipe_node(t_node *left, t_node *right)
 {
