@@ -6,11 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:42:13 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/23 03:02:41 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:04:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 static int	word_len(const char *str, char sep)
 {

@@ -6,11 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:32:32 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/21 21:33:49 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:04:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

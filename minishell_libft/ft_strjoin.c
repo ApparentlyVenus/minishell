@@ -6,11 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:27:52 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/21 13:49:42 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:03:45 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

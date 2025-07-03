@@ -6,9 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 20:06:13 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/22 23:54:23 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:05:02 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	*ft_memset(void *s, int c, unsigned int n)
 {

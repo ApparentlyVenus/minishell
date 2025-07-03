@@ -6,11 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 00:12:21 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/24 00:16:27 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:04:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {

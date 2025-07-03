@@ -6,11 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 21:36:10 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/22 21:35:40 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:04:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {

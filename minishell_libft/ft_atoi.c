@@ -6,9 +6,11 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:55:39 by yitani            #+#    #+#             */
-/*   Updated: 2025/05/22 22:22:04 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:05:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {

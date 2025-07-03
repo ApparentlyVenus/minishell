@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:48:12 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:47:57 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_env
 void	env_init(t_env **env_list, char **envp);
 char	*get_env_value(t_env *env, char *key);
 void	handle_new_key(t_env **env, char *key, char *value);
-void	set_env_value(t_env *env, char *key, char *value);
+void	set_env_value(t_env **env, char *key, char *value);
 void	unset_env_value(t_env **env, char *key);
 int		valid_entries_count(t_env *env);
 char	**to_envp(t_env *env);

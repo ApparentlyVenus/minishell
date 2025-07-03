@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:20:53 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:47:37 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,29 @@ void	handle_new_key(t_env **env, char *key, char *value)
 	}
 }
 
-void	set_env_value(t_env *env, char *key, char *value)
+void	set_env_value(t_env **env, char *key, char *value)
 {
 	t_env	*new_key;
+	t_env	*current;
 
+	current = *env;
 	if (!key)
 		return ;
-	while (env)
+	while (current)
 	{
-		if (ft_strcmp(env->key, key) == 0)
+		if (ft_strcmp(current->key, key) == 0)
 		{
-			env->equal = (value != NULL);
-			free(env->value);
+			current->equal = (value != NULL);
+			free(current->value);
 			if (!value)
-				env->value = NULL;
+				current->value = NULL;
 			else
-				env->value = ft_strdup(value);
+				current->value = ft_strdup(value);
 			return ;
 		}
-		env = env->next;
+		current = current->next;
 	}
-	handle_new_key(&env, key, value);
+	handle_new_key(env, key, value);
 }
 
 void	unset_env_value(t_env **env, char *key)
