@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 04:57:29 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 05:24:02 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,18 @@ void	builtin_env(t_env *env)
 			write(1, "\n", 1);
 		}
 		env = env->next;
+	}
+}
+
+void	builtin_unset(t_env **env, t_token *arg)
+{
+	t_token	*current;
+
+	current = arg->next;
+	while (current)
+	{
+		if (current && current->type == TOKEN_WORD)
+			unset_env_value(env, current->value);
+		current = current->next;
 	}
 }
