@@ -34,9 +34,9 @@ SHLVL	 			// shell level -> optional
 _________________________________________________________________________________
 
 commands to implement :
-env 				// all environment variables
-pwd 				// showing current directory
-export				// add or change any variables
-unset				// removes variables
+env 				// all environment variables  ✅ 
+pwd 				// showing current directory  ✅ 
+export				// add or change any variables  ✅
+unset				// removes variables  ✅ 
 cd 					// uses | PWD | OLDPWD | HOME
-echo $VAR 			// using any variable -> we need to be able to export it | updaate it | unset it
+echo $VAR 			// using any variable -> we need to be able to export it | updaate it | unset it  ✅ 

@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:20:43 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/03 21:30:17 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*expand_token_value_final(char *value, t_env *env)
 				i[0]++;
 			expanded = ft_substr(value, i[1], i[0] - i[1]);
 			temp = result;
-			result = ft_strjoin(result, expanded);
+			result = ft_strjoin(temp, expanded);
 			free(temp);
 			free(expanded);
 		}
