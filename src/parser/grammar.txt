@@ -2,12 +2,12 @@ Documentation brought to you by odana
 
 SYNTAX:
 
-   rulename    ::= defintion
+   rulename   ::= defintion
    rules       -> lowercase
    token       -> uppercase
 
 # input       ::= pipeline
-# pipeline    ::= command ('|' command)*
+# pipeline    ::= command ('|' command)?
 
 the question mark means its optional:
 a pipeline might contain a pipe 

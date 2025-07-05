@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/03 05:01:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/04 21:52:35 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 /*
 **  call pipeline, if there are trailing tokens free and return NULL
 */
-
 t_node	*parse_input(t_token **tokens)
 {
 	t_node	*ast;
@@ -39,7 +38,6 @@ t_node	*parse_input(t_token **tokens)
 **  basically, you're parsing the first command then building left to right
 **  a | b | c -> (a | b) | c
 */
-
 t_node	*parse_pipeline(t_token **tokens)
 {
 	t_node	*left;
@@ -71,7 +69,6 @@ t_node	*parse_pipeline(t_token **tokens)
 ** 2 Possible Patterns: 1. WORD+ redir*(at least one word, optional redirection)
 **                          2. redir+ (at least one redirection)
 */
-
 t_node	*parse_command(t_token **tokens)
 {
 	int		count;
