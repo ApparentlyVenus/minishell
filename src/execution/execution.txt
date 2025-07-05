@@ -173,3 +173,5 @@ EXECUTION MODULE - Handles command execution in minishell
    5. close_pipes() -> cleanup
    6. wait_children() -> collect results
    7. free_exec() -> deallocate resources
+
+   one must imagine sisyphus happy (idk if thats how u spell it)
