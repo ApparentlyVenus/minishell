@@ -6,13 +6,13 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/04 21:49:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/05 13:01:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	redir_in(t_redir *redir)
+void	redir_in(t_redir *redir)
 {
 	int	fd;
 
@@ -26,7 +26,7 @@ static void	redir_in(t_redir *redir)
 	close(fd);
 }
 
-static void	redir_out(t_redir *redir)
+void	redir_out(t_redir *redir)
 {
 	int	fd;
 
@@ -40,7 +40,7 @@ static void	redir_out(t_redir *redir)
 	close(fd);
 }
 
-static void	redir_out_append(t_redir *redir)
+void	redir_out_append(t_redir *redir)
 {
 	int	fd;
 
