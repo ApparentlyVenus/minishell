@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:29:48 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/05 13:05:23 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "parser.h"
 # include "env.h"
 
-// Enum for builtin command identification
-typedef enum e_builtin_type
+// enum for builtin command identification
+typedef enum e_builtin
 {
 	BUILTIN_NONE,
 	BUILTIN_CD,
@@ -28,42 +28,54 @@ typedef enum e_builtin_type
 	BUILTIN_EXPORT,
 	BUILTIN_PWD,
 	BUILTIN_UNSET
-}	t_builtin_type;
+}	t_builtin;
 
-// Execution context for a pipeline
+// execution context for a pipeline
 typedef struct s_exec
 {
-	int		cmd_count;	// Number of commands in the pipeline
-	int		**pipes;	// Array of pipe file descriptors
-	pid_t	*pids;	// Array of child process IDsz
-	int		last_exit_code; // Exit code of the last command
-	t_env	*env_list;	// Pointer to environment variable list
+	int		cmd_count;
+	int		**pipes;
+	pid_t	*pids;
+	int		exit;
+	t_env	*env_list;
 }	t_exec;
 
-// Function prototypes
+// main execution function
 
-// Main entry point for executing a parsed command line
-void			execute_line(t_node *cmd_list, t_env *env_list);
+void		execute_pipeline(t_node *cmd_list, t_env *env_list);
 
-// Execute a single command node (external or builtin)
-int				execute_command(t_node *cmd_node, t_exec *ctx);
+// helpers for pipeline execution
 
-// Check if a command is a builtin and return its type
-t_builtin_type	get_builtin_type(const char *cmd_name);
+void		execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index);
+void		execute_builtin(t_node *cmd_node, t_exec *ctx);
+void		execute_external_command(t_node *cmd_node, t_exec *ctx);
+t_exec		*setup_exec(t_node *cmd_list, t_env *env_list);
 
-// Execute a builtin command
-t_builtin_type	execute_builtin(t_node *cmd_node, t_exec *ctx);
+// redirection handeling
 
-// Setup input/output redirections for a command
-int				setup_redirections(t_cmd *cmd);
+int			setup_redir(t_cmd *cmd);
+void		redir_in(t_redir *redir);
+void		redir_out(t_redir *redir);
+void		redir_out_append(t_redir *redir);
+// TODO:	redir_heredoc();
 
-// Setup pipes for a pipeline
-int				setup_pipes(t_exec *ctx, int cmd_index);
+// setup pipes
 
-// Close all pipes in the context
-void			close_pipes(t_exec *ctx);
+int			setup_pipes(t_exec *ctx, int cmd_index);
+int			**allocate_pipes(int cmd_count);
+void		close_pipes(t_exec *ctx);
 
-// Wait for all child processes and return the last exit code
-int				wait_for_children(t_exec *ctx);
+// frees
 
-#endif // EXECUTION_H
+void		free_pipes(int **pipes, int cmd_count);
+void		free_exec(t_exec *ctx);
+void		free_split(char **args);
+
+// utils
+int			wait_for_children(t_exec *ctx);
+t_node		*get_nth_command(t_node *node, int n);
+t_builtin	get_builtin_type(const char *cmd_name);
+char		*find_path(char *cmd, t_env *env_list);
+int			count_commands(t_node *node);
+
+#endif
