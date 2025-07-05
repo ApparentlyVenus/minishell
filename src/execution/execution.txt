@@ -1,0 +1,175 @@
+Documentation brought to you by odana
+
+EXECUTION MODULE - Handles command execution in minishell
+
+## 1. COUNTING COMMANDS IN A PIPELINE
+
+### Purpose:
+   -> determines total number of processes needed for execution
+   -> essential for resource allocation (pipes, PIDs, memory)
+
+### Implementation:
+   -> recursive traversal of AST structure
+   -> counts NODE_CMD nodes only
+   -> ignores NODE_PIPE nodes (they're structural)
+
+### Logic Flow:
+   count_commands(node)
+       |
+       |-> if NODE_PIPE: count_commands(left) + count_commands(right)
+       |-> if NODE_CMD: return 1
+       |-> else: return 0
+
+### Example:
+   cat file | grep text | sort
+   -> AST: PIPE(PIPE(cat, grep), sort)
+   -> count: 1 + 1 + 1 = 3 commands
+   -> result: need 2 pipes, 3 PIDs
+
+## 2. SETTING UP PIPES FOR INTER-PROCESS COMMUNICATION
+
+### Pipe Creation:
+   -> allocates (n-1) pipe pairs for n commands
+   -> each pipe has read[0] and write[1] file descriptors
+   -> pipes[i][0] = read end, pipes[i][1] = write end
+
+### Connection Pattern:
+   cmd1 | cmd2 | cmd3
+   -> cmd1: stdout -> pipes[0][1]
+   -> cmd2: stdin <- pipes[0][0], stdout -> pipes[1][1]
+   -> cmd3: stdin <- pipes[1][0]
+
+### Setup Logic:
+   setup_pipes(ctx, cmd_index)
+       |
+       |-> if cmd_index > 0: dup2(pipes[cmd_index-1][0], STDIN)
+       |-> if cmd_index < last: dup2(pipes[cmd_index][1], STDOUT)
+       |-> close all pipe file descriptors
+
+### Critical Rule:
+   -> ALL pipe file descriptors must be closed in each child
+   -> prevents hanging when processes finish
+   -> parent closes pipes after forking all children
+
+## 3. FORKING PROCESSES AND EXECUTING COMMANDS
+
+### Process Creation Flow:
+   execute_pipeline(cmd_list, env_list)
+       |
+       |-> setup_exec() -> allocate resources
+       |-> for each command:
+           |-> get_nth_command() -> extract command from AST
+           |-> fork() -> create child process
+           |-> child: execute_command()
+           |-> parent: continue to next command
+       |-> close_pipes() -> cleanup
+       |-> wait_children() -> collect exit codes
+
+### Child Process Behavior:
+   execute_command(cmd_node, ctx, cmd_index)
+       |
+       |-> setup_pipes() -> configure stdin/stdout
+       |-> setup_redirections() -> handle file redirections
+       |-> check builtin vs external
+       |-> execute and exit (never returns to parent)
+
+### Parent Process Behavior:
+   -> orchestrates the entire pipeline
+   -> forks all children sequentially
+   -> closes pipe file descriptors
+   -> waits for all children to complete
+   -> returns exit code of last command
+
+## 4. HANDLING BUILT-IN COMMANDS VS EXTERNAL PROGRAMS
+
+### Built-in Detection:
+   get_builtin_type(cmd_name)
+       |
+       |-> string comparison against known built-ins
+       |-> returns BUILTIN_CD, BUILTIN_ECHO, etc.
+       |-> returns BUILTIN_NONE for external commands
+
+### Built-in List:
+   -> cd, echo, env, exit, export, pwd, unset
+   -> executed within child process
+   -> have direct access to shell environment
+
+### External Command Handling:
+   execute_external_command(cmd_node, ctx)
+       |
+       |-> check if command contains '/' (absolute/relative path)
+       |-> if not: search PATH environment variable
+       |-> find_path() -> searches each PATH directory
+       |-> execve() -> replaces process with command
+       |-> exit(127) if command not found
+
+### Path Resolution:
+   -> if cmd contains '/': use as-is
+   -> else: search PATH directories sequentially
+   -> test each path with access(X_OK)
+   -> return first executable match
+
+## 5. MANAGING REDIRECTIONS (>, <, >>)
+
+### Redirection Types:
+   -> REDIR_IN (<): redirect input from file
+   -> REDIR_OUT (>): redirect output to file (truncate)
+   -> REDIR_OUT_APPEND (>>): redirect output to file (append)
+   -> TODO: REDIR_HEREDOC (<<): heredoc implementation
+
+### Setup Process:
+   setup_redirections(cmd)
+       |
+       |-> iterate through redirection list
+       |-> for each redirection:
+           |-> open file with appropriate flags
+           |-> dup2() to redirect stdin/stdout
+           |-> close original file descriptor
+
+### File Opening Flags:
+   -> input: O_RDONLY
+   -> output: O_WRONLY | O_CREAT | O_TRUNC, mode 0644
+   -> append: O_WRONLY | O_CREAT | O_APPEND, mode 0644
+
+### Error Handling:
+   -> perror() for file opening failures
+   -> exit(1) in child process
+   -> preserves shell behavior
+
+## 6. WAITING FOR CHILD PROCESSES TO COMPLETE
+
+### Process Synchronization:
+   wait_children(ctx)
+       |
+       |-> iterate through all PIDs
+       |-> waitpid() for each child process
+       |-> collect exit status
+       |-> return exit code of last process
+
+### Exit Code Logic:
+   -> shell returns exit code of rightmost command
+   -> WIFEXITED() checks if process exited normally
+   -> WEXITSTATUS() extracts actual exit code
+   -> handles signals and abnormal termination
+
+### Pipeline Completion:
+   -> all processes run concurrently
+   -> parent waits for ALL children to finish
+   -> maintains proper shell semantics
+   -> prevents zombie processes
+
+## EXECUTION FLOW SUMMARY:
+
+   input: "cat file | grep text | sort"
+   
+   1. count_commands() -> 3 commands
+   2. allocate_pipes() -> 2 pipes
+   3. setup_exec() -> initialize context
+   4. for each command (0, 1, 2):
+      -> get_nth_command() -> extract command
+      -> fork() -> create child
+      -> child: setup_pipes() + execute_command()
+      -> parent: continue loop
+   5. close_pipes() -> cleanup
+   6. wait_children() -> collect results
+   7. free_exec() -> deallocate resources
