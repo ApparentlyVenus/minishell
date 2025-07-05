@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:47:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/05 12:52:02 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,15 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* structures and tokens */
+/* minishell modules */
 
 # include "tokenizer.h"
 # include "parser.h"
+# include "env.h"
+# include "execution.h"
 
 /* minishell utils / helper functions */
 
 # include "../minishell_libft/libft.h"	// libft functions
-
-/* ENV variables */
-
-# include "env.h"
 
 #endif
