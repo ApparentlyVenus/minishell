@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 05:24:02 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/05 13:58:02 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	get_pwd(void)
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (0);
+		return (1);
 	write(1, path, ft_strlen(path));
 	write(1, "\n", 1);
 	free(path);
-	return (1);
+	return (0);
 }
 
 static t_token	*new_line_flag(t_token *args, int *i)

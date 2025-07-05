@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:21:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/05 14:05:41 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	valid_entries_count(t_env *env)
 	return (count);
 }
 
-char	**to_envp(t_env *env)
+char	**convert_env_to_array(t_env *env)
 {
 	int		count;
 	char	**envp;

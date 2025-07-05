@@ -40,3 +40,10 @@ export				// add or change any variables  ✅
 unset				// removes variables  ✅ 
 cd 					// uses | PWD | OLDPWD | HOME
 echo $VAR 			// using any variable -> we need to be able to export it | updaate it | unset it  ✅ 
+
+
+
+---------------------------------------------------------------------------------
+SHLVL (NOT OPTIONAL) !!
+exit codes;
+exit = CTRL D
