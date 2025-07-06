@@ -6,7 +6,7 @@
 #    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/28 17:19:12 by yitani            #+#    #+#              #
-#    Updated: 2025/06/28 17:19:50 by yitani           ###   ########.fr        #
+#    Updated: 2025/07/06 07:19:13 by yitani           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,3 +29,14 @@
 	// }
 	// while (i[1] > 0 && word[i[1] - 1] == ' ')
     //     i[1]--;
+
+
+
+
+// void	print_token_or_exitcode(const char *value, t_shell *shell)
+// {
+// 	if (ft_strcmp(value, "$?") == 0)
+// 		printf("%d", shell->exit_code);
+// 	else
+// 		write(1, value, strlen(value));
+// }

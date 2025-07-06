@@ -29,8 +29,8 @@ PWD    				// current working directory -> updated after cd
 OLDPWD 				//previous directory -> used with cd -
 HOME   				// cd with no arguments -> also for ~ implementation
 _ 					// holds last executed command -> updates every execve
-TERM 				// not to be handled but must be present in env for execve to used
-SHLVL	 			// shell level -> optional
+TERM 				// not to be handled but must be present in env for execve to be used
+SHLVL	 			// shell level -> not optional
 _________________________________________________________________________________
 
 commands to implement :
@@ -47,3 +47,11 @@ echo $VAR 			// using any variable -> we need to be able to export it | updaate 
 SHLVL (NOT OPTIONAL) !!
 exit codes;  ✅ 
 exit = CTRL D  ✅
+
+----------------------------------------------------------------------------------
+for exit :
+✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅
+too many args;                                        ✅
+bigger than int 256 / smaller than int min            ✅
+not a number										  ✅
+✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅✅

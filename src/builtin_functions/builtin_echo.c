@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:50:25 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:36:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@ static t_token	*new_line_flag(t_token *args, int *i)
 		*i = 1;
 	}
 	return (args);
-}
-
-void	print_token_or_exitcode(const char *value, t_shell *shell)
-{
-	if (ft_strcmp(value, "$?") == 0)
-		printf("%d", shell->exit_code);
-	else
-		write(1, value, strlen(value));
 }
 
 int	builtin_echo_stdrd(t_token *args, t_shell *shell)
@@ -48,7 +40,7 @@ int	builtin_echo_stdrd(t_token *args, t_shell *shell)
 					args = args->next;
 					continue ;
 				}
-				print_token_or_exitcode(args->value, shell);
+				write(1, args->value, strlen(args->value));
 				if (args->next && args->next->type == TOKEN_WORD)
 					write(1, " ", 1);
 			}

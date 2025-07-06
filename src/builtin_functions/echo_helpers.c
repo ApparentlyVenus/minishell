@@ -6,27 +6,35 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 03:44:57 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:36:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*expand_token_value_1(char *value, t_env *env, int *i)
+char	*expand_token_value_1(char *value, t_shell *shell, int *i)
 {
 	int		start;
 	char	*var_name;
 	char	*var_value;
+	char	*env_value;
 
 	start = i[0];
 	while (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 		i[0]++;
-	var_name = ft_substr(value, i[1], i[0] - i[1]);
-	var_value = get_env_value(env, var_name);
-	if (!var_value)
-		var_value = ft_strdup("");
+	if (i[0] == start)
+		i[0]++;
+	var_name = ft_substr(value, start, i[0] - start);
+	if (ft_strcmp(var_name, "?") == 0)
+		var_value = ft_itoa(shell->exit_code);
 	else
-		var_value = ft_strdup(var_value);
+	{
+		env_value = get_env_value(*(shell->env), var_name);
+		if (env_value)
+			var_value = ft_strdup(env_value);
+		else
+			var_value = ft_strdup("");
+	}
 	free(var_name);
 	return (var_value);
 }
@@ -40,27 +48,35 @@ char	*expand_token_value_1_5(char *dest, const char *to_append)
 	return (new);
 }
 
-char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
+char	*handle_dollar_expansion(char *result, char *value, t_shell *shell,
+	int *i)
 {
 	char	*expanded;
 	char	*temp;
 
 	if (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 	{
-		expanded = expand_token_value_1(value, env, i);
+		expanded = expand_token_value_1(value, shell, i);
 		temp = result;
 		result = ft_strjoin(result, expanded);
 		free(temp);
 		free(expanded);
 	}
-	else
+	else if (value[i[0]] == '?')
 	{
-		result = expand_token_value_1_5(result, "$");
+		expanded = ft_itoa(shell->exit_code);
+		temp = result;
+		result = ft_strjoin(result, expanded);
+		free(temp);
+		free(expanded);
+		i[0]++;
 	}
+	else
+		result = expand_token_value_1_5(result, "$");
 	return (result);
 }
 
-char	*expand_token_value_final(char *value, t_env *env)
+char	*expand_token_value_final(char *value, t_shell *shell)
 {
 	int		i[2];
 	char	*result;
@@ -72,7 +88,7 @@ char	*expand_token_value_final(char *value, t_env *env)
 	while (value[i[0]])
 	{
 		if (value[i[0]++] == '$')
-			result = handle_dollar_expansion(result, value, env, i);
+			result = handle_dollar_expansion(result, value, shell, i);
 		else
 		{
 			i[1] = i[0];
@@ -88,7 +104,7 @@ char	*expand_token_value_final(char *value, t_env *env)
 	return (result);
 }
 
-t_token	*expand_variables_in_tokens(t_token *tokens, t_env *env)
+t_token	*expand_variables_in_tokens(t_token *tokens, t_shell *shell)
 {
 	t_token	*curr;
 	char	*expanded;
@@ -98,7 +114,7 @@ t_token	*expand_variables_in_tokens(t_token *tokens, t_env *env)
 	{
 		if (curr->type == TOKEN_WORD && curr->single_quotes == 0)
 		{
-			expanded = expand_token_value_final(curr->value, env);
+			expanded = expand_token_value_final(curr->value, shell);
 			free(curr->value);
 			curr->value = expanded;
 		}
