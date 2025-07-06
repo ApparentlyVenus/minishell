@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:23:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 08:25:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,14 @@ t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 	else if (input[*pos] == '<')
 		return (token->value = ft_substr(input, *pos, 1),
 			token->type = TOKEN_REDIR_IN, (*pos)++, token);
+	else if (input[*pos] == '(' && input[*pos + 1] == '&'
+		&& input[*pos + 2] == '&' && input[*pos + 3] == ')')
+		return (token->value = ft_substr(input, *pos, 4),
+			token->type = TOKEN_AND, token->priority = 1, (*pos) += 4, token);
+	else if (input[*pos] == '(' && input[*pos + 1] == '|'
+		&& input[*pos + 2] == '|' && input[*pos + 3] == ')')
+		return (token->value = ft_substr(input, *pos, 4),
+			token->type = TOKEN_OR, token->priority = 1, (*pos) += 4, token);
 	else
 	{
 		free(token);
