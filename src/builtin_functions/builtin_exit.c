@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 06:32:53 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:52:54 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_is_numeric(const char *str)
+static int	ft_is_numeric(const char *str)
 {
 	int	i;
 

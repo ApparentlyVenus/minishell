@@ -6,11 +6,31 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:45:11 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 08:05:14 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	handle_new_key(t_env **env, char *key, char *value)
+{
+	t_env	*new_key;
+
+	if (!key)
+		return ;
+	else
+	{
+		new_key = malloc(sizeof(t_env));
+		new_key->key = ft_strdup(key);
+		if (!value)
+			new_key->value = NULL;
+		else
+			new_key->value = ft_strdup(value);
+		new_key->equal = (value != NULL);
+		new_key->next = NULL;
+		ft_lstadd_back(env, new_key);
+	}
+}
 
 void	set_env_value(t_env **env, char *key, char *value)
 {
@@ -65,7 +85,7 @@ void	export_helper(t_env **envp, char *equal_sign, t_token *args)
 	}
 }
 
-void	swap_env_nodes(t_env *a, t_env *b)
+static void	swap_env_nodes(t_env *a, t_env *b)
 {
 	char	*temp_key;
 	char	*temp_value;
@@ -105,24 +125,4 @@ t_env	**do_something(t_env **envp)
 		}
 	}
 	return (envp);
-}
-
-void	handle_new_key(t_env **env, char *key, char *value)
-{
-	t_env	*new_key;
-
-	if (!key)
-		return ;
-	else
-	{
-		new_key = malloc(sizeof(t_env));
-		new_key->key = ft_strdup(key);
-		if (!value)
-			new_key->value = NULL;
-		else
-			new_key->value = ft_strdup(value);
-		new_key->equal = (value != NULL);
-		new_key->next = NULL;
-		ft_lstadd_back(env, new_key);
-	}
 }

@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 07:36:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 07:59:50 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*expand_token_value_1(char *value, t_shell *shell, int *i)
+static char	*expand_token_value_1(char *value, t_shell *shell, int *i)
 {
 	int		start;
 	char	*var_name;
@@ -39,7 +39,7 @@ char	*expand_token_value_1(char *value, t_shell *shell, int *i)
 	return (var_value);
 }
 
-char	*expand_token_value_1_5(char *dest, const char *to_append)
+static char	*expand_token_value_1_5(char *dest, const char *to_append)
 {
 	char	*new;
 
@@ -48,8 +48,7 @@ char	*expand_token_value_1_5(char *dest, const char *to_append)
 	return (new);
 }
 
-char	*handle_dollar_expansion(char *result, char *value, t_shell *shell,
-	int *i)
+static char	*echo_helper(char *result, char *value, t_shell *shell, int *i)
 {
 	char	*expanded;
 	char	*temp;
@@ -76,7 +75,7 @@ char	*handle_dollar_expansion(char *result, char *value, t_shell *shell,
 	return (result);
 }
 
-char	*expand_token_value_final(char *value, t_shell *shell)
+static char	*expand_token_value_final(char *value, t_shell *shell)
 {
 	int		i[2];
 	char	*result;
@@ -88,7 +87,7 @@ char	*expand_token_value_final(char *value, t_shell *shell)
 	while (value[i[0]])
 	{
 		if (value[i[0]++] == '$')
-			result = handle_dollar_expansion(result, value, shell, i);
+			result = echo_helper(result, value, shell, i);
 		else
 		{
 			i[1] = i[0];
@@ -104,7 +103,7 @@ char	*expand_token_value_final(char *value, t_shell *shell)
 	return (result);
 }
 
-t_token	*expand_variables_in_tokens(t_token *tokens, t_shell *shell)
+t_token	*echo_util(t_token *tokens, t_shell *shell)
 {
 	t_token	*curr;
 	char	*expanded;
