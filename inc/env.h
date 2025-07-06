@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 08:07:09 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:27:17 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_shell
-{
-	t_env	**env;
-	int		exit_code;
-}	t_shell;
+// typedef struct s_shell
+// {
+// 	t_env	**env;
+// 	int		exit_code;
+// }	t_shell;
 
 // Parsing environment
 
@@ -35,17 +35,17 @@ char	**convert_env_to_array(t_env *env);
 
 // Builtin functions
 
-int		builtin_echo(t_token *tokens, t_shell *shell);
-void	builtin_env(t_shell *shell);
-void	builtin_exit(char **args, t_shell *shell);
-void	builtin_export(t_shell *shell, t_token *args);
-void	builtin_pwd(t_shell *shell);
-void	builtin_unset(t_shell *shell, t_token *arg);
+int		builtin_echo(t_token *tokens, t_exec *shell);
+void	builtin_env(t_exec *shell);
+void	builtin_exit(char **args, t_exec *shell);
+void	builtin_export(t_exec *shell, t_token *args);
+void	builtin_pwd(t_exec *shell);
+void	builtin_unset(t_exec *shell, t_token *arg);
 void	builtin_cd();
 
 // Utils 
 
-t_token	*echo_util(t_token *tokens, t_shell *shell);
+t_token	*echo_util(t_token *tokens, t_exec *shell);
 void	set_env_value(t_env **env, char *key, char *value);
 void	export_helper(t_env **envp, char *equal_sign, t_token *args);
 int		is_valid_key(const char *key);

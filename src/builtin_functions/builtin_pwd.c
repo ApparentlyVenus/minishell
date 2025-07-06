@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:03 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:16:21 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	builtin_pwd(t_shell *shell)
+void	builtin_pwd(t_exec *shell)
 {
 	char	*path;
 

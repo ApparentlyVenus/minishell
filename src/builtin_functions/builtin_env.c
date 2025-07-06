@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:45 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:19:21 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	builtin_env(t_shell *shell)
+void	builtin_env(t_exec *shell)
 {
 	t_env	*env;
 

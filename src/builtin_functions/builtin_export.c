@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:45:33 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	print_sorted_env(t_env **envp)
 	}
 }
 
-void	builtin_export(t_shell *shell, t_token *args)
+void	builtin_export(t_exec *shell, t_token *args)
 {
 	char	*equal_sign;
 	int		failed;

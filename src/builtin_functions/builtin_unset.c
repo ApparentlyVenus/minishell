@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:40:09 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	unset_env_value(t_env **env, char *key)
 	return (0);
 }
 
-void	builtin_unset(t_shell *shell, t_token *arg)
+void	builtin_unset(t_exec *shell, t_token *arg)
 {
 	t_token	*current;
 	int		failure;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 13:05:23 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/06 09:25:04 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ typedef struct s_exec
 	int		cmd_count;
 	int		**pipes;
 	pid_t	*pids;
-	int		exit;
-	t_env	*env_list;
+	int		exit_code;
+	t_env	**env;
 }	t_exec;
 
 // main execution function

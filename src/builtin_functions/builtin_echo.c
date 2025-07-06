@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 08:00:00 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_token	*new_line_flag(t_token *args, int *i)
 	return (args);
 }
 
-static int	builtin_echo_stdrd(t_token *args, t_shell *shell)
+static int	builtin_echo_stdrd(t_token *args, t_exec *shell)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ static int	builtin_echo_stdrd(t_token *args, t_shell *shell)
 	return (0);
 }
 
-int	builtin_echo(t_token *tokens, t_shell *shell)
+int	builtin_echo(t_token *tokens, t_exec *shell)
 {
 	t_token	*expanded_tokens;
 

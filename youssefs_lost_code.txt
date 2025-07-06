@@ -6,7 +6,7 @@
 #    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/28 17:19:12 by yitani            #+#    #+#              #
-#    Updated: 2025/07/06 07:19:13 by yitani           ###   ########.fr        #
+#    Updated: 2025/07/06 08:47:36 by yitani           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,3 +40,20 @@
 // 	else
 // 		write(1, value, strlen(value));
 // }
+
+
+// char *shlvl_str = getenv("SHLVL");
+// int shlvl_value;
+// char new_shlvl[12]; // enough for int max value
+
+// if (shlvl_str == NULL) {
+//     // SHLVL not set, this is the first shell
+//     shlvl_value = 1;
+// } else {
+//     // SHLVL exists, increment it
+//     shlvl_value = atoi(shlvl_str) + 1;
+// }
+
+// // Convert back to string and set in environment
+// sprintf(new_shlvl, "%d", shlvl_value);
+// setenv("SHLVL", new_shlvl, 1);

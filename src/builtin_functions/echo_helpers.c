@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 07:59:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*expand_token_value_1(char *value, t_shell *shell, int *i)
+static char	*expand_token_value_1(char *value, t_exec *shell, int *i)
 {
 	int		start;
 	char	*var_name;
@@ -48,7 +48,7 @@ static char	*expand_token_value_1_5(char *dest, const char *to_append)
 	return (new);
 }
 
-static char	*echo_helper(char *result, char *value, t_shell *shell, int *i)
+static char	*echo_helper(char *result, char *value, t_exec *shell, int *i)
 {
 	char	*expanded;
 	char	*temp;
@@ -75,7 +75,7 @@ static char	*echo_helper(char *result, char *value, t_shell *shell, int *i)
 	return (result);
 }
 
-static char	*expand_token_value_final(char *value, t_shell *shell)
+static char	*expand_token_value_final(char *value, t_exec *shell)
 {
 	int		i[2];
 	char	*result;
@@ -103,7 +103,7 @@ static char	*expand_token_value_final(char *value, t_shell *shell)
 	return (result);
 }
 
-t_token	*echo_util(t_token *tokens, t_shell *shell)
+t_token	*echo_util(t_token *tokens, t_exec *shell)
 {
 	t_token	*curr;
 	char	*expanded;
