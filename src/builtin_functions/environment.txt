@@ -45,5 +45,5 @@ echo $VAR 			// using any variable -> we need to be able to export it | updaate 
 
 ---------------------------------------------------------------------------------
 SHLVL (NOT OPTIONAL) !!
-exit codes;
-exit = CTRL D
+exit codes;  ✅ 
+exit = CTRL D  ✅

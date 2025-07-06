@@ -1,18 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsed_environment.c                               :+:      :+:    :+:   */
+/*   A_parsing_environment.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 14:05:41 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 04:53:52 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	valid_entries_count(t_env *env)
+void	env_init(t_env **env_list, char **envp)
+{
+	int		i;
+	t_env	*new_node;
+	char	*equal_sign;
+
+	i = -1;
+	new_node = NULL;
+	while (envp[++i])
+	{
+		new_node = malloc(sizeof(t_env));
+		equal_sign = ft_strchr(envp[i], '=');
+		if (equal_sign)
+		{
+			new_node->equal = 1;
+			new_node->value = ft_strdup(equal_sign + 1);
+			new_node->key = ft_substr(envp[i], 0, equal_sign - envp[i]);
+		}
+		else
+		{
+			new_node->equal = 0;
+			new_node->value = NULL;
+			new_node->key = strdup(envp[i]);
+		}
+		new_node->next = NULL;
+		ft_lstadd_back(env_list, new_node);
+	}
+}
+
+static int	valid_entries_count(t_env *env)
 {
 	int		count;
 	t_env	*current;

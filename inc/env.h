@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 17:21:02 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 04:48:20 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	t_env	*env;
+	t_env	**env;
 	int		exit_code;
 }	t_shell;
-
 
 void	env_init(t_env **env_list, char **envp);
 char	*get_env_value(t_env *env, char *key);

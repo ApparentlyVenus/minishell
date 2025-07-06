@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/03 00:46:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 03:15:46 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 	char			*value;
 	int				single_quotes;
 	int				double_quotes;
+	int				priority;
 	struct s_token	*next;
 }	t_token;
 
@@ -52,7 +53,6 @@ t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token);
 
 int		has_wildcard(char *word);
 int		is_logic_op(t_token_type type);
-int		has_wildcard(char *word);
 
 int		redirection_validation(t_token **token);
 int		pipe_validation(t_token **token);

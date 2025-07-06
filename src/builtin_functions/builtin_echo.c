@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_implementation.c                          :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 13:58:02 by yitani           ###   ########.fr       */
+/*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/06 04:50:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	get_pwd(void)
-{
-	char	*path;
-
-	path = getcwd(NULL, 0);
-	if (!path)
-		return (1);
-	write(1, path, ft_strlen(path));
-	write(1, "\n", 1);
-	free(path);
-	return (0);
-}
 
 static t_token	*new_line_flag(t_token *args, int *i)
 {
@@ -36,7 +23,15 @@ static t_token	*new_line_flag(t_token *args, int *i)
 	return (args);
 }
 
-int	builtin_echo(t_token *args)
+void	print_token_or_exitcode(const char *value, t_shell *shell)
+{
+	if (ft_strcmp(value, "$?") == 0)
+		printf("%d", shell->exit_code);
+	else
+		write(1, value, strlen(value));
+}
+
+int	builtin_echo_stdrd(t_token *args, t_shell *shell)
 {
 	int	i;
 
@@ -53,7 +48,7 @@ int	builtin_echo(t_token *args)
 					args = args->next;
 					continue ;
 				}
-				write(1, args->value, ft_strlen(args->value));
+				print_token_or_exitcode(args->value, shell);
 				if (args->next && args->next->type == TOKEN_WORD)
 					write(1, " ", 1);
 			}
@@ -62,33 +57,14 @@ int	builtin_echo(t_token *args)
 	}
 	if (i == 0)
 		write(1, "\n", 1);
-	return (i);
+	return (0);
 }
 
-void	builtin_env(t_env *env)
+int	builtin_echo(t_token *tokens, t_shell *shell)
 {
-	while (env)
-	{
-		if (env->equal == 1)
-		{
-			write(1, env->key, ft_strlen(env->key));
-			write(1, "=", 1);
-			write(1, env->value, ft_strlen(env->value));
-			write(1, "\n", 1);
-		}
-		env = env->next;
-	}
-}
+	t_token	*expanded_tokens;
 
-void	builtin_unset(t_env **env, t_token *arg)
-{
-	t_token	*current;
-
-	current = arg->next;
-	while (current)
-	{
-		if (current && current->type == TOKEN_WORD)
-			unset_env_value(env, current->value);
-		current = current->next;
-	}
+	expanded_tokens = expand_variables_in_tokens(tokens, *shell->env);
+	shell->exit_code = builtin_echo_stdrd(expanded_tokens, shell);
+	return (shell->exit_code);
 }

@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands_implementation_2.c                        :+:      :+:    :+:   */
+/*   export_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 05:27:25 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/04 23:49:55 by yitani           ###   ########.fr       */
+/*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/06 04:45:11 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	is_valid_key(const char *key)
+void	set_env_value(t_env **env, char *key, char *value)
 {
-	int	i;
+	t_env	*new_key;
+	t_env	*current;
 
-	if (!key || !(ft_isalpha(key[0]) || key[0] == '_'))
-		return (0);
-	i = 1;
-	while (key[i])
+	current = *env;
+	if (!key)
+		return ;
+	while (current)
 	{
-		if (!(ft_isalnum(key[i]) || key[i] == '_'))
-			return (0);
-		i++;
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			current->equal = (value != NULL);
+			free(current->value);
+			if (!value)
+				current->value = NULL;
+			else
+				current->value = ft_strdup(value);
+			return ;
+		}
+		current = current->next;
 	}
-	return (1);
+	handle_new_key(env, key, value);
 }
 
 void	export_helper(t_env **envp, char *equal_sign, t_token *args)
@@ -98,39 +107,22 @@ t_env	**do_something(t_env **envp)
 	return (envp);
 }
 
-void	print_sorted_env(t_env **envp)
+void	handle_new_key(t_env **env, char *key, char *value)
 {
-	t_env	*current;
+	t_env	*new_key;
 
-	envp = do_something(envp);
-	current = *envp;
-	while (current)
-	{
-		if (current->value)
-			printf("declare -x %s=\"%s\"\n", current->key, current->value);
-		else
-			printf("declare -x %s\n", current->key);
-		current = current->next;
-	}
-}
-
-void	builtin_export(t_env **envp, t_token *args)
-{
-	char	*equal_sign;
-
-	if (!args || !args->next)
-	{
-		print_sorted_env(*envp);
+	if (!key)
 		return ;
-	}
-	while (args)
+	else
 	{
-		equal_sign = ft_strchr(args->value, '=');
-		if (equal_sign)
-			export_helper(envp, equal_sign, args);
+		new_key = malloc(sizeof(t_env));
+		new_key->key = ft_strdup(key);
+		if (!value)
+			new_key->value = NULL;
 		else
-			if (is_valid_key(args->value))
-				set_env_value(envp, args->value, NULL);
-		args = args->next;
+			new_key->value = ft_strdup(value);
+		new_key->equal = (value != NULL);
+		new_key->next = NULL;
+		ft_lstadd_back(env, new_key);
 	}
 }

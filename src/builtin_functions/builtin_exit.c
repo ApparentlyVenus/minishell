@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fix_01.c                                           :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/05 17:15:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 22:13:41 by yitani           ###   ########.fr       */
+/*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/06 04:51:13 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
-void free_env_list(t_env *env)
+static void	free_env_list(t_env *env)
 {
 	t_env	*tmp;
 
@@ -26,7 +26,7 @@ void free_env_list(t_env *env)
 	}
 }
 
-int ft_exit(char **args, t_shell *shell)
+int	ft_exit(char **args, t_shell *shell)
 {
 	int		code;
 	int		level;
