@@ -55,6 +55,7 @@ t_token	*clean_word_token(char *word)
 {
 	t_token	*token;
 	char	*trimmed;
+	int		i;
 
 	token = malloc(sizeof(t_token));
 	token->single_quotes = 0;
@@ -66,16 +67,25 @@ t_token	*clean_word_token(char *word)
 		free(word);
 		word = trimmed;
 	}
-	else if (word[0] == '\"' && word[ft_strlen(word) - 1] == '\"')
+	else if (word[0] == '"' && word[ft_strlen(word) - 1] == '"')
 	{
 		token->double_quotes = 1;
-		trimmed = ft_strtrim(word, '\"');
+		trimmed = ft_strtrim(word, '"');
 		free(word);
 		word = trimmed;
 	}
 	token->value = word;
 	token->type = TOKEN_WORD;
+	token->priority = 0;
 	token->next = NULL;
+	// Mark if the word contains a wildcard for later expansion
+	token->has_wildcard = 0;
+	for (i = 0; word[i]; i++)
+		if (word[i] == '*')
+		{
+			token->has_wildcard = 1;
+			break;
+		}
 	return (token);
 }
 
@@ -83,24 +93,26 @@ t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 {
 	if (input[*pos] == '|')
 		return (token->value = ft_substr(input, *pos, 1),
-			token->type = TOKEN_PIPE, (*pos)++, token);
+			token->type = TOKEN_PIPE, token->priority = 2, (*pos)++, token);
 	else if (input[*pos] == '*')
-		return (token->value = ft_substr(input, *pos, 1),
-			token->type = TOKEN_WILDCARD, (*pos)++, token);
+	{
+		token->value = ft_substr(input, *pos, 1);
+		token->type = TOKEN_WILDCARD;
+		(*pos)++;
+		return token;
+	}
 	else if (input[*pos] == '&' && input[*pos + 1] == '&')
 		return (token->value = ft_substr(input, *pos, 2),
-			token->type = TOKEN_AND, (*pos) += 2, token);
+			token->type = TOKEN_AND, token->priority = 1, (*pos) += 2, token);
 	else if (input[*pos] == '<')
 		return (token->value = ft_substr(input, *pos, 1),
 			token->type = TOKEN_REDIR_IN, (*pos)++, token);
-	else if (input[*pos] == '(' && input[*pos + 1] == '&'
-		&& input[*pos + 2] == '&' && input[*pos + 3] == ')')
-		return (token->value = ft_substr(input, *pos, 4),
-			token->type = TOKEN_AND, token->priority = 1, (*pos) += 4, token);
-	else if (input[*pos] == '(' && input[*pos + 1] == '|'
-		&& input[*pos + 2] == '|' && input[*pos + 3] == ')')
-		return (token->value = ft_substr(input, *pos, 4),
-			token->type = TOKEN_OR, token->priority = 1, (*pos) += 4, token);
+	else if (input[*pos] == '(')
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_LPAREN, (*pos)++, token);
+	else if (input[*pos] == ')')
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_RPAREN, (*pos)++, token);
 	else
 	{
 		free(token);
@@ -124,7 +136,7 @@ t_token	*extract_operator_token(char *input, int *pos)
 				token->type = TOKEN_REDIR_OUT, (*pos)++, token);
 		else if (input[*pos] == '|' && input[*pos + 1] == '|')
 			return (token->value = ft_substr(input, *pos, 2),
-				token->type = TOKEN_OR, (*pos) += 2, token);
+				token->type = TOKEN_OR, token->priority = 1, (*pos) += 2, token);
 		else if (input[*pos] == '<' && input[*pos + 1] == '<')
 			return (token->value = ft_substr(input, *pos, 2),
 				token->type = TOKEN_HERDOC, (*pos) += 2, token);

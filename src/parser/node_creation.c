@@ -58,3 +58,27 @@ t_redir	*create_redir_node(int type, char *filename)
 	redir->next = NULL;
 	return (redir);
 }
+
+t_node *create_and_node(t_node *left, t_node *right)
+{
+	t_node *and_node = (t_node *)malloc(sizeof(t_node));
+	if (!and_node)
+		return (free_node(left), free_node(right), NULL);
+	and_node->type = NODE_AND;
+	and_node->left = left;
+	and_node->right = right;
+	and_node->cmd = NULL;
+	return and_node;
+}
+
+t_node *create_or_node(t_node *left, t_node *right)
+{
+	t_node *or_node = (t_node *)malloc(sizeof(t_node));
+	if (!or_node)
+		return (free_node(left), free_node(right), NULL);
+	or_node->type = NODE_OR;
+	or_node->left = left;
+	or_node->right = right;
+	or_node->cmd = NULL;
+	return or_node;
+}
