@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:55:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/04 21:51:18 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/07 21:55:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ int	**allocate_pipes(int cmd_count)
 		i++;
 	}
 	return (pipes);
+}
+
+/*
+** get_nth_command - Retrieves the nth command node from pipeline
+**
+** Navigates the left-associative AST to find a specific command
+** Used to iterate through commands in execution order
+*/
+t_node	*get_nth_command(t_node *node, int n)
+{
+	int	left_count;
+
+	if (!node)
+		return (NULL);
+	if (node->type == NODE_PIPE)
+	{
+		left_count = count_commands(node->left);
+		if (n < left_count)
+			return (get_nth_command(node->left, n));
+		else
+			return (get_nth_command(node->right, n - left_count));
+	}
+	if (node->type == NODE_CMD && n == 0)
+		return (node);
+	return (NULL);
 }
 
 void	close_pipes(t_exec *ctx)

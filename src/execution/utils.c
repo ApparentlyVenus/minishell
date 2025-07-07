@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/05 12:37:42 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/07 22:19:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	count_commands(t_node *node)
 	return (0);
 }
 
-int	wait_for_children(t_exec *ctx)
+int	wait_child(t_exec *ctx)
 {
 	int	status;
 	int	exit_code;
@@ -64,34 +64,32 @@ int	wait_for_children(t_exec *ctx)
 		waitpid(ctx->pids[i], &status, 0);
 		if (WIFEXITED(status))
 			exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGINT)
+				exit_code = 130;
+			else if (WTERMSIG(status) == SIGQUIT)
+				exit_code = 131;
+			else
+				exit_code = 128 + WTERMSIG(status);
+		}
 		i++;
 	}
 	return (exit_code);
 }
 
-/*
-** get_nth_command - Retrieves the nth command node from pipeline
-**
-** Navigates the left-associative AST to find a specific command
-** Used to iterate through commands in execution order
-*/
-t_node	*get_nth_command(t_node *node, int n)
+void	kill_children(t_exec *ctx, int i)
 {
-	int	left_count;
+	int	j;
 
-	if (!node)
-		return (NULL);
-	if (node->type == NODE_PIPE)
+	j = 0;
+	if (ctx->pids[i] == -1)
+		perror("fork");
+	while (j < i)
 	{
-		left_count = count_commands(node->left);
-		if (n < left_count)
-			return (get_nth_command(node->left, n));
-		else
-			return (get_nth_command(node->right, n - left_count));
+		kill(ctx->pids[j], SIGTERM);
+		j++;
 	}
-	if (node->type == NODE_CMD && n == 0)
-		return (node);
-	return (NULL);
 }
 
 t_builtin	get_builtin_type(const char *cmd_name)

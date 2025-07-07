@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/05 13:01:47 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/07 21:40:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	redir_out_append(t_redir *redir)
 }
 
 /*
-** setup_redirections - Handles file redirections
+** setup_redir - Handles file redirections
 **
 ** Supports: < (input), > (output), >> (append)
    TODO: Implement heredoc (<<)	

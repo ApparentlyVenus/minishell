@@ -6,11 +6,11 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 09:42:31 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 00:41:57 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/execution.h"
+#include "../../inc/minishell.h"
 
 /*
 ** setup_exec - Initializes execution environment
@@ -32,6 +32,8 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 		return (NULL);
 	ctx->cmd_count = count_commands(cmd_list);
 	ctx->pipes = allocate_pipes(ctx->cmd_count);
+	if (ctx->cmd_count > 1 && !ctx->pipes)
+		return (free(ctx->pids), free(ctx), NULL);
 	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
 	if (!ctx->pids)
 		return (free_pipes(ctx->pipes, ctx->cmd_count), free(ctx), NULL);
@@ -64,10 +66,14 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putendl_fd(": command not found", 2);
+		free_split(envp);
 		exit(127);
 	}
 	execve(path, cmd_node->cmd->args, envp);
 	perror("execve");
+	if (path != cmd)
+		free(path);
+	free_split(envp);
 	exit(127);
 }
 
@@ -119,8 +125,10 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 */
 void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	setup_pipes(ctx, cmd_index);
-	setup_redirections(cmd_node->cmd);
+	setup_redir(cmd_node->cmd);
 	if (get_builtin_type(cmd_node->cmd->args[0]) != BUILTIN_NONE)
 	{
 		execute_builtin(cmd_node, ctx);
@@ -161,10 +169,12 @@ void	execute_pipeline(t_node *cmd_list, t_env *env)
 			continue ;
 		ctx->pids[i] = fork();
 		if (ctx->pids[i] == -1)
-			perror("fork");
+		{
+			kill_children(ctx, i);
+			break ;
+		}
 		else if (ctx->pids[i] == 0)
 			execute_command(cmd_node, ctx, i);
 	}
-	return (close_pipes(ctx), ctx->exit_code = wait_children(ctx),
-		free_exec(ctx));
+	return (close_pipes(ctx), ctx->exit_code = wait_child(ctx), free_exec(ctx));
 }
