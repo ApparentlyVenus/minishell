@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 07:13:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 08:25:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ t_token	*extract_operator_token(char *input, int *pos)
 				token->type = TOKEN_REDIR_OUT, (*pos)++, token);
 		else if (input[*pos] == '|' && input[*pos + 1] == '|')
 			return (token->value = ft_substr(input, *pos, 2),
-				token->type = TOKEN_OR, token->priority = 1, (*pos) += 2, token);
+				token->type = TOKEN_OR, token->priority = 1, *pos += 2, token);
 		else if (input[*pos] == '<' && input[*pos + 1] == '<')
 			return (token->value = ft_substr(input, *pos, 2),
 				token->type = TOKEN_HERDOC, (*pos) += 2, token);
