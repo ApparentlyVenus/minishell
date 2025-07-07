@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 09:27:17 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 16:15:56 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ typedef struct s_env
 	int				equal;
 	struct s_env	*next;
 }	t_env;
-
-// typedef struct s_shell
-// {
-// 	t_env	**env;
-// 	int		exit_code;
-// }	t_shell;
 
 // Parsing environment
 
