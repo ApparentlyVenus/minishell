@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/07/03 04:59:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/06 23:24:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,16 @@ char	**process_args(t_arg *arg_list, int count)
 	}
 	argv[i] = NULL;
 	return (argv);
+}
+
+int	get_token_priority(t_token *tok)
+{
+	if (!tok)
+		return (100);
+	else if (tok->type == TOKEN_AND || tok->type == TOKEN_OR)
+		return (1);
+	else if (tok->type == TOKEN_PIPE)
+		return (2);
+	else
+		return (0);
 }

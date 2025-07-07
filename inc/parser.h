@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/03 00:32:24 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 08:23:40 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ typedef enum e_node_type
 {
 	NODE_CMD,
 	NODE_PIPE,
-	NODE_SEQUENCE
+	NODE_AND,
+	NODE_OR,
 }	t_node_type;
 
 typedef struct s_node
@@ -63,10 +64,16 @@ t_node	*parse_input(t_token **tokens);
 
 // parsing helpers
 
-t_node	*parse_pipeline(t_token **tokens);
+t_node	*parse_pipeline(t_token **tokens, int min_priority);
 t_node	*parse_command(t_token **tokens);
 t_redir	*parse_redir(t_token **tokens);
+t_node	*parse_group(t_token **tokens);
+
+// node creation
+
 t_node	*create_pipe_node(t_node *left, t_node *right);
+t_node	*create_and_node(t_node *left, t_node *right);
+t_node	*create_or_node(t_node *left, t_node *right);
 t_node	*create_cmd_node(char **argv, t_redir *redir_list);
 t_redir	*create_redir_node(int type, char *filename);
 

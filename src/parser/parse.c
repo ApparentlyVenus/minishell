@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/04 21:52:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/07 08:21:33 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_node	*parse_input(t_token **tokens)
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	ast = parse_expr(tokens, 1);
+	ast = parse_pipeline(tokens, 1);
 	if (!ast)
 		return (NULL);
 	if (*tokens)
@@ -32,31 +32,24 @@ t_node	*parse_input(t_token **tokens)
 	return (ast);
 }
 
-/*
-**  parse left side, if extra tokens are present then parse the right side
-**  after parsing create the node after iterating to the next node.
-**  basically, you're parsing the first command then building left to right
-**  a | b | c -> (a | b) | c
-*/
-t_node	*parse_pipeline(t_token **tokens)
+t_node	*parse_pipeline(t_token **tokens, int min_priority)
 {
-	t_node	*left;
-	t_node	*right;
+	t_node			*left;
+	int				op_priority;
+	t_token_type	op_type;
 
-	if (!tokens || !*tokens)
-		return (NULL);
-	left = parse_command(tokens);
+	left = parse_command_or_group(tokens);
 	if (!left)
 		return (NULL);
-	while (*tokens && (*tokens)->type == TOKEN_PIPE)
+	while (*tokens)
 	{
-		*tokens = (*tokens)->next;
-		right = parse_command(tokens);
-		if (!right)
-			return (free_node(left), NULL);
-		left = create_pipe_node(left, right);
+		op_priority = get_token_priority(*tokens);
+		if (op_priority < min_priority || op_priority == 0)
+			break ;
+		op_type = (*tokens)->type;
+		left = handle_operator(left, tokens, op_type, op_priority);
 		if (!left)
-			return (free_node(right), NULL);
+			return (NULL);
 	}
 	return (left);
 }
@@ -114,86 +107,23 @@ t_redir	*parse_redir(t_token **tokens)
 	return (create_redir_node(type, filename));
 }
 
-// Helper: get operator priority (lower = higher precedence)
-static int get_token_priority(t_token *tok) {
-	if (!tok) return 100; // very low precedence for end/null
-	switch (tok->type) {
-		case TOKEN_AND:
-		case TOKEN_OR:
-			return 1;
-		case TOKEN_PIPE:
-			return 2;
-		default:
-			return 0;
-	}
-}
+t_node	*parse_group(t_token **tokens)
+{
+	t_node	*node;
 
-// Forward declaration
-static t_node *parse_expr(t_token **tokens, int min_priority);
-
-// Helper: parse a command or a parenthesized subexpression
-static t_node *parse_command_or_group(t_token **tokens) {
-	t_node *node = NULL;
-	if (*tokens && (*tokens)->type == TOKEN_LPAREN) {
+	node = NULL;
+	if (*tokens && (*tokens)->type == TOKEN_LPAREN)
+	{
 		*tokens = (*tokens)->next;
 		node = parse_expr(tokens, 0);
-		if (!node || !*tokens || (*tokens)->type != TOKEN_RPAREN) {
-			if (node) free_node(node);
-			return NULL;
+		if (!node || !*tokens || (*tokens)->type != TOKEN_RPAREN)
+		{
+			if (node)
+				free_node(node);
+			return (NULL);
 		}
 		*tokens = (*tokens)->next;
-		return node;
-	} else {
-		// Parse a command (WORD+ redir* | redir+)
-		int count = 0;
-		t_arg *arg_list = NULL;
-		t_redir *redir_list = NULL;
-		t_redir *redir;
-		while (*tokens && (*tokens)->type == TOKEN_WORD) {
-			if (!add_arg_list(&arg_list, (*tokens)->value))
-				return (free_arg(arg_list), NULL);
-			count++;
-			*tokens = (*tokens)->next;
-		}
-		while (*tokens && is_redir(*tokens)) {
-			redir = parse_redir(tokens);
-			if (!redir)
-				return (free_arg(arg_list), free_redir(redir_list), (NULL));
-			append_redir(&redir_list, redir);
-		}
-		if (count == 0 && !redir_list)
-			return NULL;
-		return create_cmd_node(process_args(arg_list, count), redir_list);
+		return (node);
 	}
-}
-
-// Main precedence-based parser
-static t_node *parse_expr(t_token **tokens, int min_priority) {
-	t_node *left = parse_command_or_group(tokens);
-	if (!left) return NULL;
-	while (*tokens) {
-		int op_priority = get_token_priority(*tokens);
-		if (op_priority < min_priority || op_priority == 0)
-			break;
-		t_token_type op_type = (*tokens)->type;
-		*tokens = (*tokens)->next;
-		t_node *right = parse_expr(tokens, op_priority + 1);
-		if (!right) {
-			free_node(left);
-			return NULL;
-		}
-		if (op_type == TOKEN_PIPE)
-			left = create_pipe_node(left, right);
-		else if (op_type == TOKEN_AND)
-			left = create_and_node(left, right);
-		else if (op_type == TOKEN_OR)
-			left = create_or_node(left, right);
-		else {
-			// fallback, should not happen
-			free_node(left);
-			free_node(right);
-			return NULL;
-		}
-	}
-	return left;
+	return (NULL);
 }
