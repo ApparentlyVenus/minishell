@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 07:36:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 02:44:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_input(char *stash)
 	char	*buffer;
 
 	buffer = NULL;
-	buffer = readline("minishell $ ");
+	buffer = readline("minishell@~$ ");
 	if (!buffer)
 	{
 		return (clean_up_and_exit());
