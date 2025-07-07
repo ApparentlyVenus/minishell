@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:41:59 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,30 @@ static void	print_sorted_env(t_env **envp)
 	}
 }
 
-void	builtin_export(t_exec *shell, t_token *args)
+void	builtin_export(t_exec *shell, char **args)
 {
 	char	*equal_sign;
 	int		failed;
+	int		i;
 
+	i = 0;
 	failed = 0;
-	if (!args || !args->next)
+	if (!args || !args[0])
 	{
 		print_sorted_env(shell->env);
 		shell->exit_code = 0;
 		return ;
 	}
-	while (args)
+	while (args[i])
 	{
-		equal_sign = ft_strchr(args->value, '=');
+		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
-			export_helper(shell->env, equal_sign, args);
-		else if (is_valid_key(args->value))
-			set_env_value(shell->env, args->value, NULL);
+			export_helper(shell->env, equal_sign, args[i]);
+		else if (is_valid_key(args[i]))
+			set_env_value(shell->env, args[i], NULL);
 		else
 			failed = 1;
-		args = args->next;
+		i++;
 	}
 	shell->exit_code = failed;
 }

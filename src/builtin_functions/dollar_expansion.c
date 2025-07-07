@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo_helpers.c                                     :+:      :+:    :+:   */
+/*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:43:51 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*echo_helper(char *result, char *value, t_exec *shell, int *i)
 	return (result);
 }
 
-static char	*expand_token_value_final(char *value, t_exec *shell)
+char	*expand_token_value_final(char *value, t_exec *shell)
 {
 	int		i[2];
 	char	*result;
@@ -103,7 +103,7 @@ static char	*expand_token_value_final(char *value, t_exec *shell)
 	return (result);
 }
 
-t_token	*echo_util(t_token *tokens, t_exec *shell)
+t_token	*expand_dollar(t_token *tokens, t_exec *shell)
 {
 	t_token	*curr;
 	char	*expanded;

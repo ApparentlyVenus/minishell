@@ -6,12 +6,12 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 08:07:36 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 00:58:28 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	builtin_cd()
+void	builtin_cd(t_exec *shell, char **args)
 {
 }

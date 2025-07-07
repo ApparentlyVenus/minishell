@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 16:15:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:44:53 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,20 @@ char	**convert_env_to_array(t_env *env);
 
 // Builtin functions
 
-int		builtin_echo(t_token *tokens, t_exec *shell);
+int		builtin_echo(char **args, t_exec *shell);
 void	builtin_env(t_exec *shell);
 void	builtin_exit(char **args, t_exec *shell);
-void	builtin_export(t_exec *shell, t_token *args);
+void	builtin_export(t_exec *shell, char **args);
 void	builtin_pwd(t_exec *shell);
 void	builtin_unset(t_exec *shell, t_token *arg);
-void	builtin_cd();
+void	builtin_cd(t_exec *shell, char **args);
 
 // Utils 
 
-t_token	*echo_util(t_token *tokens, t_exec *shell);
+char	*expand_token_value_final(char *value, t_exec *shell);
+t_token	*expand_dollar(t_token *tokens, t_exec *shell); // for expansion $
+// for expansion *
+// for expansion all toguether;
 void	set_env_value(t_env **env, char *key, char *value);
 void	export_helper(t_env **envp, char *equal_sign, t_token *args);
 int		is_valid_key(const char *key);

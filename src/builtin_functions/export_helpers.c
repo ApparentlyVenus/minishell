@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 08:05:14 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:46:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ void	set_env_value(t_env **env, char *key, char *value)
 	handle_new_key(env, key, value);
 }
 
-void	export_helper(t_env **envp, char *equal_sign, t_token *args)
+void	export_helper(t_env **envp, char *equal_sign, char *args)
 {
 	char	*key;
 	char	*value[2];
 
-	key = ft_substr(args->value, 0, equal_sign - args->value);
+	key = ft_substr(args, 0, equal_sign - args);
 	value[0] = ft_strdup(equal_sign + 1);
 	if (!key || !value[0])
 	{
