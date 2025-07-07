@@ -1,0 +1,53 @@
+Documentation brought to you by odana
+
+SYNTAX:
+
+   rulename   ::= defintion
+   rules       -> lowercase
+   token       -> uppercase
+
+# input       ::= pipeline
+# pipeline    ::= command_or_group (('&&' | '||' | '|') command_or_group)*
+# command_or_group ::= command | group
+the question mark means its optional:
+a pipeline might contain a pipe 
+and another pipeline, or it might not (This part is less accurate now, the '*' indicates zero or more occurrences)
+
+# command     ::= WORD+ redir* |
+redir+
+
+here the (*) means there might be zero or more redirs
+and the (+) means there must be at least 1 word
+example:  ls -l /etc  -> 3 words
+          echo hello  -> 2 words
+          < file.txt  -> 0 words it's just a redir
+
+when parsing the command we have to make sure to implement left assosiative parsing
+this means that when parsing a |
+b | c, th strcuture needs to be (a | b) | c and not a |
+(b | c)
+
+# redir       ::= ('<'|'>'|'>>'|'<<') WORD
+# group       ::= '(' pipeline ')'
+
+OPERATOR PRIORITIES (Higher number means higher precedence):
+  - TOKEN_AND ('&&'): Priority 1
+  - TOKEN_OR ('||'): Priority 1
+  - TOKEN_PIPE ('|'): Priority 2
+
+LEFT ASSOCIATIVE PARSING METHOD:
+  -> top down parsing methodology:
+  -> each rule has its own function (parse_pipeline, parse_input, etc..)
+  -> each function will call the functions defined in it
+  -> parsing mimics shell behavior as it parses nodes on the left first, 
+      then any trailing commands are left on the right
+  -> example:     parse_pipeline 
+                      |
+                      |-> parse_command_or_group -> parse_command / parse_group
+                      |-> (recursive call with increased priority)
+                      |
+etc..
+
+
+
+
