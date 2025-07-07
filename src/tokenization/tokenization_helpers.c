@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizing_2.c                                     :+:      :+:    :+:   */
+/*   tokenization_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 00:43:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:21:31 by yitani           ###   ########.fr       */
+/*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/07 07:14:41 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,10 @@ void	free_tokens(t_token **head)
 		current = next;
 	}
 	*head = (NULL);
+}
+
+void	skip_spaces(char *input, int *pos)
+{
+	while (input[*pos] == 32 || (input[*pos] >= 9 && input[*pos] <= 13))
+		(*pos)++;
 }

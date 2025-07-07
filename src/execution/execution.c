@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 12:49:38 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/07 07:30:45 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** - Process ID array
 ** - Environment variables
 */
-t_exec	*setup_exec(t_node *cmd_list, t_env *env_list)
+t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 {
 	t_exec	*ctx;
 
@@ -35,8 +35,8 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env_list)
 	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
 	if (!ctx->pids)
 		return (free_pipes(ctx->pipes, ctx->cmd_count), free(ctx), NULL);
-	ctx->exit = 0;
-	ctx->env_list = env_list;
+	ctx->exit_code = 0;
+	ctx->env = env;
 	return (ctx);
 }
 
@@ -55,11 +55,11 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 	char	**envp;
 
 	cmd = cmd_node->cmd->args[0];
-	envp = convert_env_to_array(ctx->env_list);
+	envp = convert_env_to_array(ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
 	else
-		path = find_path(cmd, ctx->env_list);
+		path = find_path(cmd, ctx->env);
 	if (!path)
 	{
 		ft_putstr_fd(cmd, 2);
@@ -85,29 +85,27 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 {
 	t_builtin	builtin_type;
-	int			exit_code;
 
 	if (!cmd_node || !cmd_node->cmd || !cmd_node->cmd->args[0])
-		return (ctx->exit = 1);
+		return (ctx->exit_code = 1);
 	builtin_type = get_builtin_type(cmd_node->cmd->args[0]);
-	exit_code = 0;
+	ctx->exit_code = 0;
 	if (builtin_type == BUILTIN_CD)
-		exit_code = builtin_cd(cmd_node->cmd->args, ctx->env_list);
+		builtin_cd(cmd_node->cmd->args, ctx->env);
 	else if (builtin_type == BUILTIN_ECHO)
-		exit_code = builtin_echo(cmd_node->cmd->args);
+		builtin_echo(cmd_node->cmd->args);
 	else if (builtin_type == BUILTIN_ENV)
-		exit_code = builtin_env(ctx->env_list);
+		builtin_env(ctx);
 	else if (builtin_type == BUILTIN_EXIT)
-		exit_code = builtin_exit(cmd_node->cmd->args, ctx);
+		builtin_exit(cmd_node->cmd->args, ctx);
 	else if (builtin_type == BUILTIN_EXPORT)
-		exit_code = builtin_export(cmd_node->cmd->args, ctx->env_list);
+		builtin_export(ctx, cmd_node->cmd->args);
 	else if (builtin_type == BUILTIN_PWD)
-		exit_code = builtin_pwd();
+		builtin_pwd(ctx);
 	else if (builtin_type == BUILTIN_UNSET)
-		exit_code = builtin_unset(cmd_node->cmd->args, ctx->env_list);
+		builtin_unset(cmd_node->cmd->args, ctx->env);
 	else
-		exit_code = 1;
-	ctx->exit = exit_code;
+		ctx->exit_code = 1;
 }
 
 /*
@@ -144,7 +142,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 ** 3. In child: set up pipes/redirections and execute
 ** 4. In parent: close pipes and wait for children
 */
-void	execute_pipeline(t_node *cmd_list, t_env *env_list)
+void	execute_pipeline(t_node *cmd_list, t_env *env)
 {
 	t_exec	*ctx;
 	t_node	*cmd_node;
@@ -152,7 +150,7 @@ void	execute_pipeline(t_node *cmd_list, t_env *env_list)
 
 	if (!cmd_list)
 		return ;
-	ctx = setup_exec(cmd_list, env_list);
+	ctx = setup_exec(cmd_list, env);
 	if (!ctx)
 		return ;
 	i = -1;
@@ -167,5 +165,5 @@ void	execute_pipeline(t_node *cmd_list, t_env *env_list)
 		else if (ctx->pids[i] == 0)
 			execute_command(cmd_node, ctx, i);
 	}
-	return (close_pipes(ctx), ctx->exit = wait_children(ctx), free_exec(ctx));
+	return (close_pipes(ctx), ctx->exit_code = wait_children(ctx), free_exec(ctx));
 }

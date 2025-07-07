@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizing.c                                       :+:      :+:    :+:   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 08:25:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 07:13:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// in a shell a word can contain anything gher hol el seperators / tokens;
-// even if mafi space bayneton its still a token, example :
-//<infile cmd|cmd <outfile , should work perfectly fine;
-
-// im extracting the words to tokenize them later in the next function;
-// pos is the index [i] of the next function;
 
 char	*extract_word(char *input, int *pos)
 {
@@ -47,15 +40,10 @@ char	*extract_word(char *input, int *pos)
 	return (word);
 }
 
-// Now we got the extracted word from quotes;
-// 3anna meshkle wehde mabda2iyan;
-// quotes preserved bel beginning and ending -> trim and clean;
-
 t_token	*clean_word_token(char *word)
 {
 	t_token	*token;
 	char	*trimmed;
-	int		i;
 
 	token = malloc(sizeof(t_token));
 	token->single_quotes = 0;
@@ -77,16 +65,8 @@ t_token	*clean_word_token(char *word)
 	token->value = word;
 	token->type = TOKEN_WORD;
 	token->priority = 0;
-	token->next = NULL;
-	// Mark if the word contains a wildcard for later expansion
-	token->has_wildcard = 0;
-	for (i = 0; word[i]; i++)
-		if (word[i] == '*')
-		{
-			token->has_wildcard = 1;
-			break;
-		}
-	return (token);
+	token->has_wildcard = has_wildcard(token->value);
+	return (token->next = NULL, token);
 }
 
 t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
@@ -95,12 +75,8 @@ t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 		return (token->value = ft_substr(input, *pos, 1),
 			token->type = TOKEN_PIPE, token->priority = 2, (*pos)++, token);
 	else if (input[*pos] == '*')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_WILDCARD;
-		(*pos)++;
-		return token;
-	}
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_WILDCARD, (*pos)++, token);
 	else if (input[*pos] == '&' && input[*pos + 1] == '&')
 		return (token->value = ft_substr(input, *pos, 2),
 			token->type = TOKEN_AND, token->priority = 1, (*pos) += 2, token);
@@ -114,10 +90,7 @@ t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
 		return (token->value = ft_substr(input, *pos, 1),
 			token->type = TOKEN_RPAREN, (*pos)++, token);
 	else
-	{
-		free(token);
-		return (NULL);
-	}
+		return (free(token), NULL);
 }
 
 t_token	*extract_operator_token(char *input, int *pos)

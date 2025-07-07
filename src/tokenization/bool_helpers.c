@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizing_helpers.c                               :+:      :+:    :+:   */
+/*   bool_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:22:19 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 07:14:30 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_word_char(char c)
 
 int	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&');
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '*');
 }
 
 int	is_quotes(char c)
@@ -26,10 +26,18 @@ int	is_quotes(char c)
 	return (c == '\'' || c == '\"');
 }
 
-void	skip_spaces(char *input, int *pos)
+int	has_wildcard(char *word)
 {
-	while (input[*pos] == 32 || (input[*pos] >= 9 && input[*pos] <= 13))
-		(*pos)++;
+	int	i;
+
+	i = 0;
+	while (word[i])
+	{
+		if (word[i] == '*')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	is_closed(char *input, int pos)

@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/03 00:24:10 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 07:18:31 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	valid_wildcard(t_token **token)
 	current = (*token);
 	while (current)
 	{
-		if (current->type == TOKEN_WORD && has_wildcard(current->value) > 1)
+		if (current->type == TOKEN_WORD && wildcard_count(current->value) > 1)
 		{
 			return (0);
 		}

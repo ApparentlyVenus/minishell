@@ -1,59 +1,19 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    lost_functions.txt                                 :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/28 17:19:12 by yitani            #+#    #+#              #
-#    Updated: 2025/07/06 08:47:36 by yitani           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+void	update_shlvl(void)
+{
+	char	*shlvl_str;
+	int		shlvl_value;
+	char	new_shlvl[12];
 
-/* i was removing spaces for unknown reasons keep it just in case */
+	shlvl_str = getenv("SHLVL");
+	if (shlvl_str == NULL)
+		shlvl_value = 1;
+	else
+		shlvl_value = ft_atoi(shlvl_str) + 1;
+	snprintf(new_shlvl, sizeof(new_shlvl), "%d", shlvl_value);
+	setenv("SHLVL", new_shlvl, 1);
+}
 
-	// while (word[i[0]] == 32 || (word[i[0]] >= 9 && word[i[0]] <= 13))
-    //     i[0]++;
-	// while (word[i[0]])
-    // {
-	// 	if (word[i[0]] == 32 || (word[i[0]] >= 9 && word[i[0]] <= 13))
-	// 		space = 1;
-	// 	else
-	// 	{
-	// 		if (space)
-	// 			word[i[1]++] = ' ';	
-    //         space = 0;
-	// 		word[i[1]++] = word[i[0]];
-	// 	}
-	// 	i[0]++;
-	// }
-	// while (i[1] > 0 && word[i[1] - 1] == ' ')
-    //     i[1]--;
+	snprintf(new_shlvl, sizeof(new_shlvl), "%d", shlvl_value);
+	setenv("SHLVL", new_shlvl, 1);
 
-
-
-
-// void	print_token_or_exitcode(const char *value, t_shell *shell)
-// {
-// 	if (ft_strcmp(value, "$?") == 0)
-// 		printf("%d", shell->exit_code);
-// 	else
-// 		write(1, value, strlen(value));
-// }
-
-
-// char *shlvl_str = getenv("SHLVL");
-// int shlvl_value;
-// char new_shlvl[12]; // enough for int max value
-
-// if (shlvl_str == NULL) {
-//     // SHLVL not set, this is the first shell
-//     shlvl_value = 1;
-// } else {
-//     // SHLVL exists, increment it
-//     shlvl_value = atoi(shlvl_str) + 1;
-// }
-
-// // Convert back to string and set in environment
-// sprintf(new_shlvl, "%d", shlvl_value);
-// setenv("SHLVL", new_shlvl, 1);
+	these two functions since not allowed will need like three functions of code idk
