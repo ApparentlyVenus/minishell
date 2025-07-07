@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:56:12 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,6 @@ static int	size_of_arr(char **args)
 	return (i);
 }
 
-static void	free_env_list(t_env **env)
-{
-	t_env	*tmp;
-
-	while (*env)
-	{
-		tmp = *env;
-		*env = (*env)->next;
-		free(tmp->key);
-		free(tmp->value);
-		free(tmp);
-	}
-}
-
 void	builtin_exit(char **args, t_exec *shell)
 {
 	long long	code;
@@ -79,6 +65,6 @@ void	builtin_exit(char **args, t_exec *shell)
 		code = ft_atoll(args[1]);
 		shell->exit_code = (unsigned int)code;
 	}
-	free_env_list(shell->env);
+	free_exec(shell);
 	exit(shell->exit_code);
 }

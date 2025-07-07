@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:40:27 by odana             #+#    #+#             */
-/*   Updated: 2025/07/04 20:53:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 01:55:46 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	free_env_list(t_env **env)
+{
+	t_env	*tmp;
+
+	while (*env)
+	{
+		tmp = *env;
+		*env = (*env)->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+	}
+}
 
 void	free_pipes(int **pipes, int cmd_count)
 {
@@ -36,6 +50,7 @@ void	free_exec(t_exec *ctx)
 		free(ctx->pids);
 	free_pipes(ctx->pipes, ctx->cmd_count);
 	free(ctx);
+	free_env_list(ctx->env);
 }
 
 void	free_split(char **args)

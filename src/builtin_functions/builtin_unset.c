@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 09:26:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:51:27 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,18 @@ static int	unset_env_value(t_env **env, char *key)
 	return (0);
 }
 
-void	builtin_unset(t_exec *shell, t_token *arg)
+void	builtin_unset(t_exec *shell, char **arg)
 {
-	t_token	*current;
-	int		failure;
+	int	failure;
+	int	i;
 
 	failure = 0;
-	current = arg->next;
-	while (current)
+	i = 0;
+	while (arg[i])
 	{
-		if (current && current->type == TOKEN_WORD
-			&& unset_env_value(shell->env, current->value) == 1)
+		if (unset_env_value(shell->env, arg[i]) == 1)
 			failure = 1;
-		current = current->next;
+		i++;
 	}
 	shell->exit_code = failure;
 }
