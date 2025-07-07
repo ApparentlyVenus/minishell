@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:56:12 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 01:57:11 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	builtin_exit(char **args, t_exec *shell)
 		shell->exit_code = (unsigned int)code;
 	}
 	free_exec(shell);
+	free_split(args);
 	exit(shell->exit_code);
 }
