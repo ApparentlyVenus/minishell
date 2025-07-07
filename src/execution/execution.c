@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 00:41:57 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 02:28:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 	builtin_type = get_builtin_type(cmd_node->cmd->args[0]);
 	ctx->exit_code = 0;
 	if (builtin_type == BUILTIN_CD)
-		builtin_cd(cmd_node->cmd->args, ctx->env);
+		builtin_cd(ctx, cmd_node->cmd->args);
 	else if (builtin_type == BUILTIN_ECHO)
-		builtin_echo(cmd_node->cmd->args);
+		builtin_echo(cmd_node->cmd->args, ctx);
 	else if (builtin_type == BUILTIN_ENV)
 		builtin_env(ctx);
 	else if (builtin_type == BUILTIN_EXIT)
@@ -109,7 +109,7 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 	else if (builtin_type == BUILTIN_PWD)
 		builtin_pwd(ctx);
 	else if (builtin_type == BUILTIN_UNSET)
-		builtin_unset(cmd_node->cmd->args, ctx->env);
+		builtin_unset(ctx, cmd_node->cmd->args);
 	else
 		ctx->exit_code = 1;
 }
