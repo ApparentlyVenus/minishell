@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 07:30:45 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/07 09:42:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,5 +165,6 @@ void	execute_pipeline(t_node *cmd_list, t_env *env)
 		else if (ctx->pids[i] == 0)
 			execute_command(cmd_node, ctx, i);
 	}
-	return (close_pipes(ctx), ctx->exit_code = wait_children(ctx), free_exec(ctx));
+	return (close_pipes(ctx), ctx->exit_code = wait_children(ctx),
+		free_exec(ctx));
 }
