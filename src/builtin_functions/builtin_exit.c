@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:57:11 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 18:14:15 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_is_numeric(const char *str)
 	return (1);
 }
 
-static int	size_of_arr(char **args)
+int	size_of_arr(char **args)
 {
 	int	i;
 

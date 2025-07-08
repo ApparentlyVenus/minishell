@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:43:51 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 18:39:07 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ t_token	*expand_dollar(t_token *tokens, t_exec *shell)
 	{
 		if (curr->type == TOKEN_WORD && curr->single_quotes == 0)
 		{
-			expanded = expand_token_value_final(curr->value, shell);
+			expanded = expand_floaty(curr->value, shell);
+			if (!expanded)
+				expanded = expand_token_value_final(curr->value, shell);
 			free(curr->value);
 			curr->value = expanded;
 		}
