@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 22:22:17 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 09:59:30 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-# include "parser.h"
-# include "env.h"
 
 // enum for builtin command identification
 typedef enum e_builtin

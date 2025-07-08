@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 12:52:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 10:29:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@
 
 /* minishell modules */
 
+typedef struct s_token t_token;
+typedef struct s_exec t_exec;
+typedef struct s_env t_env;
+
 # include "tokenizer.h"
 # include "parser.h"
+# include "expansion.h"
 # include "env.h"
 # include "execution.h"
 
