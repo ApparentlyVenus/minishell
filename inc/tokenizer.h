@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/08 10:15:44 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 11:17:24 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef enum e_token_type
 {
@@ -58,7 +58,7 @@ t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token);
 
 int		has_wildcard(char *word);
 int		is_logic_op(t_token_type type);
-int	is_redirection(t_token_type type);
+int		is_redirection(t_token_type type);
 int		wildcard_count(char *word);
 void	token_add_back(t_token **lst, t_token *new);
 

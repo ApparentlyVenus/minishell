@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 09:32:24 by odana             #+#    #+#             */
-/*   Updated: 2025/07/08 09:59:34 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 11:19:03 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 # define ERROR -1
 # define NO_CHANGE 0

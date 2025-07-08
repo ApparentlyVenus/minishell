@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 09:59:23 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/08 11:19:17 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define ENV_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef struct s_env
 {
