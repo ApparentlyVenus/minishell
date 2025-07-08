@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:08:33 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 08:56:54 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	new_line_flag(t_token *args, int *i)
 {
 	int	j;
-	
+
 	*i = 0;
 	j = 0;
 	while (args && ft_strcmp(args->value, "-n") == 0)
