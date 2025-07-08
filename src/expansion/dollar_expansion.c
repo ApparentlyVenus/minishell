@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 18:39:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:49:53 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,19 +103,20 @@ char	*expand_token_value_final(char *value, t_exec *shell)
 	return (result);
 }
 
-t_token	*expand_dollar(t_token *tokens, t_exec *shell)
+t_token	**expand_dollar(t_token **tokens, t_exec *shell)
 {
 	t_token	*curr;
 	char	*expanded;
+	char	*temp;
 
-	curr = tokens;
+	curr = *tokens;
 	while (curr)
 	{
 		if (curr->type == TOKEN_WORD && curr->single_quotes == 0)
 		{
-			expanded = expand_floaty(curr->value, shell);
-			if (!expanded)
-				expanded = expand_token_value_final(curr->value, shell);
+			temp = expand_floaty(curr->value, shell);
+			curr->value = temp;
+			expanded = expand_token_value_final(curr->value, shell);
 			free(curr->value);
 			curr->value = expanded;
 		}
