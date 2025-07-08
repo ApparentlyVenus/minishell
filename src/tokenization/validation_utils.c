@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 04:00:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 07:19:06 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 10:22:30 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	wildcard_count(char *word)
 
 	i = 0;
 	count = 0;
-	while (word)
+	while (word[i])
 	{
 		if (word[i] == '*')
 		{
@@ -45,4 +45,23 @@ int	wildcard_count(char *word)
 		i++;
 	}
 	return (count);
+}
+
+void	token_add_back(t_token **lst, t_token *new)
+{
+	t_token	*last;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next)
+	{
+		last = last->next;
+	}
+	last->next = new;
 }

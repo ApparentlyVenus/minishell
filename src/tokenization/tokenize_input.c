@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/07 16:14:31 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 10:15:35 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ t_token	*clean_word_token(char *word)
 	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
 	{
 		token->single_quotes = 1;
-		trimmed = ft_strtrim(word, '\'');
+		trimmed = ft_strtrim(word, "\'");
 		free(word);
 		word = trimmed;
 	}
 	else if (word[0] == '"' && word[ft_strlen(word) - 1] == '"')
 	{
 		token->double_quotes = 1;
-		trimmed = ft_strtrim(word, '"');
+		trimmed = ft_strtrim(word, "\"");
 		free(word);
 		word = trimmed;
 	}
@@ -141,7 +141,7 @@ t_token	**tokenize_input(char *input, t_token **token)
 			free_tokens(token);
 			return (NULL);
 		}
-		ft_lstadd_back(token, new_token);
+		token_add_back(token, new_token);
 		new_token = NULL;
 	}
 	return (token);
