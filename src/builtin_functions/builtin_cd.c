@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 19:35:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/08 20:55:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	change_directory(t_exec *shell, char **args, int *status)
 {
 	if (!args || !args[0])
 		status[0] = chdir(get_env_value(*(shell->env), "HOME"));
-	else if (args[0][0] == '~')
-		status[0] = chdir(expand_floaty(args[0], shell));
 	else if (args[0][0] == '-' && args[0][1] == '\0')
 	{
 		status[0] = chdir(get_env_value(*(shell->env), "OLDPWD"));
