@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+
 /*
  * handle_empty_token - Removes empty tokens from the token list
  *
