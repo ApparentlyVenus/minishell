@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:41:59 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:34:56 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	print_sorted_env(t_env **envp)
 	}
 }
 
-void	builtin_export(t_exec *shell, char **args)
+int	builtin_export(t_exec *shell, char **args)
 {
 	char	*equal_sign;
 	int		failed;
@@ -53,5 +53,5 @@ void	builtin_export(t_exec *shell, char **args)
 			failed = 1;
 		i++;
 	}
-	shell->exit_code = failed;
+	return (failed);
 }

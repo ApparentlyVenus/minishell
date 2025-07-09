@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 18:38:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:35:07 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**convert_env_to_array(t_env *env);
 int		builtin_echo(char **args, t_exec *shell);
 void	builtin_env(t_exec *shell);
 void	builtin_exit(char **args, t_exec *shell);
-void	builtin_export(t_exec *shell, char **args);
+int		builtin_export(t_exec *shell, char **args);
 void	builtin_pwd(t_exec *shell);
 void	builtin_unset(t_exec *shell, char **arg);
 void	builtin_cd(t_exec *shell, char **args);
@@ -43,7 +43,7 @@ void	builtin_cd(t_exec *shell, char **args);
 
 int		size_of_arr(char **args);
 char	*expand_token_value_final(char *value, t_exec *shell);
-t_token	*expand_dollar(t_token *tokens, t_exec *shell); // for expansion $
+t_token	**expand_dollar(t_token **tokens, t_exec *shell); // for expansion $
 char	*expand_floaty(char *value, t_exec *shell); // expanding ~ called in expand $
 // for expansion *
 // for expansion all toguether;

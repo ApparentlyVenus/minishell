@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 02:28:40 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:36:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 	else if (builtin_type == BUILTIN_EXIT)
 		builtin_exit(cmd_node->cmd->args, ctx);
 	else if (builtin_type == BUILTIN_EXPORT)
-		builtin_export(ctx, cmd_node->cmd->args);
+		ctx->exit_code = builtin_export(ctx, cmd_node->cmd->args);
 	else if (builtin_type == BUILTIN_PWD)
 		builtin_pwd(ctx);
 	else if (builtin_type == BUILTIN_UNSET)

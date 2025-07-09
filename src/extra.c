@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 11:14:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/09 17:35:37 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,21 @@ int	get_input(char *stash)
 	}
 	else
 		return (0);
+}
+void	update_shlvl(t_exec *shell)
+{
+	char	*val[2];
+	int		level;
+
+	val[0] = "SHLVL=";
+	val[1] = get_env_value(*(shell->env), "SHLVL");
+	val[2] = NULL;
+	level = ft_atoi(val[1]) + 1;
+	if (!level)
+		builtin_export(shell, "SHLVL=1");
+	else
+	{
+		val[1] = ft_itoa(level);
+		builtin_export(shell, val);
+	}
 }
