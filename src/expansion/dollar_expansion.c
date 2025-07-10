@@ -3,16 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 20:49:53 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/10 15:32:22 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*expand_token_value_1(char *value, t_exec *shell, int *i)
+char	*expand_tilde(char *value, t_env *env)
+{
+	char	*result;
+	char	*home;
+	char	*suffix;
+	
+	if (!value)
+		return (NULL);
+	if (value[0] == '~' && (value[1] == '/' || value[1] == '\0'))
+	{
+		home = get_env_value(env, "HOME");
+		if (!home)
+			return (ft_strdup(value));
+		suffix = ft_strdup(value + 1);
+		if (!suffix)
+			return (ft_strdup(value));
+		result = ft_strjoin(home, suffix);
+		free(suffix);
+		if (!result)
+			return (ft_strdup(value));
+		return (result);
+	}
+	return (ft_strdup(value));
+}
+
+/*
+ * extract_and_expand_variable - Extracts variable name and returns its value
+ * 
+ * @value: String containing variable reference
+ * @shell: Shell execution context
+ * @i: Current position index (will be modified)
+ * @return: Expanded variable value
+ */
+char	*extract_variable(char *value, t_exec *shell, int *i)
 {
 	int		start;
 	char	*var_name;
@@ -39,28 +72,32 @@ static char	*expand_token_value_1(char *value, t_exec *shell, int *i)
 	return (var_value);
 }
 
-static char	*expand_token_value_1_5(char *dest, const char *to_append)
-{
-	char	*new;
-
-	new = ft_strjoin(dest, to_append);
-	free(dest);
-	return (new);
-}
-
-static char	*echo_helper(char *result, char *value, t_exec *shell, int *i)
+/*
+ * handle_dollar_expansion - Handles different types of $ expansions
+ * 
+ * - result: Current result string
+ * 
+ * - value: String being processed
+ * 
+ * - shell: Shell execution context
+ * 
+ * - i: Current position index (will be modified)
+ * 
+ * @return Updated result string
+ */
+char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 {
 	char	*expanded;
 	char	*temp;
 
 	if (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 	{
-		expanded = expand_token_value_1(value, shell, i);
+		expanded = extract_and_expand_variable(value, env, i);
 		temp = result;
 		result = ft_strjoin(result, expanded);
 		free(temp);
 		free(expanded);
-	}
+	}	
 	else if (value[i[0]] == '?')
 	{
 		expanded = ft_itoa(shell->exit_code);
@@ -71,11 +108,20 @@ static char	*echo_helper(char *result, char *value, t_exec *shell, int *i)
 		i[0]++;
 	}
 	else
-		result = expand_token_value_1_5(result, "$");
+		result = append_string_to_result(result, "$");
 	return (result);
 }
 
-char	*expand_token_value_final(char *value, t_exec *shell)
+/*
+ * expand_variables_in_string - Expands all $ variables in a string
+ * 
+ * - value: String containing potential $ variables
+ * 
+ * - shell: Shell execution context
+ * 
+ * @return New string with variables expanded
+ */
+char	*expand_variables(char *value, t_env *env)
 {
 	int		i[2];
 	char	*result;
@@ -87,7 +133,7 @@ char	*expand_token_value_final(char *value, t_exec *shell)
 	while (value[i[0]])
 	{
 		if (value[i[0]++] == '$')
-			result = echo_helper(result, value, shell, i);
+			result = handle_dollar_expansion(result, value, env, i);
 		else
 		{
 			i[1] = i[0];
@@ -103,7 +149,16 @@ char	*expand_token_value_final(char *value, t_exec *shell)
 	return (result);
 }
 
-t_token	**expand_dollar(t_token **tokens, t_exec *shell)
+/*
+ * expand_dollar_variables - Expands $ variables in all eligible tokens
+ * 
+ * - tokens: Pointer to token list
+ * 
+ * - shell: Shell execution context
+ * 
+ * @return Updated token list
+ */
+t_token	**expand_dollar_variables(t_token **tokens, t_exec *env)
 {
 	t_token	*curr;
 	char	*expanded;
@@ -114,9 +169,9 @@ t_token	**expand_dollar(t_token **tokens, t_exec *shell)
 	{
 		if (curr->type == TOKEN_WORD && curr->single_quotes == 0)
 		{
-			temp = expand_floaty(curr->value, shell);
+			temp = expand_tilde(curr->value, env);
 			curr->value = temp;
-			expanded = expand_token_value_final(curr->value, shell);
+			expanded = expand_variables(curr->value, env);
 			free(curr->value);
 			curr->value = expanded;
 		}

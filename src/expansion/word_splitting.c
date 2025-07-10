@@ -1,5 +1,17 @@
 #include "../../inc/minishell.h"
 
+/*
+ * handle_empty_token - Removes empty tokens from the token list
+ *
+ * This function checks if a token is empty (zero length) and not quoted.
+ * If so, it removes the token from the linked list and frees its memory.
+ * This is necessary after variable expansion when a variable expands to nothing.
+ *
+ * @tokens: Pointer to the head of the token list
+ * @current: The current token being processed
+ * @prev: The previous token in the list (for linking)
+ * @return: 1 if token was removed, 0 if token was kept
+ */
 
 int handle_empty_token(t_token **tokens, t_token *current, t_token *prev)
 {
@@ -17,6 +29,16 @@ int handle_empty_token(t_token **tokens, t_token *current, t_token *prev)
 	return (0);
 }
 
+/*
+ * init_new_token - Creates a new token and inserts it into the list
+ *
+ * This function creates a new token with the given word value and inserts it
+ * right after the last_inserted token in the linked list. Used during word splitting.
+ *
+ * @word: The string value for the new token
+ * @last_inserted: The token after which to insert the new token
+ * @return: Pointer to the newly created token, or NULL on failure
+ */
 t_token *init_new_token(char *word, t_token *last_inserted)
 {
 	t_token *new_token;
@@ -34,6 +56,17 @@ t_token *init_new_token(char *word, t_token *last_inserted)
 	return (new_token);
 }
 
+/*
+ * insert_split_words - Replaces current token with multiple split words
+ *
+ * This function takes a token and an array of split words, then replaces
+ * the current token's value with the first word and creates new tokens
+ * for the remaining words, inserting them in sequence.
+ *
+ * @current: The token to be replaced/expanded
+ * @split_words: Array of strings from splitting the original token
+ * @return: Pointer to the last inserted token, or NULL on failure
+ */
 t_token *insert_split_words(t_token *current, char **split_words)
 {
 	t_token *last_inserted;
@@ -53,6 +86,20 @@ t_token *insert_split_words(t_token *current, char **split_words)
 	return (last_inserted);
 }
 
+/*
+ * handle_word_splitting - Processes the result of word splitting
+ *
+ * This function handles different scenarios after attempting to split a word:
+ * - If splitting produced multiple words: insert them into the token list
+ * - If splitting produced no words: remove the empty token
+ * - If splitting produced one word: keep the token as is
+ *
+ * @tokens: Pointer to the head of the token list
+ * @current: The current token being processed
+ * @prev: The previous token in the list
+ * @split_words: Array of strings from splitting
+ * @return: Split result code (see explanation below)
+ */
 int handle_word_splitting(t_token **tokens, t_token *current, t_token *prev, char **split_words)
 {
 	if (split_words[0] && split_words[1])
@@ -70,6 +117,17 @@ int handle_word_splitting(t_token **tokens, t_token *current, t_token *prev, cha
 	return (0);
 }
 
+/*
+ * apply_word_splitting - Attempts to split a token on whitespace
+ *
+ * This function checks if a token should be split (not quoted and contains whitespace),
+ * then performs the splitting and handles the results.
+ *
+ * @tokens: Pointer to the head of the token list
+ * @current: The current token being processed
+ * @prev: The previous token in the list
+ * @return: Split result code (see explanation below)
+ */
 int apply_word_splitting(t_token **tokens, t_token *current, t_token *prev)
 {
 	char **split_words;
