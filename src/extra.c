@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/09 17:35:37 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/10 19:49:30 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	get_input(char *stash)
 	else
 		return (0);
 }
+
 void	update_shlvl(t_exec *shell)
 {
 	char	*val[2];
