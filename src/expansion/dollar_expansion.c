@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/10 15:32:22 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/10 15:40:03 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,35 @@ char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 		result = append_string_to_result(result, "$");
 	return (result);
 }
+
+// ! THE ABOVE FUNCTION WAS THIS ECHO_HELPER FUNCTION
+
+// char    *echo_helper(char *result, char *value, t_exec *shell, int *i)
+// {
+//     char    *expanded;
+//     char    *temp;
+
+//     if (ftisalnum(value[i[0]]) || value[i[0]] == '')
+//     {
+//         expanded = expand_token_value_1(value, shell, i);
+//         temp = result;
+//         result = ft_strjoin(result, expanded);
+//         free(temp);
+//         free(expanded);
+//     }
+//     else if (value[i[0]] == '?')
+//     {
+//         expanded = ft_itoa(shell->exit_code);
+//         temp = result;
+//         result = ft_strjoin(result, expanded);
+//         free(temp);
+//         free(expanded);
+//         i[0]++;
+//     }
+//     else
+//         result = expand_token_value_1_5(result, "$");
+//     return (result);
+// }
 
 /*
  * expand_variables_in_string - Expands all $ variables in a string
