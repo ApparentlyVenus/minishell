@@ -33,12 +33,14 @@ typedef struct s_redir
 typedef struct s_arg
 {
 	char			*value;
+	int				single_quotes;
+	int				double_quotes;
 	struct s_arg	*next;
 }	t_arg;
 
 typedef struct s_cmd
 {
-	char	**args;
+	t_arg	**args;
 	t_redir	*redirs;
 }	t_cmd;
 

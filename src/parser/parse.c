@@ -74,7 +74,7 @@ t_node	*parse_command(t_token **tokens)
 	redir_list = NULL;
 	while (*tokens && (*tokens)->type == TOKEN_WORD)
 	{
-		if (!add_arg_list(&arg_list, (*tokens)->value))
+		if (!add_arg_list(&arg_list, *tokens))
 			return (free_arg(arg_list), NULL);
 		count++;
 		*tokens = (*tokens)->next;

@@ -54,15 +54,21 @@ t_node	*create_or_node(t_node *left, t_node *right)
 	return (or_node);
 }
 
-t_node	*create_cmd_node(char **argv, t_redir *redir_list)
+/*
+** create_cmd_node
+** Purpose: Creates a command node with t_arg **args and redirections.
+** Used variables: args (t_arg **), redir_list (t_redir *)
+** Return: t_node *
+*/
+t_node	*create_cmd_node(t_arg **args, t_redir *redir_list)
 {
 	t_cmd	*command;
 	t_node	*node;
 
 	command = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!command)
-		return (free_split(argv), free_redir(redir_list), NULL);
-	command->args = argv;
+		return (free_split((char **)args), free_redir(redir_list), NULL);
+	command->args = args;
 	command->redirs = redir_list;
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)

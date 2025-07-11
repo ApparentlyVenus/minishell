@@ -29,7 +29,13 @@ void	append_redir(t_redir **list, t_redir *new_redir)
 	*list = new_redir;
 }
 
-int	add_arg_list(t_arg **list, char *value)
+/*
+** add_arg_list
+** Purpose: Adds a new t_arg to the list, copying value and quoting info from t_token.
+** Used variables: list (t_arg **), token (t_token *)
+** Return: 1 on success, 0 on failure
+*/
+int	add_arg_list(t_arg **list, t_token *token)
 {
 	t_arg	*cur;
 	t_arg	*new;
@@ -37,9 +43,11 @@ int	add_arg_list(t_arg **list, char *value)
 	new = malloc(sizeof(t_arg));
 	if (!new)
 		return (0);
-	new->value = ft_strdup(value);
+	new->value = ft_strdup(token->value);
 	if (!new->value)
 		return (free(new), 0);
+	new->single_quotes = token->single_quotes;
+	new->double_quotes = token->double_quotes;
 	new->next = NULL;
 	if (!*list)
 		*list = new;
@@ -53,27 +61,30 @@ int	add_arg_list(t_arg **list, char *value)
 	return (1);
 }
 
-char	**process_args(t_arg *arg_list, int count)
+/*
+** process_args
+** Purpose: Converts a linked list of t_arg to a NULL-terminated array of t_arg*.
+** Used variables: arg_list (t_arg *), count (int)
+** Return: t_arg** (NULL-terminated array)
+*/
+t_arg **process_args(t_arg *arg_list, int count)
 {
-	char	**argv;
-	t_arg	*temp;
-	t_arg	*current;
-	int		i;
+	t_arg **args;
+	t_arg *current;
+	int i;
 
-	argv = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!argv)
+	args = (t_arg **)malloc(sizeof(t_arg *) * (count + 1));
+	if (!args)
 		return (free_arg(arg_list), NULL);
 	i = 0;
 	current = arg_list;
 	while (current)
 	{
-		argv[i++] = current->value;
-		temp = current;
+		args[i++] = current;
 		current = current->next;
-		free(temp);
 	}
-	argv[i] = NULL;
-	return (argv);
+	args[i] = NULL;
+	return (args);
 }
 
 int	get_token_priority(t_token *tok)
