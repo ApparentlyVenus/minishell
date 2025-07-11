@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 04:00:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 11:14:57 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 09:39:05 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,18 @@ void	token_add_back(t_token **lst, t_token *new)
 		last = last->next;
 	}
 	last->next = new;
+}
+
+int	valid_wildcard(t_token **token)
+{
+	t_token	*current;
+
+	current = (*token);
+	while (current)
+	{
+		if (current->type == TOKEN_WORD && wildcard_count(current->value) > 1)
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }

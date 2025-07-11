@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bool_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 19:36:23 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 10:28:34 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,7 @@ int	is_closed(char *input, int pos)
 {
 	int		i;
 	char	q;
-	int		is_word;
 
-	is_word = 0;
 	i = pos;
 	if (!input[i])
 		return (0);
@@ -57,10 +55,7 @@ int	is_closed(char *input, int pos)
 		{
 			i++;
 			if (input[i] == q)
-			{
-				is_word = 1;
 				return (1);
-			}
 		}
 	}
 	return (0);

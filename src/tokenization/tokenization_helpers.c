@@ -3,29 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 19:36:27 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 10:24:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token)
+t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 {
-	if (is_quotes(input[*i]) && is_closed(input, *i))
-	{
-		word = extract_word(input, i);
-		new_token = clean_word_token(word);
-	}
-	else if (is_quotes(input[*i]) && !(is_closed(input, *i)))
-		return (NULL);
-	else if (is_word_char(input[*i]))
-	{
-		word = extract_word(input, i);
-		new_token = clean_word_token(word);
-	}
+	char	*word;
+	t_token	*new_token;
+	int		start;
+
+	start = *i;
+	word = extract_word(input, i);
+	if (!word)
+		return (set_error(shell, "minishell: malloc failure"), NULL);
+	if (is_quotes(input[start]) && !is_closed(input, start))
+		return (free(word), set_error(shell, "minishell: unclose quotes"), NULL);
+	new_token = clean_word_token(word);
+	if (!new_token)
+		return (set_error(shell, "minishehll: malloc failure"), NULL);
+	return (new_token);
+}
+
+t_token	*create_next_token(char *input, int *i, t_shell *shell)
+{
+	t_token	*new_token;
+
+	new_token = NULL;
+	if (is_operator(input[*i]))
+		new_token = extract_operator_token(input, i);
+	else if (is_quotes(input[*i]) || is_word_char(input[*i]))
+		new_token = handle_word_token(input, i, shell);
+	else
+		return (set_error(shell, "minishell: unexpected character"), NULL);
 	return (new_token);
 }
 

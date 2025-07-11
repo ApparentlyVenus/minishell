@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 19:36:30 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 10:43:17 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*extract_word(char *input, int *pos)
 	int		len;
 	int		in_single_quotes;
 	int		in_double_quotes;
-	char	*word;
 
 	i = *pos;
 	len = 0;
@@ -26,47 +25,33 @@ char	*extract_word(char *input, int *pos)
 	in_double_quotes = 0;
 	while (input[*pos])
 	{
-		if (input[*pos] == '\'' && !in_double_quotes)
-			in_single_quotes = !in_single_quotes;
-		else if (input[*pos] == '\"' && !in_single_quotes)
-			in_double_quotes = !in_double_quotes;
-		else if (!in_single_quotes && !in_double_quotes
-			&& !is_word_char(input[*pos]))
+		toggle_quotes(input[*pos], &in_single_quotes, &in_double_quotes);
+		if (!continue_word(input[*pos], in_single_quotes, in_double_quotes))
 			break ;
 		(*pos)++;
 		len++;
 	}
-	word = ft_substr(input, i, len);
-	return (word);
+	return (ft_substr(input, i, len));
 }
 
 t_token	*clean_word_token(char *word)
 {
 	t_token	*token;
-	char	*trimmed;
 
 	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	token->single_quotes = 0;
 	token->double_quotes = 0;
-	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
-	{
-		token->single_quotes = 1;
-		trimmed = ft_strtrim(word, "\'");
-		free(word);
-		word = trimmed;
-	}
-	else if (word[0] == '"' && word[ft_strlen(word) - 1] == '"')
-	{
-		token->double_quotes = 1;
-		trimmed = ft_strtrim(word, "\"");
-		free(word);
-		word = trimmed;
-	}
+	token->next = NULL;
+	word = trim_quotes(word, token);
+	if (!word)
+		return (free(token), NULL);
 	token->value = word;
 	token->type = TOKEN_WORD;
 	token->priority = 0;
 	token->has_wildcard = has_wildcard(token->value);
-	return (token->next = NULL, token);
+	return (token);
 }
 
 t_token	*extract_bonus_token(char *input, int *pos, t_token *token)
@@ -121,28 +106,23 @@ t_token	*extract_operator_token(char *input, int *pos)
 			return (token);
 	}
 }
-
-t_token	**tokenize_input(char *input, t_token **token)
+	
+t_token	**tokenize_input(char *input, t_shell *shell)
 {
 	int		i;
 	t_token	*new_token;
-	char	*word;
 
 	i = 0;
+	shell->tokens = NULL;
 	while (input[i])
 	{
 		skip_spaces(input, &i);
-		if (is_operator(input[i]))
-			new_token = extract_operator_token(input, &i);
-		if (is_quotes(input[i]) || is_word_char(input[i]))
-			new_token = handle_any_word(input, word, &i, new_token);
+		if (!input[i])
+			break;
+		new_token = create_next_token(input, &i, shell);
 		if (!new_token)
-		{
-			free_tokens(token);
-			return (NULL);
-		}
-		token_add_back(token, new_token);
-		new_token = NULL;
+			return (free_tokens(shell->tokens), NULL);
+		token_add_back(&shell->tokens, new_token);
 	}
-	return (token);
+	return (&shell->tokens);
 }
