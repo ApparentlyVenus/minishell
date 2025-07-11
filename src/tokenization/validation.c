@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 09:17:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 09:20:24 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	redirection_validation(t_token **token)
 {
 	t_token	*current;
 
-	prev = NULL;
 	current = (*token);
 	while (current)
 	{
