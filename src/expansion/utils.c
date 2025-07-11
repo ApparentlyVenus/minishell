@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 09:38:35 by odana             #+#    #+#             */
-/*   Updated: 2025/07/10 15:27:55 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 16:05:24 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ int has_wildcard(char *str)
 	return (0);
 }
 
-/*
- * append_string_to_result - Appends string to result and frees old result
- * 
- * @dest: Destination string (will be freed)
- * @to_append: String to append
- * @return: New concatenated string
- */
 char	*append_string(char *dest, const char *to_append)
 {
 	char	*new;
@@ -53,4 +46,20 @@ char	*append_string(char *dest, const char *to_append)
 	new = ft_strjoin(dest, to_append);
 	free(dest);
 	return (new);
+}
+
+int contains_whitespace(char *str)
+{
+	int i;
+	
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

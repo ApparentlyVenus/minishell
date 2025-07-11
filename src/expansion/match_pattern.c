@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   match_patter.c                                     :+:      :+:    :+:   */
+/*   match_pattern.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:00:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/09 13:07:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 15:53:11 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @star_f: Pointer to store filename position when * was found
  * @return: 1 if pattern ends with *, 0 to continue matching
  */
-static int	handle_star_case(const char **p, const char *f,
+int	handle_star_case(const char **p, const char *f,
 				const char **star_p, const char **star_f)
 {
 	while (**p == '*')
@@ -42,7 +42,7 @@ static int	handle_star_case(const char **p, const char *f,
  * @star_f: Pointer to position in filename when * was found (will be modified)
  * @return: 1 if backtrack possible, 0 if not
  */
-static int	try_backtrack(const char **p, const char **f,
+int	try_backtrack(const char **p, const char **f,
 				const char *star_p, const char **star_f)
 {
 	if (!star_p)

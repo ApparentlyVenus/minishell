@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/08 11:17:24 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 10:46:32 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,59 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-// functions
+// tokenization functions
+
+// main tokenization function
+
+t_token	**tokenize_input(char *input, t_shell *shell);
+
+// helpers
+
+t_token	*clean_word_token(char *word);
+t_token	*extract_operator_token(char *input, int *pos);
+t_token *handle_word_token(char *input, int *i, t_shell *shell);
+t_token *create_next_token(char *input, int *i, t_shell *shell);
+char	*trim_quotes(char *word, t_token *token);
+void	toggle_quotes(char c, int *in_single, int *in_double);
+int		continue_word(char c, int in_single, int in_double);
+
+
+// bool helpers
 
 int		is_operator(char c);
-void	skip_spaces(char *input, int *pos);
 int		is_word_char(char c);
-int		get_input(char *stash);
-char	*extract_word(char *input, int *pos);
-t_token	*clean_word_token(char *word);
+int		has_wildcard(char *word);
 int		is_closed(char *input, int pos);
 int		is_quotes(char c);
-t_token	**tokenize_input(char *input, t_token **token);
-t_token	*extract_operator_token(char *input, int *pos);
-void	free_tokens(t_token **head);
-t_token	*handle_any_word(char *input, char *word, int *i, t_token *new_token);
 
-int		has_wildcard(char *word);
-int		is_logic_op(t_token_type type);
-int		is_redirection(t_token_type type);
-int		wildcard_count(char *word);
-void	token_add_back(t_token **lst, t_token *new);
+// utils 
+
+void	free_tokens(t_token **head);
+int		get_input(char *stash);
+char	*extract_word(char *input, int *pos);
+void	skip_spaces(char *input, int *pos);
+
+
+// validation functions
+
+// main validation function for all validations
+
+int		validate_tokens(t_shell *shell);
+
+// validation helpers
 
 int		redirection_validation(t_token **token);
 int		pipe_validation(t_token **token);
 int		valid_heredoc(t_token **token);
 int		valid_logic_op(t_token **token);
 int		valid_wildcard(t_token **token);
+
+// validation utils
+
+int		is_redirection(t_token_type type);
+int		is_logic_op(t_token_type type);
+int		wildcard_count(char *word);
+void	token_add_back(t_token **lst, t_token *new);
+
 
 #endif

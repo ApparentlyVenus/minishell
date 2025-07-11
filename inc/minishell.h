@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 11:18:57 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 00:30:52 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/* C libraries */
+// libraries
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -32,20 +32,24 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-/* minishell utils / helper functions */
+// minishell modules
 
 # include "tokenizer.h"
 # include "parser.h"
 # include "expansion.h"
 # include "env.h"
 # include "execution.h"
+# include "shell.h"
 
-# include "../minishell_libft/libft.h"	// libft functions
+// minishell libft
 
-/* minishell modules */
+# include "../minishell_libft/libft.h"
+
+// definition for all major structs used to avoid circluar inclusion
 
 typedef struct s_token	t_token;
 typedef struct s_exec	t_exec;
 typedef struct s_env	t_env;
+typedef struct s_shell  t_shell;
 
 #endif

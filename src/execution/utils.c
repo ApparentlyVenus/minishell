@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/07 22:19:39 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 09:08:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	wait_child(t_exec *ctx)
 	int	i;
 
 	status = 0;
-	exit_code = 0;
+	exit_code = EXIT_SUCCESS;
 	i = 0;
 	while (i < ctx->cmd_count)
 	{
@@ -67,9 +67,9 @@ int	wait_child(t_exec *ctx)
 		else if (WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == SIGINT)
-				exit_code = 130;
+				exit_code = EXIT_CTRL_C;
 			else if (WTERMSIG(status) == SIGQUIT)
-				exit_code = 131;
+				exit_code = EXIT_CTRL_BACK;
 			else
 				exit_code = 128 + WTERMSIG(status);
 		}
@@ -79,7 +79,7 @@ int	wait_child(t_exec *ctx)
 }
 
 void	kill_children(t_exec *ctx, int i)
-{
+{	
 	int	j;
 
 	j = 0;
@@ -87,7 +87,11 @@ void	kill_children(t_exec *ctx, int i)
 		perror("fork");
 	while (j < i)
 	{
-		kill(ctx->pids[j], SIGTERM);
+		if (ctx->pids[j] > 0)
+		{
+			if (kill(ctx->pids[j], SIGTERM) == -1);
+				perror("kill");
+		}
 		j++;
 	}
 }

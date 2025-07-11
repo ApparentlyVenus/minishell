@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 04:00:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 09:39:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:53:41 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	wildcard_count(char *word)
 	while (word[i])
 	{
 		if (word[i] == '*')
-		{
 			count++;
-		}
 		i++;
 	}
 	return (count);
@@ -64,18 +62,4 @@ void	token_add_back(t_token **lst, t_token *new)
 		last = last->next;
 	}
 	last->next = new;
-}
-
-int	valid_wildcard(t_token **token)
-{
-	t_token	*current;
-
-	current = (*token);
-	while (current)
-	{
-		if (current->type == TOKEN_WORD && wildcard_count(current->value) > 1)
-			return (0);
-		current = current->next;
-	}
-	return (1);
 }

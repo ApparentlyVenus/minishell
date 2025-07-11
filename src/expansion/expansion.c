@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 10:21:18 by odana             #+#    #+#             */
-/*   Updated: 2025/07/10 15:22:18 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 16:11:03 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@
 t_token *process_word_token(t_token **tokens, t_token *current,
 								   t_token *prev, t_env *env)
 {
-	int split_result;
+	int		split_result;
+	char	*expanded;
 
-	if (!expand_variables(current->value, env))
+	expanded = expand_variables(current->value, env);
+	if (!expanded)
 		return (NULL);
+	free(current->value);
+	current->value = expanded;
 	split_result = apply_word_splitting(tokens, current, prev);
 	if (split_result == ERROR)
 		return (NULL);

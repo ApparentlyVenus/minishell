@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_expansion.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:45:34 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/10 19:50:06 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 16:20:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*expand_tilde(char *value, t_env *env)
  * @i: Current position index (will be modified)
  * @return: Expanded variable value
  */
-char	*extract_variable(char *value, t_exec *shell, int *i)
+char	*extract_variable(char *value, t_env *env, int *i)
 {
 	int		start;
 	char	*var_name;
@@ -59,10 +59,10 @@ char	*extract_variable(char *value, t_exec *shell, int *i)
 		i[0]++;
 	var_name = ft_substr(value, start, i[0] - start);
 	if (ft_strcmp(var_name, "?") == 0)
-		var_value = ft_itoa(shell->exit_code);
+		var_value = ft_strdup("0");
 	else
 	{
-		env_value = get_env_value(*(shell->env), var_name);
+		env_value = get_env_value(env, var_name);
 		if (env_value)
 			var_value = ft_strdup(env_value);
 		else
@@ -92,7 +92,7 @@ char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 
 	if (ft_isalnum(value[i[0]]) || value[i[0]] == '_')
 	{
-		expanded = extract_and_expand_variable(value, env, i);
+		expanded = extract_variable(value, env, i);
 		temp = result;
 		result = ft_strjoin(result, expanded);
 		free(temp);
@@ -100,7 +100,7 @@ char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 	}	
 	else if (value[i[0]] == '?')
 	{
-		expanded = ft_itoa(shell->exit_code); // because $? gets expanded into the last exit code ya habibi
+		expanded = ft_strdup("0");
 		temp = result;
 		result = ft_strjoin(result, expanded);
 		free(temp);
@@ -108,7 +108,7 @@ char	*handle_dollar_expansion(char *result, char *value, t_env *env, int *i)
 		i[0]++;
 	}
 	else
-		result = append_string_to_result(result, "$");
+		result = append_string(result, "$");
 	return (result);
 }
 
@@ -176,35 +176,4 @@ char	*expand_variables(char *value, t_env *env)
 		}
 	}
 	return (result);
-}
-
-/*
- * expand_dollar_variables - Expands $ variables in all eligible tokens
- * 
- * - tokens: Pointer to token list
- * 
- * - shell: Shell execution context
- * 
- * @return Updated token list
- */
-t_token	**expand_dollar_variables(t_token **tokens, t_exec *env)
-{
-	t_token	*curr;
-	char	*expanded;
-	char	*temp;
-
-	curr = *tokens;
-	while (curr)
-	{
-		if (curr->type == TOKEN_WORD && curr->single_quotes == 0)
-		{
-			temp = expand_tilde(curr->value, env);
-			curr->value = temp;
-			expanded = expand_variables(curr->value, env);
-			free(curr->value);
-			curr->value = expanded;
-		}
-		curr = curr->next;
-	}
-	return (tokens);
 }

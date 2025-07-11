@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 10:47:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/11 13:53:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	validate_tokens(t_shell *shell)
 		return (set_error(shell, "minishell: unexpected token near `heredoc`"), 0);
 	if (!valid_logic_op(&shell->tokens))
 		return (set_error(shell, "minishell: unexpected token near `logical operator`"), 0);
-	if (!valid_wildcard(&shell->tokens))
-		return (set_error(shell, "minishell: unexpected token near `wildcard`"), 0);
 	return (1);
 }
 

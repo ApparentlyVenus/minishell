@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/09 17:36:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 09:08:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /*
-** setup_exec - Initializes execution environment
-**
-** Sets up the context structure with:
-** - Command count
-** - Pipe array
-** - Process ID array
-** - Environment variables
-*/
+ * setup_exec - Initializes execution environment
+ *
+ * Sets up the context structure with:
+ * - Command count
+ * - Pipe array
+ * - Process ID array
+ * - Environment variables
+ */
 t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 {
 	t_exec	*ctx;
@@ -37,19 +37,19 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
 	if (!ctx->pids)
 		return (free_pipes(ctx->pipes, ctx->cmd_count), free(ctx), NULL);
-	ctx->exit_code = 0;
+	ctx->exit_code = EXIT_SUCCESS;
 	ctx->env = env;
 	return (ctx);
 }
 
 /*
-** execute_external_command - Executes external programs
-**
-** Steps:
-** - Check if command has '/' (absolute/relative path)
-** - If not, search in PATH environment variable
-** - Use execve to replace current process with command
-*/
+ * execute_external_command - Executes external programs
+ *
+ * Steps:
+ * - Check if command has '/' (absolute/relative path)
+ * - If not, search in PATH environment variable
+ * - Use execve to replace current process with command
+ */
 void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 {
 	char	*cmd;
@@ -81,21 +81,21 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 // ! or change the names directly in the execute_builtin function
 
 /*
-** execute_builtin - Executes built-in shell commands
-**
-** Steps:
-** - Dispatches to appropriate builtin function based on command type
-** - Called only in child processes for pipeline commands
-** - Sets ctx->exit for proper exit code handling
-*/
+ * execute_builtin - Executes built-in shell commands
+ *
+ * Steps:
+ * - Dispatches to appropriate builtin function based on command type
+ * - Sets ctx->exit for proper exit code handling
+ * - Called only in child processes for pipeline commands
+ */
 void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 {
 	t_builtin	builtin_type;
 
 	if (!cmd_node || !cmd_node->cmd || !cmd_node->cmd->args[0])
-		return (ctx->exit_code = 1);
+		return (ctx->exit_code = EXIT_GENERAL_ERROR);
 	builtin_type = get_builtin_type(cmd_node->cmd->args[0]);
-	ctx->exit_code = 0;
+	ctx->exit_code = EXIT_SUCCESS;
 	if (builtin_type == BUILTIN_CD)
 		builtin_cd(ctx, cmd_node->cmd->args);
 	else if (builtin_type == BUILTIN_ECHO)
@@ -111,18 +111,18 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 	else if (builtin_type == BUILTIN_UNSET)
 		builtin_unset(ctx, cmd_node->cmd->args);
 	else
-		ctx->exit_code = 1;
+		ctx->exit_code = EXIT_GENERAL_ERROR;
 }
 
 /*
-** execute_single_command - Handles execution of one command
-**
-** Steps:
-** - Checks if command is built-in or external
-** - Sets up pipes and redirections
-** - Executes the command appropriately
-** - Only called in child processes
-*/
+ * execute_single_command - Handles execution of one command
+ *
+ * Steps:
+ * - Checks if command is built-in or external
+ * - Sets up pipes and redirections
+ * - Executes the command appropriately
+ * - Only called in child processes
+ */
 void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 {
 	signal(SIGINT, SIG_DFL);
@@ -142,14 +142,14 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 }
 
 /*
-** execute_pipeline - Main execution function
-**
-** Process flow:
-** 1. Set up execution context
-** 2. Fork child process for each command
-** 3. In child: set up pipes/redirections and execute
-** 4. In parent: close pipes and wait for children
-*/
+ * execute_pipeline - Main execution function
+ *
+ * Process flow:
+ * 1. Set up execution context
+ * 2. Fork child process for each command
+ * 3. In child: set up pipes/redirections and execute
+ * 4. In parent: close pipes and wait for children
+ */
 void	execute_pipeline(t_node *cmd_list, t_env *env)
 {
 	t_exec	*ctx;
