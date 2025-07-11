@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/09 17:16:32 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/11 09:17:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 int	redirection_validation(t_token **token)
 {
 	t_token	*current;
-	t_token	*prev;
 
 	prev = NULL;
 	current = (*token);
 	while (current)
 	{
-		if (is_redirection(current->type)
-			&& current->next != NULL && is_redirection(current->next->type))
-			return (0);
-		if (is_redirection(current->type)
-			&& (prev == NULL || prev->type != TOKEN_WORD))
-			return (0);
-		prev = current;
+		if (is_redirection(current->type))
+		{
+			if (current->next = NULL || current->next->type != TOKEN_WORD)
+				return (0);
+			if (is_redirection(current->next->type))
+				return (0);
+		}
 		current = current->next;
 	}
 	return (1);
