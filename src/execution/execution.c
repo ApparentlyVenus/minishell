@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 09:08:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/13 17:56:36 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env)
  * - If not, search in PATH environment variable
  * - Use execve to replace current process with command
  */
-void	execute_external_command(t_node *cmd_node, t_exec *ctx)
+void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
 {
 	char	*cmd;
 	char	*path;
 	char	**envp;
 
-	cmd = cmd_node->cmd->args[0];
+	cmd = args[0];
 	envp = convert_env_to_array(ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
@@ -69,7 +69,7 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 		free_split(envp);
 		exit(127);
 	}
-	execve(path, cmd_node->cmd->args, envp);
+	execve(path, args, envp);
 	perror("execve");
 	if (path != cmd)
 		free(path);
@@ -91,25 +91,27 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx)
 void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 {
 	t_builtin	builtin_type;
+	char		**args;
 
 	if (!cmd_node || !cmd_node->cmd || !cmd_node->cmd->args[0])
 		return (ctx->exit_code = EXIT_GENERAL_ERROR);
-	builtin_type = get_builtin_type(cmd_node->cmd->args[0]);
+	builtin_type = get_builtin_type(cmd_node->cmd->args[0]->value);
+	args = convert_args(cmd_node->cmd->args);
 	ctx->exit_code = EXIT_SUCCESS;
 	if (builtin_type == BUILTIN_CD)
-		builtin_cd(ctx, cmd_node->cmd->args);
+		builtin_cd(ctx, args + 1);
 	else if (builtin_type == BUILTIN_ECHO)
-		builtin_echo(cmd_node->cmd->args, ctx);
+		builtin_echo(args + 1, ctx);
 	else if (builtin_type == BUILTIN_ENV)
 		builtin_env(ctx);
 	else if (builtin_type == BUILTIN_EXIT)
-		builtin_exit(cmd_node->cmd->args, ctx);
+		builtin_exit(args , ctx);
 	else if (builtin_type == BUILTIN_EXPORT)
-		ctx->exit_code = builtin_export(ctx, cmd_node->cmd->args);
+		ctx->exit_code = builtin_export(ctx, args + 1);
 	else if (builtin_type == BUILTIN_PWD)
 		builtin_pwd(ctx);
 	else if (builtin_type == BUILTIN_UNSET)
-		builtin_unset(ctx, cmd_node->cmd->args);
+		builtin_unset(ctx, args + 1);
 	else
 		ctx->exit_code = EXIT_GENERAL_ERROR;
 }
@@ -125,9 +127,13 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
  */
 void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 {
+	t_builtin	type;
+	
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	setup_pipes(ctx, cmd_index);
+	type = get_builtin_type(cmd_node->cmd->args[0]->value);
+	expand_cmd(cmd_node->cmd, *ctx->env, type);
 	setup_redir(cmd_node->cmd);
 	if (get_builtin_type(cmd_node->cmd->args[0]) != BUILTIN_NONE)
 	{

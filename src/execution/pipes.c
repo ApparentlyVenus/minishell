@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:55:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/07 21:55:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/13 19:05:06 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,15 @@ void	close_pipes(t_exec *ctx)
 		close(ctx->pipes[i][1]);
 		i++;
 	}
+}
+
+int	count_commands(t_node *node)
+{
+	if (!node)
+		return (0);
+	if (node->type == NODE_PIPE)
+		return (count_commands(node->left) + count_commands(node->right));
+	if (node->type == NODE_CMD)
+		return (1);
+	return (0);
 }

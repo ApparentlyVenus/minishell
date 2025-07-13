@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/07 21:40:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/13 17:59:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,39 @@ void	redir_out_append(t_redir *redir)
 	close(fd);
 }
 
+void redir_heredoc(t_redir *redir)
+{
+    int pipefd[2];
+    char *line;
+    
+    if (pipe(pipefd) == -1)
+    {
+        perror("pipe");
+        exit(1);
+    }
+    
+    while (1)
+    {
+        line = readline("heredoc> ");
+        if (!line || ft_strcmp(line, redir->filename) == 0)
+        {
+            free(line);
+            break;
+        }
+        write(pipefd[1], line, ft_strlen(line));
+        write(pipefd[1], "\n", 1);
+        free(line);
+    }
+    
+    close(pipefd[1]);
+    dup2(pipefd[0], STDIN_FILENO);
+    close(pipefd[0]);
+}
+
 /*
 ** setup_redir - Handles file redirections
 **
-** Supports: < (input), > (output), >> (append)
-   TODO: Implement heredoc (<<)	
+** Supports: < (input), > (output), >> (append) and << LIM (heredoc)
 */
 void	setup_redir(t_cmd *cmd)
 {

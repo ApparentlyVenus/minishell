@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/11 09:08:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/13 19:05:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,32 @@ char	*find_path(char *cmd, t_env *env_list)
 	return (free_split(paths), NULL);
 }
 
-int	count_commands(t_node *node)
+char **convert_args(t_arg **args)
 {
-	if (!node)
-		return (0);
-	if (node->type == NODE_PIPE)
-		return (count_commands(node->left) + count_commands(node->right));
-	if (node->type == NODE_CMD)
-		return (1);
-	return (0);
+    int count = 0;
+    char **result;
+    int i;
+    
+    if (!args)
+        return (NULL);
+    while (args[count])
+        count++;
+    result = malloc(sizeof(char *) * (count + 1));
+    if (!result)
+        return (NULL);
+    i = 0;
+    while (i < count)
+    {
+        result[i] = ft_strdup(args[i]->value);
+        if (!result[i])
+        {
+            free_split(result);
+            return (NULL);
+        }
+        i++;
+    }
+    result[i] = NULL;
+    return (result);
 }
 
 int	wait_child(t_exec *ctx)
