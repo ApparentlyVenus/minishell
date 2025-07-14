@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/10 19:49:30 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/13 18:02:01 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	get_input(char *stash)
 	if (ft_strlen(buffer) > 0)
 	{
 		add_history(buffer);
-		ft_strlcpy(stash, buffer, ft_strlen(buffer));
+		ft_strlcpy(stash, buffer, ft_strlen(buffer) + 1);
 		free(buffer);
 		return (1);
 	}
@@ -41,7 +41,7 @@ int	get_input(char *stash)
 
 void	update_shlvl(t_exec *shell)
 {
-	char	*val[2];
+	char	*val[3];
 	int		level;
 
 	val[0] = "SHLVL=";
