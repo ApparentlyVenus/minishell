@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:51:27 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 08:50:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	unset_env_value(t_env **env, char *key)
+int	unset_env_value(t_env **env, char *key)
 {
 	t_env	*prev;
 	t_env	*curr;
@@ -40,18 +40,18 @@ static int	unset_env_value(t_env **env, char *key)
 	return (0);
 }
 
-void	builtin_unset(t_exec *shell, char **arg)
+int	builtin_unset(char **args, t_env **env)
 {
 	int	failure;
 	int	i;
 
 	failure = 0;
 	i = 0;
-	while (arg[i])
+	while (args[i])
 	{
-		if (unset_env_value(shell->env, arg[i]) == 1)
+		if (unset_env_value(env, args[i]) == 1)
 			failure = 1;
 		i++;
 	}
-	shell->exit_code = failure;
+	return (failure);
 }

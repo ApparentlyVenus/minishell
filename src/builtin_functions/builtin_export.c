@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/09 17:34:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 08:51:05 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,26 @@ static void	print_sorted_env(t_env **envp)
 	}
 }
 
-int	builtin_export(t_exec *shell, char **args)
+int	builtin_export(char **args, t_env **env)
 {
 	char	*equal_sign;
-	int		failed;
+	int		failure;
 	int		i;
 
 	i = 0;
-	failed = 0;
+	failure = 0;
 	if (!args || !args[0])
-	{
-		print_sorted_env(shell->env);
-		shell->exit_code = 0;
-		return ;
-	}
+		return (print_sorted_env(env), 0);
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
-			export_helper(shell->env, equal_sign, args[i]);
+			export_helper(env, equal_sign, args[i]);
 		else if (is_valid_key(args[i]))
-			set_env_value(shell->env, args[i], NULL);
+			set_env_value(env, args[i], NULL);
 		else
-			failed = 1;
+			failure = 1;
 		i++;
 	}
-	return (failed);
+	return (failure);
 }

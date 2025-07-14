@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 01:46:23 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 09:09:55 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	handle_new_key(t_env **env, char *key, char *value)
+void	handle_new_key(t_env **env, char *key, char *value)
 {
 	t_env	*new_key;
 
@@ -77,7 +77,6 @@ void	export_helper(t_env **envp, char *equal_sign, char *args)
 	}
 	else
 	{
-		value[1] = expand_token_value_final(value[0], *envp);
 		set_env_value(envp, key, value[1]);
 		free(key);
 		free(value[0]);
@@ -85,7 +84,7 @@ void	export_helper(t_env **envp, char *equal_sign, char *args)
 	}
 }
 
-static void	swap_env_nodes(t_env *a, t_env *b)
+void	swap_env_nodes(t_env *a, t_env *b)
 {
 	char	*temp_key;
 	char	*temp_value;

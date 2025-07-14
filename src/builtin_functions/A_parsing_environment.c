@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   A_parsing_environment.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/06 04:53:52 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 09:10:27 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	env_init(t_env **env_list, char **envp)
 	}
 }
 
-static int	valid_entries_count(t_env *env)
+int	valid_entries_count(t_env *env)
 {
 	int		count;
 	t_env	*current;

@@ -6,28 +6,27 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 08:56:54 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/14 08:54:27 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	new_line_flag(t_token *args, int *i)
+static int	new_line_flag(char **args, int *i)
 {
 	int	j;
 
 	*i = 0;
 	j = 0;
-	while (args && ft_strcmp(args->value, "-n") == 0)
+	while (args[j] && ft_strcmp(args[j], "-n") == 0)
 	{
-		args = args->next;
 		*i = 1;
 		j++;
 	}
 	return (j);
 }
 
-static int	builtin_echo_stdrd(char **args, t_exec *shell)
+int	builtin_echo(char **args)
 {
 	int	i;
 	int	j;
@@ -42,7 +41,7 @@ static int	builtin_echo_stdrd(char **args, t_exec *shell)
 				j++;
 				continue ;
 			}
-			write(1, args[j], strlen(args[j]));
+			write(1, args[j], ft_strlen(args[j]));
 			if (args[j + 1] != NULL)
 				write(1, " ", 1);
 		}
@@ -51,10 +50,4 @@ static int	builtin_echo_stdrd(char **args, t_exec *shell)
 	if (i == 0)
 		write(1, "\n", 1);
 	return (0);
-}
-
-int	builtin_echo(char **args, t_exec *shell)
-{
-	shell->exit_code = builtin_echo_stdrd(args, shell);
-	return (shell->exit_code);
 }

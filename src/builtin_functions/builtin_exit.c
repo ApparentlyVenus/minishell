@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 18:14:15 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 08:54:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,17 @@ static int	ft_is_numeric(const char *str)
 	return (1);
 }
 
-int	size_of_arr(char **args)
+static int	size_of_arr(char **args)
 {
 	int	i;
 
 	i = 0;
 	while (args[i])
-	{
 		i++;
-	}
 	return (i);
 }
 
-void	builtin_exit(char **args, t_exec *shell)
+void	builtin_exit(char **args, t_shell *shell)
 {
 	long long	code;
 
@@ -52,20 +50,17 @@ void	builtin_exit(char **args, t_exec *shell)
 		if (!ft_is_numeric(args[1]))
 		{
 			printf("minishell: exit: %s: numeric argument required\n", args[1]);
-			shell->exit_code = 2;
-			free_env_list(shell->env);
-			exit(shell->exit_code);
+			shell->exit_code = EXIT_MISUSE;
+			shell_exit(shell, shell->exit_code);
 		}
 		if (size_of_arr(args) > 2)
 		{
 			printf("minishell: exit: too many arguments\n");
-			shell->exit_code = 1;
+			shell->exit_code = EXIT_FAILURE;
 			return ;
 		}
 		code = ft_atoll(args[1]);
 		shell->exit_code = (unsigned int)code;
 	}
-	free_exec(shell);
-	free_split(args);
-	exit(shell->exit_code);
+	shell_exit(shell, shell->exit_code);
 }
