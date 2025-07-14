@@ -1,4 +1,15 @@
-#include "../../inc/new_expansion.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard_expand.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/13 18:58:15 by odana             #+#    #+#             */
+/*   Updated: 2025/07/13 19:04:01 by odana            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 /*
@@ -13,17 +24,6 @@ int wildcard_expand(char *pattern, char ***matches)
 
 	count = collect_star_matches(pattern, matches);
 	if (count > 1)
-		sort_star_matches(*matches, count);
+		sort_matches(*matches, count);
 	return (count);
-}
-
-/*
-** sort_matches
-** Purpose: Alias for sort_star_matches for new expansion interface.
-** Used variables: matches (array), count (number of strings)
-** Return: None (modifies matches in place)
-*/
-void sort_matches(char **matches, int count)
-{
-	sort_star_matches(matches, count);
 }

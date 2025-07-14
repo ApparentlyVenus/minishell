@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard_helpers.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
+/*   Updated: 2025/07/13 18:58:05 by odana            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
-#include "../../inc/new_expansion.h"
 
 /*
-** sort_star_matches
+** sort_matches
 ** Purpose: Sorts the matched filenames alphabetically.
 ** Used variables: matches (array), count (number of matches)
 ** Return: None (modifies matches in place)
 */
-void sort_star_matches(char **matches, int count)
+void sort_matches(char **matches, int count)
 {
 	int i;
 	int j;
