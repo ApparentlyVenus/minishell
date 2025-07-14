@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/09 17:35:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/14 09:12:05 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,31 @@ typedef struct s_env
 // Parsing environment
 
 void	env_init(t_env **env_list, char **envp);
+int		valid_entries_count(t_env *env);
 char	**convert_env_to_array(t_env *env);
 
 // Builtin functions
 
-int		builtin_echo(char **args, t_exec *shell);
-void	builtin_env(t_exec *shell);
-void	builtin_exit(char **args, t_exec *shell);
-int		builtin_export(t_exec *shell, char **args);
-void	builtin_pwd(t_exec *shell);
-void	builtin_unset(t_exec *shell, char **arg);
-void	builtin_cd(t_exec *shell, char **args);
+int		builtin_echo(char **args);
+int		builtin_export(char **args, t_env **env);
+int		builtin_pwd(void);
+int		builtin_unset(char **args, t_env **env);
+int		builtin_cd(char **args, t_env **env);
+void	builtin_env(t_env **env);
+void	builtin_exit(char **args, t_shell *shell);
 
 // Utils 
 
 int		size_of_arr(char **args);
-char	*expand_token_value_final(char *value, t_exec *shell);
-t_token	**expand_dollar(t_token **tokens, t_exec *shell); // for expansion $
-char	*expand_floaty(char *value, t_exec *shell); // expanding ~ called in expand $
-// for expansion *
-// for expansion all toguether;
+
+// Helpers
+
+void	handle_new_key(t_env **env, char *key, char *value);
 void	set_env_value(t_env **env, char *key, char *value);
-void	export_helper(t_env **envp, char *equal_sign, char *args);
-int		is_valid_key(const char *key);
+void	export_helper(t_env **envp, char *equal_sign, char *args); 
+void	swap_env_nodes(t_env *a, t_env *b);
 t_env	**do_something(t_env **envp);
 char	*get_env_value(t_env *env, char *key);
+int		is_valid_key(const char *key);
 
 #endif
