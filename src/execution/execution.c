@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/13 17:56:36 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/14 09:56:38 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 	if (builtin_type == BUILTIN_CD)
 		builtin_cd(ctx, args + 1);
 	else if (builtin_type == BUILTIN_ECHO)
-		builtin_echo(args + 1, ctx);
+		builtin_echo(args + 1);
 	else if (builtin_type == BUILTIN_ENV)
 		builtin_env(ctx);
 	else if (builtin_type == BUILTIN_EXIT)
@@ -128,6 +128,7 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
 void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 {
 	t_builtin	type;
+	char		**args;
 	
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -138,11 +139,13 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
 	if (get_builtin_type(cmd_node->cmd->args[0]) != BUILTIN_NONE)
 	{
 		execute_builtin(cmd_node, ctx);
-		exit(0);
+		exit(ctx->exit_code);
 	}
 	else
 	{
-		execute_external_command(cmd_node, ctx);
+		args = convert_args(cmd_node->cmd->args);
+		execute_external_command(cmd_node, ctx, args);
+		free_split(args);
 		exit(127);
 	}
 }
