@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 14:53:59 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 15:41:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-
-// enum for builtin command identification
-typedef enum e_builtin
-{
-	BUILTIN_NONE,
-	BUILTIN_CD,
-	BUILTIN_ECHO,
-	BUILTIN_ENV,
-	BUILTIN_EXIT,
-	BUILTIN_EXPORT,
-	BUILTIN_PWD,
-	BUILTIN_UNSET
-}	t_builtin;
 
 // execution context for a pipeline
 typedef struct s_exec
