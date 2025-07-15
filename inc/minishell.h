@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/13 18:15:09 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 14:56:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ extern volatile sig_atomic_t	g_signal_received;
 # define ERROR				-1
 # define NO_CHANGE			0
 # define SPLIT_SUCCESS		1
-# define TOKEN_REMOVED
+# define TOKEN_REMOVED		2
 
 // forward strcut declarations
 typedef struct s_token		t_token;
