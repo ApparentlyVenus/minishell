@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 17:59:25 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 14:46:49 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	setup_redir(t_cmd *cmd)
 			redir_out(redir);
 		else if (redir->type == REDIR_OUT_APPEND)
 			redir_out_append(redir);
+		else if (redir->type == HERE_DOC)
+			redir_heredoc(redir);
 		redir = redir->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/08 09:59:30 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 14:53:59 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,29 @@ typedef struct s_exec
 	int		cmd_count;
 	int		**pipes;
 	pid_t	*pids;
-	int		exit_code;
 	t_env	**env;
 }	t_exec;
 
 // main execution function
 
-void		execute_pipeline(t_node *cmd_list, t_env *env_list);
+void		execute_pipeline(t_shell *shell);
 
 // helpers for pipeline execution
 
-void		execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index);
-void		execute_builtin(t_node *cmd_node, t_exec *ctx);
-void		execute_external_command(t_node *cmd_node, t_exec *ctx);
-t_exec		*setup_exec(t_node *cmd_list, t_env *env_list);
+void 		execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell);
+int  		execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell);
+int			call_builtin_function(t_builtin builtin_type, char **args, 
+				t_exec *ctx, t_shell *shell);
+void		execute_external_command(t_node *cmd_node, t_exec *ctx, char **args);
 
 // redirection handeling
 
 int			setup_redir(t_cmd *cmd);
+
 void		redir_in(t_redir *redir);
 void		redir_out(t_redir *redir);
 void		redir_out_append(t_redir *redir);
-// TODO:	redir_heredoc();
+void		redir_heredoc(t_redir *redir);
 
 // setup pipes
 
@@ -70,10 +71,14 @@ void		free_exec(t_exec *ctx);
 void		free_split(char **args);
 
 // utils
+
+t_exec		*setup_exec(t_node *cmd_list, t_env *env_list);
 int			wait_child(t_exec *ctx);
+void		kill_child(t_exec *ctx, int i);
 t_node		*get_nth_command(t_node *node, int n);
 t_builtin	get_builtin_type(const char *cmd_name);
 char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
+char		**convert_args(t_arg **args);
 
 #endif

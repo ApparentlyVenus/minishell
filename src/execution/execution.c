@@ -6,41 +6,11 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/14 09:56:38 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 14:52:48 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-/*
- * setup_exec - Initializes execution environment
- *
- * Sets up the context structure with:
- * - Command count
- * - Pipe array
- * - Process ID array
- * - Environment variables
- */
-t_exec	*setup_exec(t_node *cmd_list, t_env *env)
-{
-	t_exec	*ctx;
-
-	if (!cmd_list)
-		return (NULL);
-	ctx = malloc(sizeof(t_exec));
-	if (!ctx)
-		return (NULL);
-	ctx->cmd_count = count_commands(cmd_list);
-	ctx->pipes = allocate_pipes(ctx->cmd_count);
-	if (ctx->cmd_count > 1 && !ctx->pipes)
-		return (free(ctx->pids), free(ctx), NULL);
-	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
-	if (!ctx->pids)
-		return (free_pipes(ctx->pipes, ctx->cmd_count), free(ctx), NULL);
-	ctx->exit_code = EXIT_SUCCESS;
-	ctx->env = env;
-	return (ctx);
-}
 
 /*
  * execute_external_command - Executes external programs
@@ -57,11 +27,11 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
 	char	**envp;
 
 	cmd = args[0];
-	envp = convert_env_to_array(ctx->env);
+	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
 	else
-		path = find_path(cmd, ctx->env);
+		path = find_path(cmd, *ctx->env);
 	if (!path)
 	{
 		ft_putstr_fd(cmd, 2);
@@ -88,33 +58,49 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
  * - Sets ctx->exit for proper exit code handling
  * - Called only in child processes for pipeline commands
  */
-void	execute_builtin(t_node *cmd_node, t_exec *ctx)
+int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx, t_shell *shell)
+{
+	if (builtin_type == BUILTIN_CD)
+		return (builtin_cd(args + 1, ctx->env));
+	else if (builtin_type == BUILTIN_ECHO)
+		return (builtin_echo(args + 1));
+	else if (builtin_type == BUILTIN_ENV)
+	{
+		builtin_env(ctx->env);
+		return (EXIT_SUCCESS);
+	}
+	else if (builtin_type == BUILTIN_EXIT)
+	{
+		builtin_exit(args, shell);
+		return (EXIT_SUCCESS);
+	}
+	else if (builtin_type == BUILTIN_EXPORT)
+		return (builtin_export(args + 1, ctx->env));
+	else if (builtin_type == BUILTIN_PWD)
+		return (builtin_pwd());
+	else if (builtin_type == BUILTIN_UNSET)
+		return (builtin_unset(args + 1, ctx->env));
+	else
+		return (EXIT_GENERAL_ERROR);
+}
+
+int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
 {
 	t_builtin	builtin_type;
 	char		**args;
+	int			exit_code;
 
 	if (!cmd_node || !cmd_node->cmd || !cmd_node->cmd->args[0])
-		return (ctx->exit_code = EXIT_GENERAL_ERROR);
+		return (EXIT_GENERAL_ERROR);
 	builtin_type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	args = convert_args(cmd_node->cmd->args);
-	ctx->exit_code = EXIT_SUCCESS;
-	if (builtin_type == BUILTIN_CD)
-		builtin_cd(ctx, args + 1);
-	else if (builtin_type == BUILTIN_ECHO)
-		builtin_echo(args + 1);
-	else if (builtin_type == BUILTIN_ENV)
-		builtin_env(ctx);
-	else if (builtin_type == BUILTIN_EXIT)
-		builtin_exit(args , ctx);
-	else if (builtin_type == BUILTIN_EXPORT)
-		ctx->exit_code = builtin_export(ctx, args + 1);
-	else if (builtin_type == BUILTIN_PWD)
-		builtin_pwd(ctx);
-	else if (builtin_type == BUILTIN_UNSET)
-		builtin_unset(ctx, args + 1);
-	else
-		ctx->exit_code = EXIT_GENERAL_ERROR;
+	if (!args)
+		return (EXIT_GENERAL_ERROR);
+	exit_code = call_builtin_function(builtin_type, args, ctx, shell);
+	free_split(args);
+	return (exit_code);
 }
+
 
 /*
  * execute_single_command - Handles execution of one command
@@ -125,21 +111,22 @@ void	execute_builtin(t_node *cmd_node, t_exec *ctx)
  * - Executes the command appropriately
  * - Only called in child processes
  */
-void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
+void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 {
 	t_builtin	type;
 	char		**args;
+	int			exit_code;
 	
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	setup_pipes(ctx, cmd_index);
+	setup_pipes(ctx, i);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	expand_cmd(cmd_node->cmd, *ctx->env, type);
 	setup_redir(cmd_node->cmd);
-	if (get_builtin_type(cmd_node->cmd->args[0]) != BUILTIN_NONE)
+	if (get_builtin_type(cmd_node->cmd->args[0]->value) != BUILTIN_NONE)
 	{
-		execute_builtin(cmd_node, ctx);
-		exit(ctx->exit_code);
+		exit_code = execute_builtin(cmd_node, ctx, shell);
+		exit(exit_code);
 	}
 	else
 	{
@@ -159,31 +146,31 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int cmd_index)
  * 3. In child: set up pipes/redirections and execute
  * 4. In parent: close pipes and wait for children
  */
-void	execute_pipeline(t_node *cmd_list, t_env *env)
+void	execute_pipeline(t_shell *shell)
 {
 	t_exec	*ctx;
 	t_node	*cmd_node;
 	int		i;
 
-	if (!cmd_list)
+	if (!shell->ast)
 		return ;
-	ctx = setup_exec(cmd_list, env);
+	ctx = setup_exec(shell->ast, shell->env);
 	if (!ctx)
 		return ;
 	i = -1;
 	while (++i < ctx->cmd_count)
 	{
-		cmd_node = get_nth_command(cmd_list, i);
+		cmd_node = get_nth_command(shell->ast, i);
 		if (!cmd_node || !cmd_node->cmd)
 			continue ;
 		ctx->pids[i] = fork();
 		if (ctx->pids[i] == -1)
 		{
-			kill_children(ctx, i);
+			kill_child(ctx, i);
 			break ;
 		}
 		else if (ctx->pids[i] == 0)
-			execute_command(cmd_node, ctx, i);
+			execute_command(cmd_node, ctx, i, shell);
 	}
-	return (close_pipes(ctx), ctx->exit_code = wait_child(ctx), free_exec(ctx));
+	return (close_pipes(ctx), shell->exit_code = wait_child(ctx), free_exec(ctx));
 }

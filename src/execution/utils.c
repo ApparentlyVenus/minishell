@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 19:05:16 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 14:52:43 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	wait_child(t_exec *ctx)
 	return (exit_code);
 }
 
-void	kill_children(t_exec *ctx, int i)
+void	kill_child(t_exec *ctx, int i)
 {	
 	int	j;
 
