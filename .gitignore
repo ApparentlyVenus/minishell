@@ -6,3 +6,4 @@ obj/
 *.a
 minishell_libft/*.o
 minishell_libft/libft.a
+.vscode
