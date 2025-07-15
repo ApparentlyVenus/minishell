@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:55:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 13:58:16 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:46:48 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	**allocate_pipes(int cmd_count)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
-			perror("pipe");
+			ft_putendl_fd("pipe creation failed", STDERR_FILENO);
 			free_pipes(pipes, i);
 			return (NULL);
 		}

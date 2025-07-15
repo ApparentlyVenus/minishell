@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 14:52:48 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:42:04 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
 	if (!path)
 	{
 		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", 2);
+		ft_putendl_fd(": command not found", STDERR_FILENO);
 		free_split(envp);
 		exit(127);
 	}
 	execve(path, args, envp);
-	perror("execve");
+	ft_putendl_fd("execve failed", STDERR_FILENO);
 	if (path != cmd)
 		free(path);
 	free_split(envp);

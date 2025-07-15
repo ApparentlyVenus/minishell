@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 14:52:43 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:47:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,13 @@ void	kill_child(t_exec *ctx, int i)
 
 	j = 0;
 	if (ctx->pids[i] == -1)
-		perror("fork");
+		ft_putendl_fd("fork failed", STDERR_FILENO);
 	while (j < i)
 	{
 		if (ctx->pids[j] > 0)
 		{
 			if (kill(ctx->pids[j], SIGTERM) == -1);
-				perror("kill");
+				ft_putendl_fd("kill failed", STDERR_FILENO);
 		}
 		j++;
 	}

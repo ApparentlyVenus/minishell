@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 14:46:49 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:46:18 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void	redir_in(t_redir *redir)
 {
-	int	fd;
+	int		fd;
 
 	fd = open(redir->filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror(redir->filename);
-		exit(1);
+		ft_putstr_fd(redir->filename, STDERR_FILENO);
+		ft_putendl_fd(": no such file or directory", STDERR_FILENO);
+		exit(EXIT_GENERAL_ERROR);
 	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
@@ -33,8 +34,9 @@ void	redir_out(t_redir *redir)
 	fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		perror(redir->filename);
-		exit(1);
+		ft_putstr_fd(redir->filename, STDERR_FILENO);
+		ft_putendl_fd(": permission denied", STDERR_FILENO);
+		exit(EXIT_GENERAL_ERROR);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
@@ -47,8 +49,9 @@ void	redir_out_append(t_redir *redir)
 	fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		perror(redir->filename);
-		exit(1);
+		ft_putstr_fd(redir->filename, STDERR_FILENO);
+		ft_putendl_fd(": permission denied", STDERR_FILENO);
+		exit(EXIT_GENERAL_ERROR);
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
@@ -61,8 +64,8 @@ void redir_heredoc(t_redir *redir)
     
     if (pipe(pipefd) == -1)
     {
-        perror("pipe");
-        exit(1);
+		ft_putendl_fd("pipe failed", STDERR_FILENO);
+        exit(EXIT_GENERAL_ERROR);
     }
     
     while (1)
