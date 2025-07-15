@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:29:06 by odana             #+#    #+#             */
-/*   Updated: 2025/07/11 08:57:57 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/15 17:39:43 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,16 @@ t_shell *shell_init(char **envp)
     if (!shell)
         return (NULL);
 	shell->env = NULL;
-    env_init(&shell->env, envp);
     shell->exit_code = EXIT_SUCCESS;
     shell->interactive = isatty(STDIN_FILENO);
     shell->tokens = NULL;
-    shell->expanded_tokens = NULL;
     shell->ast = NULL;
     shell->exec_ctx = NULL;
     shell->current_phase = PHASE_NONE;
 	shell->last_error = NULL;
+    env_init(&shell->env, envp);
+    if (!shell->env)
+        return(free(shell), NULL);
     return (shell);
 }
 
@@ -37,11 +38,12 @@ void shell_cleanup(t_shell *shell)
     if (!shell)
         return;
     cleanup_tokens(shell);
-    cleanup_expanded_tokens(shell);
     cleanup_ast(shell);
     cleanup_exec(shell);
     if (shell->env)
         free_env(shell->env);
+    if (shell->last_error)
+        free(shell->last_error);
     free(shell);
 }
 
@@ -59,12 +61,18 @@ void shell_reset_phase(t_shell *shell)
 {
     if (!shell)
         return;
-    
-    // Clean up current phase data
     cleanup_tokens(shell);
-    cleanup_expanded_tokens(shell);
     cleanup_ast(shell);
     cleanup_exec(shell);
-    
     shell->current_phase = PHASE_NONE;
+    if (shell->last_error)
+    {
+        free(shell->last_error);
+        shell->last_error = NULL;
+    }
+}
+
+int is_valid_shell(t_shell *shell)
+{
+    return (shell != NULL && shell->env != NULL);
 }
