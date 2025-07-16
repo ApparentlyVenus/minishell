@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 14:56:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:26:46 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@
 # include <readline/history.h>
 # include "../minishell_libft/libft.h"
 
-// global variable
-extern volatile sig_atomic_t	g_signal_received;
+// minishell modules
+# include "tokenizer.h"
+# include "parser.h"
+# include "expansion.h"
+# include "env.h"
+# include "execution.h"
+# include "shell.h"
 
 // macros
+
 # define EXIT_SUCCESS		0
 # define EXIT_GENERAL_ERROR	1
 # define EXIT_MISUSE		2
@@ -49,14 +55,15 @@ extern volatile sig_atomic_t	g_signal_received;
 # define TOKEN_REMOVED		2
 
 // forward strcut declarations
-typedef struct s_token		t_token;
-typedef struct s_node		t_node;
-typedef struct s_cmd		t_cmd;
-typedef struct s_arg		t_arg;
-typedef struct s_redir		t_redir;
-typedef struct s_env		t_env;
-typedef struct s_exec		t_exec;
-typedef struct s_shell		t_shell;
+
+typedef struct s_token	t_token;
+typedef struct s_node	t_node;
+typedef struct s_cmd	t_cmd;
+typedef struct s_arg	t_arg;
+typedef struct s_redir	t_redir;
+typedef struct s_env	t_env;
+typedef struct s_exec	t_exec;
+typedef struct s_shell	t_shell;
 
 // enums
 
@@ -111,13 +118,5 @@ typedef enum e_phase
 	PHASE_PARSE,
 	PHASE_EXECUTE,
 }	t_phase;
-
-// minishell modules
-# include "tokenizer.h"
-# include "parser.h"
-# include "expansion.h"
-# include "env.h"
-# include "execution.h"
-# include "shell.h"
 
 #endif

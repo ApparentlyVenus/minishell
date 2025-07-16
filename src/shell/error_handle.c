@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   error_handle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 07:38:28 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 17:30:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:36:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void print_error(char *msg)
+void	print_error(char *msg)
 {
 	if (!msg)
 		return ;
-	
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
-int is_fatal_error(int exit_code)
+int	is_fatal_error(int exit_code)
 {
 	return (exit_code == EXIT_GENERAL_ERROR || exit_code == 1);
 }
 
-void set_error(t_shell *shell, char *error_msg)
+void	set_error(t_shell *shell, char *error_msg)
 {
 	if (!shell)
 		return ;
@@ -39,7 +38,7 @@ void set_error(t_shell *shell, char *error_msg)
 		shell->last_error = ft_strdup(error_msg);
 }
 
-int handle_error(t_shell *shell, char *msg, int exit_code)
+int	handle_error(t_shell *shell, char *msg, int exit_code)
 {
 	if (!shell)
 		return (1);

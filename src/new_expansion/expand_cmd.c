@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 18:58:12 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:27:26 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 ** Used variables: arg (input string)
 ** Return: 1 if assignment, 0 otherwise
 */
-int is_assignment(char *arg)
+int	is_assignment(char *arg)
 {
-	char *eq;
+	char	*eq;
+
 	eq = ft_strchr(arg, '=');
 	if (!eq)
 		return (0);
@@ -35,10 +36,10 @@ int is_assignment(char *arg)
 ** Used variables: var (left), val (right)
 ** Return: Newly allocated string "var=val"
 */
-char *join_assignment(char *var, char *val)
+char	*join_assignment(char *var, char *val)
 {
-	char *tmp;
-	char *result;
+	char	*tmp;
+	char	*result;
 
 	result = ft_strjoin(var, "=");
 	tmp = result;
@@ -56,13 +57,13 @@ char *join_assignment(char *var, char *val)
 ** Used variables: arg (input), env (env list)
 ** Return: Newly allocated expanded assignment string
 */
-char *expand_assignment_value(char *arg, t_env *env)
+char	*expand_assignment_value(char *arg, t_env *env)
 {
-	char *eq;
-	char *var;
-	char *val;
-	char *result;
-	int var_len;
+	char	*eq;
+	char	*var;
+	char	*val;
+	char	*result;
+	int		var_len;
 
 	eq = ft_strchr(arg, '=');
 	if (!eq)
@@ -88,9 +89,10 @@ char *expand_assignment_value(char *arg, t_env *env)
 ** Used variables: arg (argument), env (env list), builtin_type, index
 ** Return: Newly allocated expanded string
 */
-char *expand_cmd_arg(char *arg, t_env *env, t_builtin builtin_type, int index)
+char	*expand_cmd_arg(char *arg, t_env *env, t_builtin builtin_type,
+	int index)
 {
-	char *expanded;
+	char	*expanded;
 
 	expanded = NULL;
 	if (builtin_type == BUILTIN_EXPORT && is_assignment(arg))
@@ -108,10 +110,10 @@ char *expand_cmd_arg(char *arg, t_env *env, t_builtin builtin_type, int index)
 ** Used variables: cmd (command), env (env list), builtin_type
 ** Return: None (modifies cmd->args in place)
 */
-void expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
+void	expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
 {
-	int i;
-	char *expanded;
+	int		i;
+	char	*expanded;
 
 	i = 0;
 	while (cmd->args && cmd->args[i])
@@ -132,10 +134,10 @@ void expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
 ** Used variables: cmd (command), env (env list)
 ** Return: None (modifies cmd->redirs in place)
 */
-void expand_cmd_redirs(t_cmd *cmd, t_env *env)
+void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 {
-	t_redir *redir;
-	char *expanded;
+	t_redir	*redir;
+	char	*expanded;
 
 	redir = cmd->redirs;
 	while (redir)
@@ -160,10 +162,10 @@ void expand_cmd_redirs(t_cmd *cmd, t_env *env)
 ** Used variables: cmd (command), env (env list), builtin_type
 ** Return: None (modifies cmd in place)
 */
-void expand_cmd(t_cmd *cmd, t_env *env, t_builtin builtin_type)
+void	expand_cmd(t_cmd *cmd, t_env *env, t_builtin builtin_type)
 {
 	if (!cmd)
 		return ;
 	expand_cmd_args(cmd, env, builtin_type);
 	expand_cmd_redirs(cmd, env);
-} 
+}

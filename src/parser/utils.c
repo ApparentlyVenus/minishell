@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/07/06 23:24:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:41:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ void	append_redir(t_redir **list, t_redir *new_redir)
 	*list = new_redir;
 }
 
-/*
-** add_arg_list
-** Purpose: Adds a new t_arg to the list, copying value and quoting info from t_token.
-** Used variables: list (t_arg **), token (t_token *)
-** Return: 1 on success, 0 on failure
-*/
+// /*
+// ** add_arg_list
+// ** Purpose: Adds a new t_arg to the list,
+//			copying value and quoting info from t_token.
+// ** Used variables: list (t_arg **), token (t_token *)
+// ** Return: 1 on success, 0 on failure
+// */
 int	add_arg_list(t_arg **list, t_token *token)
 {
 	t_arg	*cur;
@@ -67,11 +68,11 @@ int	add_arg_list(t_arg **list, t_token *token)
 ** Used variables: arg_list (t_arg *), count (int)
 ** Return: t_arg** (NULL-terminated array)
 */
-t_arg **process_args(t_arg *arg_list, int count)
+t_arg	**process_args(t_arg *arg_list, int count)
 {
-	t_arg **args;
-	t_arg *current;
-	int i;
+	t_arg	**args;
+	t_arg	*current;
+	int		i;
 
 	args = (t_arg **)malloc(sizeof(t_arg *) * (count + 1));
 	if (!args)

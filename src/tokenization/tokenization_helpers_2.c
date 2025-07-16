@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:38:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/11 10:43:17 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:37:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ void	toggle_quotes(char c, int *in_single, int *in_double)
 		*in_double = !(*in_double);
 }
 
-
 int	continue_word(char c, int in_single, int in_double)
 {
 	if (in_single || in_double)
 		return (1);
 	return (is_word_char(c));
 }
-

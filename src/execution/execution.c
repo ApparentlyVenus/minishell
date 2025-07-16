@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 18:42:04 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:06:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
  * - Sets ctx->exit for proper exit code handling
  * - Called only in child processes for pipeline commands
  */
-int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx, t_shell *shell)
+int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
+	t_shell *shell)
 {
 	if (builtin_type == BUILTIN_CD)
 		return (builtin_cd(args + 1, ctx->env));
@@ -101,7 +102,6 @@ int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
 	return (exit_code);
 }
 
-
 /*
  * execute_single_command - Handles execution of one command
  *
@@ -116,9 +116,8 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	t_builtin	type;
 	char		**args;
 	int			exit_code;
-	
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+
+	signals_child();
 	setup_pipes(ctx, i);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	expand_cmd(cmd_node->cmd, *ctx->env, type);
@@ -172,5 +171,5 @@ void	execute_pipeline(t_shell *shell)
 		else if (ctx->pids[i] == 0)
 			execute_command(cmd_node, ctx, i, shell);
 	}
-	return (close_pipes(ctx), shell->exit_code = wait_child(ctx), free_exec(ctx));
+	return (parent_process(shell, ctx));
 }

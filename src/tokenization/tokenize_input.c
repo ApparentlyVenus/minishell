@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 10:43:17 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:37:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ t_token	*extract_operator_token(char *input, int *pos)
 			return (token);
 	}
 }
-	
+
 t_token	**tokenize_input(char *input, t_shell *shell)
 {
 	int		i;
@@ -118,7 +118,7 @@ t_token	**tokenize_input(char *input, t_shell *shell)
 	{
 		skip_spaces(input, &i);
 		if (!input[i])
-			break;
+			break ;
 		new_token = create_next_token(input, &i, shell);
 		if (!new_token)
 			return (free_tokens(shell->tokens), NULL);

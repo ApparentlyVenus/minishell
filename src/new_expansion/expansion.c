@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:13 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 19:03:53 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 19:08:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 ** Used variables: args (array), env (env list)
 ** Return: None (modifies args in place)
 */
-void expand_variables_in_args(char **args, t_env *env)
+void	expand_variables_in_args(char **args, t_env *env)
 {
-	int i;
-	char *expanded;
+	int		i;
+	char	*expanded;
 
 	i = 0;
 	while (args && args[i])
@@ -42,12 +42,15 @@ void expand_variables_in_args(char **args, t_env *env)
 ** Used variables: args (pointer to array)
 ** Return: None (modifies args in place, may reallocate array)
 */
-void word_split_args(char ***args)
+void	word_split_args(char ***args)
 {
-	int i;
-	char **split;
-	int j, k, count, new_count;
-	char **new_args;
+	int		i;
+	char	**split;
+	int		j;
+	int		k;
+	int		count;
+	int		new_count;
+	char	**new_args;
 
 	i = 0;
 	while (*args && (*args)[i])
@@ -59,10 +62,12 @@ void word_split_args(char ***args)
 			{
 				free_split(split);
 				i++;
-				continue;
+				continue ;
 			}
-			for (count = 0; (*args)[count]; count++);
-			for (new_count = 0; split[new_count]; new_count++);
+			for (count = 0; (*args)[count]; count++)
+				;
+			for (new_count = 0; split[new_count]; new_count++)
+				;
 			new_args = (char **)malloc(sizeof(char *) * (count + new_count));
 			j = 0;
 			while (j < i)
@@ -110,7 +115,8 @@ void expand_wildcards_in_args(char ***args)
 		if (match_count > 0)
 		{
 			// Count total new args
-			for (new_count = 0; (*args)[new_count]; new_count++);
+			for (new_count = 0; (*args)[new_count]; new_count++)
+				;
 			new_args = (char **)malloc(sizeof(char *) * (new_count + match_count));
 			j = 0;
 			while (j < i)
@@ -138,15 +144,16 @@ void expand_wildcards_in_args(char ***args)
 	}
 }
 
-/*
-** expand_all_args
-** Purpose: Centralizes variable, word splitting, and wildcard expansion for args.
-** Used variables: args (array, pointer to array), env (env list)
-** Return: None (modifies args in place, may reallocate array)
-*/
-void expand_all_args(char ***args, t_env *env)
+// /*
+// ** expand_all_args
+// ** Purpose: Centralizes variable, word splitting,
+//		and wildcard expansion for args.
+// ** Used variables: args (array, pointer to array), env (env list)
+// ** Return: None (modifies args in place, may reallocate array)
+// */
+void	expand_all_args(char ***args, t_env *env)
 {
 	expand_variables_in_args(*args, env);
 	word_split_args(args);
 	expand_wildcards_in_args(args);
-} 
+}

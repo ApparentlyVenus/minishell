@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 15:41:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:05:52 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ void		execute_pipeline(t_shell *shell);
 
 // helpers for pipeline execution
 
-void 		execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell);
-int  		execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell);
-int			call_builtin_function(t_builtin builtin_type, char **args, 
+void		execute_command(t_node *cmd_node, t_exec *ctx, int i,
+				t_shell *shell);
+int			execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell);
+int			call_builtin_function(t_builtin builtin_type, char **args,
 				t_exec *ctx, t_shell *shell);
-void		execute_external_command(t_node *cmd_node, t_exec *ctx, char **args);
-
+void		execute_external_command(t_node *cmd_node, t_exec *ctx,
+				char **args);
+void		parent_process(t_shell *shell, t_exec *ctx);
 // redirection handeling
 
 int			setup_redir(t_cmd *cmd);

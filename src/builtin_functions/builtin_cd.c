@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 18:49:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:30:58 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*expand_floaty(char *value, t_env **env)
 	char	*result;
 	char	*home;
 	char	*suffix;
-	
+
 	if (!value || value[0] != '~'
 		|| (value[1] != '/' && value[1] != '\0'))
 		return (ft_strdup(value));
@@ -99,11 +99,11 @@ int	builtin_cd(char **args, t_env **env)
 
 	new_value[0] = getcwd(NULL, 0);
 	if (size_of_arr(args) > 1)
-		return (ft_putendl_fd("cd: directory change failed", STDERR_FILENO), 
-        	free(new_value[0]), 1);
+		return (ft_putendl_fd("cd: directory change failed", STDERR_FILENO),
+			free(new_value[0]), 1);
 	status = change_directory(args, env, &print);
 	if (status == -1)
-		return(perror("cd"), free(new_value[0]), 1);
+		return (perror("cd"), free(new_value[0]), 1);
 	new_value[1] = getcwd(NULL, 0);
 	update_pwd(env, new_value[0], new_value[1]);
 	if (print == 1)

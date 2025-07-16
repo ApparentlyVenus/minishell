@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 17:42:53 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:30:22 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	shell_reset_phase(t_shell *shell);
 
 // Wrapper functions for main loop
 
-int 	shell_tokenize(t_shell *shell, char *input);
-int 	shell_expand(t_shell *shell);
-int 	shell_parse(t_shell *shell);
-int 	shell_execute(t_shell *shell);
+int		shell_tokenize(t_shell *shell, char *input);
+int		shell_expand(t_shell *shell);
+int		shell_parse(t_shell *shell);
+int		shell_execute(t_shell *shell);
 
 // Cleanup functions
 void	cleanup_tokens(t_shell *shell);
@@ -58,6 +58,6 @@ void	cleanup_exec(t_shell *shell);
 void	set_error(t_shell *shell, char *error_msg);
 void	print_error(char *msg);
 int		is_fatal_error(int exit_code);
-int 	handle_error(t_shell *shell, char *msg, int exit_code);
+int		handle_error(t_shell *shell, char *msg, int exit_code);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 14:46:01 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:05:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,12 @@ int	count_commands(t_node *node)
 	if (node->type == NODE_CMD)
 		return (1);
 	return (0);
+}
+
+void	parent_process(t_shell *shell, t_exec *ctx)
+{
+	close_pipes(ctx);
+	signals_parent();
+	shell->exit_code = wait_child(ctx);
+	free_exec(ctx);
 }

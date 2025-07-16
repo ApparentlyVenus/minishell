@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 18:47:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:33:57 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,33 @@ char	*find_path(char *cmd, t_env *env_list)
 	return (free_split(paths), NULL);
 }
 
-char **convert_args(t_arg **args)
+char	**convert_args(t_arg **args)
 {
-    int count = 0;
-    char **result;
-    int i;
-    
-    if (!args)
-        return (NULL);
-    while (args[count])
-        count++;
-    result = malloc(sizeof(char *) * (count + 1));
-    if (!result)
-        return (NULL);
-    i = 0;
-    while (i < count)
-    {
-        result[i] = ft_strdup(args[i]->value);
-        if (!result[i])
-        {
-            free_split(result);
-            return (NULL);
-        }
-        i++;
-    }
-    result[i] = NULL;
-    return (result);
+	int		count;
+	char	**result;
+	int		i;
+
+	count = 0;
+	if (!args)
+		return (NULL);
+	while (args[count])
+		count++;
+	result = malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		result[i] = ft_strdup(args[i]->value);
+		if (!result[i])
+		{
+			free_split(result);
+			return (NULL);
+		}
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
 }
 
 int	wait_child(t_exec *ctx)
@@ -106,7 +107,7 @@ void	kill_child(t_exec *ctx, int i)
 	{
 		if (ctx->pids[j] > 0)
 		{
-			if (kill(ctx->pids[j], SIGTERM) == -1);
+			if (kill(ctx->pids[j], SIGTERM) == -1)
 				ft_putendl_fd("kill failed", STDERR_FILENO);
 		}
 		j++;

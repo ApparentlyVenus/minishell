@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 18:54:43 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:36:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 #include "../inc/minishell.h"
 
-char *get_input_line(void)
+char	*get_input_line(void)
 {
-	char *buffer;
+	char	*buffer;
 
 	buffer = readline("minishell@~$ ");
 	if (!buffer)
@@ -30,7 +30,7 @@ char *get_input_line(void)
 	return (buffer);
 }
 
-void update_shlvl(t_shell *shell)
+void	update_shlvl(t_shell *shell)
 {
 	char	*current_shlvl;
 	char	*new_shlvl_str;

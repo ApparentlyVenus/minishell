@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:45 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 18:49:38 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:31:22 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void builtin_env(t_env **env)
+void	builtin_env(t_env **env)
 {
 	t_env	*current;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/14 09:12:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:04:48 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		size_of_arr(char **args);
 
 void	handle_new_key(t_env **env, char *key, char *value);
 void	set_env_value(t_env **env, char *key, char *value);
-void	export_helper(t_env **envp, char *equal_sign, char *args); 
+void	export_helper(t_env **envp, char *equal_sign, char *args);
 void	swap_env_nodes(t_env *a, t_env *b);
 t_env	**do_something(t_env **envp);
 char	*get_env_value(t_env *env, char *key);

@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 14:32:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:06:44 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int process_input(t_shell *shell, char *input)
+static int	process_input(t_shell *shell, char *input)
 {
 	if (!shell_tokenize(shell, input))
 		return (0);
@@ -25,12 +25,12 @@ static int process_input(t_shell *shell, char *input)
 	return (1);
 }
 
-static char *get_prompt(void)
+static char	*get_prompt(void)
 {
-	char *cwd;
-	char *prompt;
-	char *temp;
-	
+	char	*cwd;
+	char	*prompt;
+	char	*temp;
+
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (ft_strdup("minishell$ "));
@@ -45,12 +45,14 @@ static char *get_prompt(void)
 	return (prompt);
 }
 
-static int main_loop(t_shell *shell)
+static int	main_loop(t_shell *shell)
 {
-	char *input;
+	char	*input;
 
 	while (1)
 	{
+		if (shell->interactive)
+			signals_prompt();
 		input = get_input_line();
 		if (!input)
 		{
@@ -70,14 +72,14 @@ static int main_loop(t_shell *shell)
 	return (shell->exit_code);
 }
 
-
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
 	int		exit_code;
-	
+
 	(void)argc;
 	(void)argv;
+	rl_catch_signals = 0;
 	shell = shell_init(envp);
 	if (!shell)
 	{
@@ -92,4 +94,3 @@ int main(int argc, char **argv, char **envp)
 	rl_clear_history();
 	return (exit_code);
 }
-

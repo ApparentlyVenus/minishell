@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_matches.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:09 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 19:03:57 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:41:55 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 ** Used variables: pattern (wildcard)
 ** Return: Number of matches found
 */
-int count_star_matches(const char *pattern)
+int	count_star_matches(const char *pattern)
 {
-	DIR *dir;
-	struct dirent *entry;
-	int count;
+	DIR				*dir;
+	struct dirent	*entry;
+	int				count;
 
 	count = 0;
 	dir = opendir(".");
@@ -31,7 +31,7 @@ int count_star_matches(const char *pattern)
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (entry->d_name[0] == '.' && pattern[0] != '.')
-			continue;
+			continue ;
 		if (match_star_pattern(pattern, entry->d_name))
 			count++;
 	}
@@ -45,11 +45,11 @@ int count_star_matches(const char *pattern)
 ** Used variables: pattern (wildcard), matches (output array), expected_count
 ** Return: Actual number of matches filled
 */
-int fill_star_matches(const char *pattern, char **matches, int expected_count)
+int	fill_star_matches(const char *pattern, char **matches, int expected_count)
 {
-	DIR *dir;
-	struct dirent *entry;
-	int count;
+	DIR				*dir;
+	struct dirent	*entry;
+	int				count;
 
 	count = 0;
 	dir = opendir(".");
@@ -58,7 +58,7 @@ int fill_star_matches(const char *pattern, char **matches, int expected_count)
 	while ((entry = readdir(dir)) != NULL && count < expected_count)
 	{
 		if (entry->d_name[0] == '.' && pattern[0] != '.')
-			continue;
+			continue ;
 		if (match_star_pattern(pattern, entry->d_name))
 		{
 			matches[count] = ft_strdup(entry->d_name);
@@ -82,11 +82,11 @@ int fill_star_matches(const char *pattern, char **matches, int expected_count)
 ** Used variables: pattern (wildcard), matches (output array)
 ** Return: Number of matches found
 */
-int collect_star_matches(const char *pattern, char ***matches)
+int	collect_star_matches(const char *pattern, char ***matches)
 {
-	int count;
-	char **temp_matches;
-	int actual_count;
+	int		count;
+	char	**temp_matches;
+	int		actual_count;
 
 	count = count_star_matches(pattern);
 	if (count == 0)
@@ -106,4 +106,4 @@ int collect_star_matches(const char *pattern, char ***matches)
 	}
 	*matches = temp_matches;
 	return (actual_count);
-} 
+}

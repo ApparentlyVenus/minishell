@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 14:31:08 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:06:49 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
-
 	write(STDOUT_FILENO, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();

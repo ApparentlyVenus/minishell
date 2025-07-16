@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/15 18:40:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/16 17:29:49 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 	start = *i;
 	word = extract_word(input, i);
 	if (!word)
-		return (handle_error(shell, "malloc failure", EXIT_GENERAL_ERROR), NULL);
+		return (handle_error(shell, "malloc failure",
+				EXIT_GENERAL_ERROR), NULL);
 	if (is_quotes(input[start]) && !is_closed(input, start))
-		return (free(word), handle_error(shell, "unclose quotes", EXIT_MISUSE), NULL);
+		return (free(word), handle_error(shell, "unclose quotes",
+				EXIT_MISUSE), NULL);
 	new_token = clean_word_token(word);
 	if (!new_token)
-		return (handle_error(shell, "malloc failure", EXIT_GENERAL_ERROR), NULL);
+		return (handle_error(shell, "malloc failure",
+				EXIT_GENERAL_ERROR), NULL);
 	return (new_token);
 }
 
