@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:30:22 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/17 21:18:58 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ int		shell_tokenize(t_shell *shell, char *input);
 int		shell_expand(t_shell *shell);
 int		shell_parse(t_shell *shell);
 int		shell_execute(t_shell *shell);
+
+// signals
+
+void	signals_prompt(void);
+void	signals_child(void);
+void	signals_parent(void);
 
 // Cleanup functions
 void	cleanup_tokens(t_shell *shell);
