@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:06:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 15:33:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,12 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 
 	signals_child();
 	setup_pipes(ctx, i);
+	if (!cmd_node->cmd->args || !cmd_node->cmd->args[0])
+		exit(EXIT_GENERAL_ERROR);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	expand_cmd(cmd_node->cmd, *ctx->env, type);
 	setup_redir(cmd_node->cmd);
-	if (get_builtin_type(cmd_node->cmd->args[0]->value) != BUILTIN_NONE)
+	if (type != BUILTIN_NONE)
 	{
 		exit_code = execute_builtin(cmd_node, ctx, shell);
 		exit(exit_code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:05:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 15:34:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 	if (!ctx)
 		return (NULL);
 	ctx->cmd_count = count_commands(cmd_list);
+	ctx->pipes = NULL;
+	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
+	if (!ctx->pids)
+		return (free(ctx), NULL);
 	ctx->pipes = allocate_pipes(ctx->cmd_count);
 	if (ctx->cmd_count > 1 && !ctx->pipes)
 		return (free(ctx->pids), free(ctx), NULL);
-	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
-	if (!ctx->pids)
-		return (free_pipes(ctx->pipes, ctx->cmd_count), free(ctx), NULL);
 	ctx->env = &env;
 	return (ctx);
 }
