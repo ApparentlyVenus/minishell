@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   A_parsing_environment.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 23:41:48 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 15:40:06 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	env_init(t_env **env_list, char **envp)
 		{
 			new_node->equal = 0;
 			new_node->value = NULL;
-			new_node->key = strdup(envp[i]);
+			new_node->key = ft_strdup(envp[i]);
 		}
 		new_node->next = NULL;
 		ft_lstadd_back(env_list, new_node);

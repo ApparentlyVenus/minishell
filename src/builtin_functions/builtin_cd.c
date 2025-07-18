@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:30:58 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 15:39:32 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	builtin_cd(char **args, t_env **env)
 
 	new_value[0] = getcwd(NULL, 0);
 	if (size_of_arr(args) > 1)
-		return (ft_putendl_fd("cd: directory change failed", STDERR_FILENO),
+		return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO),
 			free(new_value[0]), 1);
 	status = change_directory(args, env, &print);
 	if (status == -1)
