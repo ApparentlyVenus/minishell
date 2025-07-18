@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:40:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 12:58:01 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,16 @@ t_node	*create_and_node(t_node *left, t_node *right);
 t_node	*create_or_node(t_node *left, t_node *right);
 t_node	*create_cmd_node(t_arg **args, t_redir *redir_list);
 t_redir	*create_redir_node(int type, char *filename);
+
+// heredoc
+t_redir	*process_heredoc(char *delimiter);
+char	*unquote_delimiter(char *delimiter);
+int		is_delimiter_quoted(char *delimiter);
+char	*create_temp_file(char *content);
+char	*collect_heredoc_content(char *delimiter);
+char	*append_heredoc_line(char *content, char *line);
+char	*get_suffix(void);
+void	cleanup_heredoc_files(t_cmd *cmd);
 
 // utils
 
