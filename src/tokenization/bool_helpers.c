@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 10:28:34 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 14:10:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	is_closed(char *input, int pos)
 	if (input[i] == '\'' || input[i] == '\"')
 	{
 		q = input[i];
+		i++;
 		while (input[i])
 		{
 			i++;

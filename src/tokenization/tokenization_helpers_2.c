@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:38:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:37:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 14:12:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*trim_quotes(char *word, t_token *token)
 	{
 		token->single_quotes = 1;
 		trimmed = ft_strtrim(word, "\'");
+		if (!trimmed)
+			return (word);
 		free(word);
 		return (trimmed);
 	}
@@ -27,6 +29,8 @@ char	*trim_quotes(char *word, t_token *token)
 	{
 		token->double_quotes = 1;
 		trimmed = ft_strtrim(word, "\"");
+		if (!trimmed)
+			return (word);
 		free(word);
 		return (trimmed);
 	}
