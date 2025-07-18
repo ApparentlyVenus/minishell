@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   art.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:04:03 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/05 15:56:36 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 13:55:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	art(void)
 	printf("\033[38;5;208m%s\n", "╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝");
 	printf("\033[38;5;208m%s\033[0m\n", "      		by Youssef & Omar     ");
 	printf("\033[1;37m%s\033[0m\n", "");
-	printf("\033[1;32m%s", "\"No leaks allowed ");
-	printf("our shell is watertight!\033[0m\n");
+	printf("\033[1;32m%s", "\"THE RETURN STATEMENTS MUST ROLL");
+	printf("DOWN WITH NORMINETTE OPPRESSION!\033[0m\n");
 }
