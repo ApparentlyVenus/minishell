@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:26:46 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 11:27:53 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ typedef enum e_phase
 {
 	PHASE_NONE,
 	PHASE_TOKEN,
-	PHASE_EXPAND,
 	PHASE_PARSE,
 	PHASE_EXECUTE,
 }	t_phase;

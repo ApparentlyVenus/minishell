@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/07 08:23:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 11:24:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,15 @@ t_node	*parse_group(t_token **tokens);
 t_node	*create_pipe_node(t_node *left, t_node *right);
 t_node	*create_and_node(t_node *left, t_node *right);
 t_node	*create_or_node(t_node *left, t_node *right);
-t_node	*create_cmd_node(char **argv, t_redir *redir_list);
+t_node	*create_cmd_node(t_arg **args, t_redir *redir_list);
 t_redir	*create_redir_node(int type, char *filename);
 
 // utils
 
 int		is_redir(t_token *token);
 void	append_redir(t_redir **list, t_redir *new_redir);
-int		add_arg_list(t_arg **list, char *value);
 char	**process_args(t_arg *arg_list, int count);
+int		add_arg_list(t_arg **list, t_token *token);
 
 // frees
 

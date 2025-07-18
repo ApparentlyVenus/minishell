@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:06:44 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 11:28:13 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static int	process_input(t_shell *shell, char *input)
 {
 	if (!shell_tokenize(shell, input))
-		return (0);
-	if (!shell_expand(shell))
 		return (0);
 	if (!shell_parse(shell))
 		return (0);

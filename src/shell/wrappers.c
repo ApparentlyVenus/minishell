@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wrappers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:33:55 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:38:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 11:27:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,6 @@ int	shell_tokenize(t_shell *shell, char *input)
 	}
 	if (!validate_tokens(shell))
 		return (0);
-	return (1);
-}
-
-int	shell_expand(t_shell *shell)
-{
-	if (!shell || !shell->tokens)
-		return (0);
-	shell->current_phase = PHASE_EXPAND;
-	if (!expand_tokens(&shell->tokens, shell->env))
-	{
-		set_error(shell, "expansion failed");
-		return (0);
-	}
 	return (1);
 }
 
