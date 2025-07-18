@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/17 21:18:58 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 12:03:38 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	shell_reset_phase(t_shell *shell);
 // Wrapper functions for main loop
 
 int		shell_tokenize(t_shell *shell, char *input);
-int		shell_expand(t_shell *shell);
 int		shell_parse(t_shell *shell);
 int		shell_execute(t_shell *shell);
 

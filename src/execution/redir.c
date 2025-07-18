@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 23:41:29 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 12:50:53 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,6 @@ void	redir_out_append(t_redir *redir)
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
-
-void	redir_heredoc(t_redir *redir)
-{
-	int		pipefd[2];
-	char	*line;
-
-	if (pipe(pipefd) == -1)
-	{
-		ft_putendl_fd("pipe failed", STDERR_FILENO);
-		exit(EXIT_GENERAL_ERROR);
-	}
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line || ft_strcmp(line, redir->filename) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(pipefd[1], line, ft_strlen(line));
-		write(pipefd[1], "\n", 1);
-		free(line);
-	}
-	close(pipefd[1]);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-}
-
 /*
 ** setup_redir - Handles file redirections
 **
@@ -103,8 +75,6 @@ void	setup_redir(t_cmd *cmd)
 			redir_out(redir);
 		else if (redir->type == REDIR_OUT_APPEND)
 			redir_out_append(redir);
-		else if (redir->type == HERE_DOC)
-			redir_heredoc(redir);
 		redir = redir->next;
 	}
 }

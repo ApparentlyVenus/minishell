@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:24:16 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 11:40:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_redir
 {
 	t_redir_type	type;
 	char			*filename;
+	int				expand_heredoc;
 	struct s_redir	*next;
 }	t_redir;
 

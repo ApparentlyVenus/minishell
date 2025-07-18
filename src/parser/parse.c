@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:21:04 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 12:51:41 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_node	*parse_command(t_token **tokens)
 	}
 	while (*tokens && is_redir(*tokens))
 	{
-		redir = parse_redir(tokens);
+		redir = parse_redir(tokens, env);
 		if (!redir)
 			return (free_arg(arg_list), free_redir(redir_list), (NULL));
 		append_redir(&redir_list, redir);
@@ -95,6 +95,7 @@ t_redir	*parse_redir(t_token **tokens)
 {
 	int		type;
 	char	*filename;
+	t_redir	*redir;
 
 	if (!*tokens)
 		return (NULL);
@@ -102,10 +103,16 @@ t_redir	*parse_redir(t_token **tokens)
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
 		return (NULL);
-	filename = ft_strdup((*tokens)->value);
+	filename = (*tokens)->value;
 	*tokens = (*tokens)->next;
-	return (create_redir_node(type, filename));
+	if (type == TOKEN_HERDOC)
+	{
+		redir = process_heredoc(filename);
+		return (redir);
+	}
+	return (create_redir_node(type, ft_strdup(filename)));
 }
+
 
 t_node	*parse_group(t_token **tokens)
 {
@@ -115,7 +122,7 @@ t_node	*parse_group(t_token **tokens)
 	if (*tokens && (*tokens)->type == TOKEN_LPAREN)
 	{
 		*tokens = (*tokens)->next;
-		node = parse_expr(tokens, 0);
+		node = parse_pipeline(tokens, 0);
 		if (!node || !*tokens || (*tokens)->type != TOKEN_RPAREN)
 		{
 			if (node)
