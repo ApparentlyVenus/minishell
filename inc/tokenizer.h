@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:13:27 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 15:00:40 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		is_quotes(char c);
 // utils 
 
 void	free_tokens(t_token **head);
-int		get_input(char *stash);
 char	*extract_word(char *input, int *pos);
 void	skip_spaces(char *input, int *pos);
 
@@ -84,7 +83,7 @@ int		redirection_validation(t_token **token);
 int		pipe_validation(t_token **token);
 int		valid_heredoc(t_token **token);
 int		valid_logic_op(t_token **token);
-int		valid_wildcard(t_token **token);
+int		valid_parentheses(t_token **tokens);
 
 // validation utils
 
