@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:37:17 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 14:22:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ int	validate_tokens(t_shell *shell)
 	if (!valid_logic_op(&shell->tokens))
 		return (set_error(shell,
 				"minishell: unexpected token near `logical operator`"), 0);
+	if (!valid_parentheses(&shell->tokens))
+		return (set_error(shell,
+				"minishell: unmatched parentheses"), 0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 04:00:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/11 13:53:41 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 14:21:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,26 @@ void	token_add_back(t_token **lst, t_token *new)
 		last = last->next;
 	}
 	last->next = new;
+}
+
+int	valid_parentheses(t_token **tokens)
+{
+	t_token	*current;
+	int		balance;
+
+	current = *tokens;
+	balance = 0;
+	while (current)
+	{
+		if (current->type == TOKEN_LPAREN)
+			balance++;
+		else if (current->type == TOKEN_RPAREN)
+		{
+			balance--;
+			if (balance < 0)
+				return (0);
+		}
+		current = current->next;
+	}
+	return (balance == 0);
 }
