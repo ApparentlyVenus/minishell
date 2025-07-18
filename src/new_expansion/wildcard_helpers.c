@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:13:58 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:50:12 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,35 @@ int	match_star_pattern(char *pattern, char *filename)
 	while (*pattern == '*')
 		pattern++;
 	return (!*pattern);
+}
+
+/*
+** count_star_matches
+** Purpose: Counts files matching the * pattern in the current directory.
+** Used variables: pattern (wildcard)
+** Return: Number of matches found
+*/
+int	count_star_matches(const char *pattern)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	int				count;
+
+	count = 0;
+	dir = opendir(".");
+	if (!dir)
+		return (0);
+	entry = readdir(dir);
+	while (entry != NULL)
+	{
+		if (entry->d_name[0] == '.' && pattern[0] != '.')
+		{
+			entry = readdir(dir);
+			continue ;
+		}
+		if (match_star_pattern(pattern, entry->d_name))
+			count++;
+		entry = readdir(dir);
+	}
+	return (closedir(dir), count);
 }

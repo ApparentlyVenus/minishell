@@ -3,40 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   collect_matches.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:09 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:41:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 13:49:49 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /*
-** count_star_matches
-** Purpose: Counts files matching the * pattern in the current directory.
-** Used variables: pattern (wildcard)
-** Return: Number of matches found
+** cleanup_matches_on_error
+** Purpose: Frees allocated matches when memory allocation fails
+** Used variables: matches (array), count (number to free)
+** Return: None
 */
-int	count_star_matches(const char *pattern)
+void	cleanup_matches_on_error(char **matches, int count)
 {
-	DIR				*dir;
-	struct dirent	*entry;
-	int				count;
+	while (--count >= 0)
+		free(matches[count]);
+}
 
-	count = 0;
-	dir = opendir(".");
-	if (!dir)
-		return (0);
-	while ((entry = readdir(dir)) != NULL)
+/*
+** should_skip_entry
+** Purpose: Checks if directory entry should be skipped
+** Used variables: entry (directory entry), pattern (wildcard pattern)
+** Return: 1 if should skip, 0 otherwise
+*/
+int	should_skip_entry(struct dirent *entry, const char *pattern)
+{
+	if (entry->d_name[0] == '.' && pattern[0] != '.')
+		return (1);
+	return (0);
+}
+
+/*
+** add_match_to_array
+** Purpose: Adds a matching filename to the matches array
+** Used variables: matches (array), count (current count), filename
+** Return: 1 on success, 0 on failure
+*/
+int	add_match_to_array(char **matches, int count, char *filename)
+{
+	matches[count] = ft_strdup(filename);
+	if (!matches[count])
 	{
-		if (entry->d_name[0] == '.' && pattern[0] != '.')
-			continue ;
-		if (match_star_pattern(pattern, entry->d_name))
-			count++;
+		cleanup_matches_on_error(matches, count);
+		return (0);
 	}
-	closedir(dir);
-	return (count);
+	return (1);
 }
 
 /*
@@ -55,25 +70,23 @@ int	fill_star_matches(const char *pattern, char **matches, int expected_count)
 	dir = opendir(".");
 	if (!dir)
 		return (0);
-	while ((entry = readdir(dir)) != NULL && count < expected_count)
+	entry = readdir(dir);
+	while (entry != NULL && count < expected_count)
 	{
-		if (entry->d_name[0] == '.' && pattern[0] != '.')
+		if (should_skip_entry(entry, pattern))
+		{
+			entry = readdir(dir);
 			continue ;
+		}
 		if (match_star_pattern(pattern, entry->d_name))
 		{
-			matches[count] = ft_strdup(entry->d_name);
-			if (!matches[count])
-			{
-				while (--count >= 0)
-					free(matches[count]);
-				closedir(dir);
-				return (0);
-			}
+			if (!add_match_to_array(matches, count, entry->d_name))
+				return (closedir(dir), 0);
 			count++;
 		}
+		entry = readdir(dir);
 	}
-	closedir(dir);
-	return (count);
+	return (closedir(dir), count);
 }
 
 /*
