@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:43:57 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:47:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:15:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	is_delimiter_quoted(char *delimiter)
 	if (!delimiter)
 		return (0);
 	len = ft_strlen(delimiter);
-	if (len >= 2 && 
-		((delimiter[0] == '"' && delimiter[len - 1] == '"') ||
-		 (delimiter[0] == '\'' && delimiter[len - 1] == '\'')))
+	if (len >= 2
+		&& ((delimiter[0] == '"' && delimiter[len - 1] == '"')
+			|| (delimiter[0] == '\'' && delimiter[len - 1] == '\'')))
 		return (1);
 	return (0);
 }
@@ -78,7 +78,29 @@ char	*append_heredoc_line(char *content, char *line)
 char	*get_suffix(void)
 {
 	static int	counter = 0;
-	
+
 	counter++;
 	return (ft_itoa(counter));
+}
+
+/*
+** cleanup_heredoc_files
+** Purpose: Removes temporary heredoc files (call during cleanup)
+** Used variables: cmd (command with redirections)
+** Return: None
+*/
+void	cleanup_heredoc_files(t_cmd *cmd)
+{
+	t_redir	*redir;
+
+	if (!cmd)
+		return ;
+	redir = cmd->redirs;
+	while (redir)
+	{
+		if (redir->type == REDIR_IN && redir->filename
+			&& ft_strncmp(redir->filename, "/tmp/heredoc_", 13) == 0)
+			unlink(redir->filename);
+		redir = redir->next;
+	}
 }

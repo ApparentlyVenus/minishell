@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:09:18 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/18 13:21:58 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ int		match_star_pattern(char *pattern, char *filename);
 int		handle_star_case(char **p, char *f, char **star_p, char **star_f);
 int		try_backtrack(char **p, char *f);
 
-//
+// Variable expansion
+
+int		is_assignment(char *arg);
+char	*join_assignment(char *var, char *val);
+char	*expand_assignment_value(char *arg, t_env *env);
+char	*expand_cmd_arg(char *arg, t_env *env, t_builtin builtin_type,
+			int index);
+void	expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type);
+void	expand_cmd(t_cmd *cmd, t_env *env, t_builtin builtin_type);
 
 #endif

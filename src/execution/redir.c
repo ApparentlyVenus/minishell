@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 12:50:53 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:06:41 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	redir_out_append(t_redir *redir)
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
+
 /*
 ** setup_redir - Handles file redirections
 **

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/13 18:58:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:13:58 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 ** Used variables: matches (array), count (number of matches)
 ** Return: None (modifies matches in place)
 */
-void sort_matches(char **matches, int count)
+void	sort_matches(char **matches, int count)
 {
-	int i;
-	int j;
-	char *temp;
+	int		i;
+	int		j;
+	char	*temp;
 
 	i = 0;
 	while (i < count - 1)
@@ -48,34 +48,29 @@ void sort_matches(char **matches, int count)
 ** Used variables: pattern (wildcard), filename (candidate)
 ** Return: 1 if match, 0 otherwise
 */
-int match_star_pattern(const char *pattern, const char *filename)
+int	match_star_pattern(char *pattern, char *filename)
 {
-	int i;
-	int j;
-	char c;
+	const char	*star_p = NULL;
+	const char	*star_f = NULL;
 
-	i = 0;
-	j = 0;
-	while (pattern[i] && filename[j])
+	while (*filename)
 	{
-		c = pattern[i];
-		if (c == '*')
+		if (*pattern == '*')
 		{
-			if (!pattern[i + 1])
-				return (1);
-			while (filename[j] && filename[j] != pattern[i + 1])
-				j++;
-			i++;
+			star_p = ++pattern;
+			star_f = filename;
 		}
-		else if (c == filename[j])
+		else if (*pattern == *filename && (pattern++, filename++, 1))
+			;
+		else if (star_p)
 		{
-			i++;
-			j++;
+			pattern = star_p;
+			filename = ++star_f;
 		}
 		else
 			return (0);
 	}
-	while (pattern[i] == '*')
-		i++;
-	return (!pattern[i] && !filename[j]);
-} 
+	while (*pattern == '*')
+		pattern++;
+	return (!*pattern);
+}

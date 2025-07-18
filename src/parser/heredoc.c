@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 12:54:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:16:06 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,24 @@ char	*collect_heredoc_content(char *delimiter)
 	content = ft_strdup("");
 	if (!content)
 		return (NULL);
-	
 	while (1)
 	{
 		line = readline("heredoc> ");
 		if (!line)
 		{
-            write(STDOUT_FILENO, "\n", 1);
-			break;
+			write(STDOUT_FILENO, "\n", 1);
+			break ;
 		}
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
-			break;
+			break ;
 		}
 		content = append_heredoc_line(content, line);
 		free(line);
 		if (!content)
 			return (NULL);
 	}
-	
 	return (content);
 }
 
@@ -100,7 +98,7 @@ t_redir	*process_heredoc(char *delimiter)
 	unquoted_delimiter = unquote_delimiter(delimiter);
 	if (!unquoted_delimiter)
 		return (NULL);
-    signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	content = collect_heredoc_content(unquoted_delimiter);
 	free(unquoted_delimiter);
 	signals_prompt();
@@ -114,27 +112,4 @@ t_redir	*process_heredoc(char *delimiter)
 	if (!redir)
 		return (unlink(temp_filename), free(temp_filename), NULL);
 	return (redir);
-}
-
-/*
-** cleanup_heredoc_files
-** Purpose: Removes temporary heredoc files (call during cleanup)
-** Used variables: cmd (command with redirections)
-** Return: None
-*/
-void	cleanup_heredoc_files(t_cmd *cmd)
-{
-	t_redir	*redir;
-
-	if (!cmd)
-		return;
-	
-	redir = cmd->redirs;
-	while (redir)
-	{
-		if (redir->type == REDIR_IN && redir->filename &&
-                ft_strncmp(redir->filename, "/tmp/heredoc_", 13) == 0)
-			unlink(redir->filename); 
-		redir = redir->next;
-	}
 }

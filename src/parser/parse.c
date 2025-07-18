@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 12:51:41 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/18 13:16:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_node	*parse_command(t_token **tokens)
 	}
 	while (*tokens && is_redir(*tokens))
 	{
-		redir = parse_redir(tokens, env);
+		redir = parse_redir(tokens);
 		if (!redir)
 			return (free_arg(arg_list), free_redir(redir_list), (NULL));
 		append_redir(&redir_list, redir);
@@ -112,7 +112,6 @@ t_redir	*parse_redir(t_token **tokens)
 	}
 	return (create_redir_node(type, ft_strdup(filename)));
 }
-
 
 t_node	*parse_group(t_token **tokens)
 {
