@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:04:48 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/19 08:02:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	swap_env_nodes(t_env *a, t_env *b);
 t_env	**do_something(t_env **envp);
 char	*get_env_value(t_env *env, char *key);
 int		is_valid_key(const char *key);
+void	env_add_back(t_env **env_list, t_env *new_node);
 
 #endif

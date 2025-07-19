@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 15:40:06 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/19 08:01:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,25 @@ void	env_init(t_env **env_list, char **envp)
 			new_node->key = ft_strdup(envp[i]);
 		}
 		new_node->next = NULL;
-		ft_lstadd_back(env_list, new_node);
+		env_add_back(env_list, new_node);
 	}
+}
+
+void	env_add_back(t_env **env_list, t_env *new_node)
+{
+	t_env	*last;
+
+	if (!env_list || !new_node)
+		return ;
+	if (*env_list == NULL)
+	{
+		*env_list = new_node;
+		return ;
+	}
+	last = *env_list;
+	while (last->next)
+		last = last->next;
+	last->next = new_node;
 }
 
 int	valid_entries_count(t_env *env)
