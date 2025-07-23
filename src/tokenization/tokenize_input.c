@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:37:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/23 13:10:49 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,26 @@ t_token	*extract_operator_token(char *input, int *pos)
 
 	token = malloc(sizeof(t_token));
 	token->next = NULL;
-	while (input[*pos])
+	if (input[*pos] == '>' && input[*pos + 1] == '>')
+		return (token->value = ft_substr(input, *pos, 2),
+			token->type = TOKEN_REDIR_OUT_APPEND, (*pos) += 2, token);
+	else if (input[*pos] == '>')
+		return (token->value = ft_substr(input, *pos, 1),
+			token->type = TOKEN_REDIR_OUT, (*pos)++, token);
+	else if (input[*pos] == '|' && input[*pos + 1] == '|')
+		return (token->value = ft_substr(input, *pos, 2),
+			token->type = TOKEN_OR, token->priority = 1, *pos += 2, token);
+	else if (input[*pos] == '<' && input[*pos + 1] == '<')
+		return (token->value = ft_substr(input, *pos, 2),
+			token->type = TOKEN_HERDOC, (*pos) += 2, token);
+	else
 	{
-		if (input[*pos] == '>' && input[*pos + 1] == '>')
-			return (token->value = ft_substr(input, *pos, 2),
-				token->type = TOKEN_REDIR_OUT_APPEND, (*pos) += 2, token);
-		else if (input[*pos] == '>')
-			return (token->value = ft_substr(input, *pos, 1),
-				token->type = TOKEN_REDIR_OUT, (*pos)++, token);
-		else if (input[*pos] == '|' && input[*pos + 1] == '|')
-			return (token->value = ft_substr(input, *pos, 2),
-				token->type = TOKEN_OR, token->priority = 1, *pos += 2, token);
-		else if (input[*pos] == '<' && input[*pos + 1] == '<')
-			return (token->value = ft_substr(input, *pos, 2),
-				token->type = TOKEN_HERDOC, (*pos) += 2, token);
-		else
-			token = extract_bonus_token(input, pos, token);
+		token = extract_bonus_token(input, pos, token);
 		if (!token)
 			return (NULL);
-		else
-			return (token);
+		return (token);
 	}
+	return (free(token),NULL);
 }
 
 t_token	**tokenize_input(char *input, t_shell *shell)
@@ -121,7 +120,7 @@ t_token	**tokenize_input(char *input, t_shell *shell)
 			break ;
 		new_token = create_next_token(input, &i, shell);
 		if (!new_token)
-			return (free_tokens(shell->tokens), NULL);
+			return (free_tokens(&shell->tokens), NULL);
 		token_add_back(&shell->tokens, new_token);
 	}
 	return (&shell->tokens);

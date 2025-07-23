@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 15:00:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/23 12:35:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,6 @@
 # define TOKENIZER_H
 
 # include "minishell.h"
-
-typedef enum e_token_type
-{
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_OUT_APPEND,
-	TOKEN_HERDOC,
-	TOKEN_OR,
-	TOKEN_AND,
-	TOKEN_WILDCARD,
-	TOKEN_LPAREN,
-	TOKEN_RPAREN,
-}	t_token_type;
-
-typedef struct s_token
-{
-	t_token_type	type;
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	int				priority;
-	int				has_wildcard;
-	struct s_token	*next;
-}	t_token;
-
-// tokenization functions
 
 // main tokenization function
 

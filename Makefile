@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
+#    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/17 22:14:34 by yitani            #+#    #+#              #
-#    Updated: 2025/07/17 22:19:13 by yitani           ###   ########.fr        #
+#    Updated: 2025/07/23 13:09:06 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,14 +94,6 @@ TOKENIZATION_SRCS = src/tokenization/validation.c \
                     src/tokenization/tokenization_helpers_2.c \
                     src/tokenization/bool_helpers.c
 
-EXPANSION_SRCS = src/expansion/expansion.c \
-                 src/expansion/utils.c \
-                 src/expansion/wildcard.c \
-                 src/expansion/match_pattern.c \
-                 src/expansion/collect_matches.c \
-                 src/expansion/word_splitting.c \
-                 src/expansion/dollar_expansion.c
-
 NEW_EXPANSION_SRCS = src/new_expansion/expand_cmd.c \
                      src/new_expansion/expansion.c \
                      src/new_expansion/word_split_helpers.c \
@@ -127,8 +119,10 @@ SHELL_SRCS = src/shell/init.c \
              src/shell/cleanup.c \
              src/shell/error_handle.c
 
-MAIN_SRCS = src/extra.c \
-            art.c
+MAIN_SRCS = src/main/art.c \
+             src/main/extra.c \
+            src/main/signals.c \
+            src/main/main.c
 
 # All source files
 SRC = $(BUILTIN_SRCS) \

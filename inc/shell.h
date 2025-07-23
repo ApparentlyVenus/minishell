@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 12:03:38 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/23 12:34:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,6 @@
 # define SHELL_H
 
 # include "minishell.h"
-
-typedef enum e_phase
-{
-	PHASE_NONE,
-	PHASE_TOKEN,
-	PHASE_PARSE,
-	PHASE_EXECUTE,
-}	t_phase;
-
-// Central shell struct
-typedef struct s_shell
-{
-	t_env		*env;
-	int			exit_code;
-	int			interactive;
-	t_token		*tokens;
-	t_node		*ast;
-	t_exec		*exec_ctx;
-	char		*last_error;
-	t_phase		current_phase;
-}	t_shell;
 
 // Core shell functions
 t_shell	*shell_init(char **envp);

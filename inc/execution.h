@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:05:52 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/23 12:34:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 # define EXECUTION_H
 
 # include "minishell.h"
-
-// execution context for a pipeline
-typedef struct s_exec
-{
-	int		cmd_count;
-	int		**pipes;
-	pid_t	*pids;
-	t_env	**env;
-}	t_exec;
 
 // main execution function
 

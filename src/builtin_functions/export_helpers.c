@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 15:42:41 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/23 13:03:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	handle_new_key(t_env **env, char *key, char *value)
 			new_key->value = ft_strdup(value);
 		new_key->equal = (value != NULL);
 		new_key->next = NULL;
-		ft_lstadd_back(env, new_key);
+		env_add_back(env, new_key);
 	}
 }
 
 void	set_env_value(t_env **env, char *key, char *value)
 {
-	t_env	*new_key;
 	t_env	*current;
 
 	current = *env;
@@ -100,8 +99,6 @@ t_env	**do_something(t_env **envp)
 {
 	t_env	*cur;
 	t_env	*head;
-	char	*temp_key;
-	char	*temp_value;
 	int		sorted;
 
 	if (!envp || !*envp)

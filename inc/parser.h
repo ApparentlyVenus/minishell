@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 12:58:01 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/23 12:34:19 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,7 @@
 
 # include "minishell.h"
 
-typedef enum e_redir_type
-{
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_OUT_APPEND,
-	HERE_DOC
-}	t_redir_type;
-
-typedef struct s_redir
-{
-	t_redir_type	type;
-	char			*filename;
-	int				expand_heredoc;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_arg
-{
-	char			*value;
-	int				single_quotes;
-	int				double_quotes;
-	struct s_arg	*next;
-}	t_arg;
-
-typedef struct s_cmd
-{
-	t_arg	**args;
-	t_redir	*redirs;
-}	t_cmd;
-
-typedef enum e_node_type
-{
-	NODE_CMD,
-	NODE_PIPE,
-	NODE_AND,
-	NODE_OR,
-}	t_node_type;
-
-typedef struct s_node
-{
-	t_node_type		type;
-	struct s_cmd	*cmd;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_node;
-
-// main parsing functions
+// main parsing function
 
 t_node	*parse_input(t_token **tokens);
 
