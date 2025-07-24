@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:29:06 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:39:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/25 02:08:34 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ t_shell	*shell_init(char **envp)
 	shell->last_error = NULL;
 	env_init(&shell->env, envp);
 	if (!shell->env)
-		return (free(shell), NULL);
+	{
+		free(shell);
+		return (NULL);
+	}
 	return (shell);
 }
 

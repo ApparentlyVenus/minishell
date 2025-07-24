@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:33:55 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:27:39 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 02:07:18 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@ int	shell_tokenize(t_shell *shell, char *input)
 	return (1);
 }
 
+// In shell_parse function:
 int	shell_parse(t_shell *shell)
 {
+	t_token	*token_copy;
+
 	if (!shell || !shell->tokens)
 		return (0);
 	shell->current_phase = PHASE_PARSE;
-	shell->ast = parse_input(&shell->tokens);
+	token_copy = shell->tokens;
+	shell->ast = parse_input(&token_copy);
 	if (!shell->ast)
 	{
 		set_error(shell, "parsing failed");
@@ -41,6 +45,7 @@ int	shell_parse(t_shell *shell)
 	return (1);
 }
 
+// In shell_execute function:
 int	shell_execute(t_shell *shell)
 {
 	if (!shell || !shell->ast)

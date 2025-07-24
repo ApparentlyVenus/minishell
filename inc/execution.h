@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/24 23:51:38 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 02:28:46 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void		setup_redir(t_cmd *cmd);
 void		redir_in(t_redir *redir);
 void		redir_out(t_redir *redir);
 void		redir_out_append(t_redir *redir);
-void		redir_heredoc(t_redir *redir);
 
 // setup pipes
 
@@ -50,7 +49,7 @@ void		free_exec(t_exec *ctx);
 
 // utils
 
-t_exec		*setup_exec(t_node *cmd_list, t_env *env_list);
+t_exec		*setup_exec(t_node *cmd_list, t_env **env_list);
 int			wait_child(t_exec *ctx);
 void		kill_child(t_exec *ctx, int i);
 t_node		*get_nth_command(t_node *node, int n);

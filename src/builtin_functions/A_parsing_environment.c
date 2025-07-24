@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/19 08:01:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 01:06:12 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,23 @@ void	env_init(t_env **env_list, char **envp)
 	t_env	*new_node;
 	char	*equal_sign;
 
-	i = -1;
-	new_node = NULL;
-	while (envp[++i])
+	if (!env_list || !envp)
+		return ;
+	i = 0;
+	*env_list = NULL;
+	while (envp[i])
 	{
 		new_node = malloc(sizeof(t_env));
+		if (!new_node)
+		{
+			free_env(*env_list);
+			*env_list = NULL;
+			return ;
+		}
+		new_node->key = NULL;
+		new_node->value = NULL;
+		new_node->equal = 0;
+		new_node->next = NULL;
 		equal_sign = ft_strchr(envp[i], '=');
 		if (equal_sign)
 		{
@@ -36,8 +48,19 @@ void	env_init(t_env **env_list, char **envp)
 			new_node->value = NULL;
 			new_node->key = ft_strdup(envp[i]);
 		}
-		new_node->next = NULL;
+		if (!new_node->key || (equal_sign && !new_node->value))
+		{
+			if (new_node->key)
+				free(new_node->key);
+			if (new_node->value)
+				free(new_node->value);
+			free(new_node);
+			free_env(*env_list);
+			*env_list = NULL;
+			return ;
+		}
 		env_add_back(env_list, new_node);
+		i++;
 	}
 }
 

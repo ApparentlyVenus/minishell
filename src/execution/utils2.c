@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 15:34:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 01:32:09 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * - Process ID array
  * - Environment variables
  */
-t_exec	*setup_exec(t_node *cmd_list, t_env *env)
+t_exec	*setup_exec(t_node *cmd_list, t_env **env)
 {
 	t_exec	*ctx;
 
@@ -37,7 +37,7 @@ t_exec	*setup_exec(t_node *cmd_list, t_env *env)
 	ctx->pipes = allocate_pipes(ctx->cmd_count);
 	if (ctx->cmd_count > 1 && !ctx->pipes)
 		return (free(ctx->pids), free(ctx), NULL);
-	ctx->env = &env;
+	ctx->env = env;
 	return (ctx);
 }
 

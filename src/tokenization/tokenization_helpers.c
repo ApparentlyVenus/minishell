@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:29:49 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/25 02:09:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void	free_tokens(t_token **head)
 {
 	t_token	*current;
 	t_token	*next;
+	int		count;
 
+	count = 0;
 	if (!head || !*head)
 		return ;
 	current = *head;
@@ -62,8 +64,9 @@ void	free_tokens(t_token **head)
 			free(current->value);
 		free(current);
 		current = next;
+		count++;
 	}
-	*head = (NULL);
+	*head = NULL;
 }
 
 void	skip_spaces(char *input, int *pos)

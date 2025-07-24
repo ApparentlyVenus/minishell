@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/24 23:43:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 01:32:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	execute_pipeline(t_shell *shell)
 
 	if (!shell->ast)
 		return ;
-	ctx = setup_exec(shell->ast, shell->env);
+	ctx = setup_exec(shell->ast, &shell->env);
 	if (!ctx)
 		return ;
 	i = -1;
