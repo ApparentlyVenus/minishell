@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:01:17 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:47:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** expand_assignment_value
-** Purpose: Expands only the right side of an assignment (VAR=VAL).
-** Used variables: arg (input), env (env list)
-** Return: Newly allocated expanded assignment string
-*/
 char	*expand_assignment_value(char *arg, t_env *env)
 {
 	char	*eq;
@@ -44,34 +38,22 @@ char	*expand_assignment_value(char *arg, t_env *env)
 	return (result);
 }
 
-/*
-** expand_cmd_arg
-** Purpose: Expands a single argument in t_cmd according to shell rules.
-** Used variables: arg (argument), env (env list), builtin_type, index
-** Return: Newly allocated expanded string
-*/
-char	*expand_cmd_arg(char *arg, t_env *env, t_builtin builtin_type,
+char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
 	int index)
 {
 	char	*expanded;
 
 	expanded = NULL;
 	if (builtin_type == BUILTIN_EXPORT && is_assignment(arg))
-		expanded = expand_assignment_value(arg, env);
+		expanded = expand_assignment_value(arg, shell->env);
 	else if (is_assignment(arg) && index == 0)
-		expanded = expand_assignment_value(arg, env);
+		expanded = expand_assignment_value(arg, shell->env);
 	else
-		expanded = expand_variables(arg, env);
+		expanded = expand_exit(arg, shell->env, shell->exit_code);
 	return (expanded);
 }
 
-/*
-** expand_cmd_args
-** Purpose: Expands all arguments in t_cmd in place.
-** Used variables: cmd (command), env (env list), builtin_type
-** Return: None (modifies cmd->args in place)
-*/
-void	expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
+void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 {
 	int		i;
 	char	*expanded;
@@ -79,8 +61,8 @@ void	expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
 	i = 0;
 	while (cmd->args && cmd->args[i])
 	{
-		expanded = expand_cmd_arg(cmd->args[i], env, builtin_type, i);
-		if (expanded && expanded != cmd->args[i])
+		expanded = expand_cmd_arg(cmd->args[i]->value, shell, builtin_type, i);
+		if (expanded && expanded != cmd->args[i]->value)
 		{
 			free(cmd->args[i]);
 			cmd->args[i] = expanded;
@@ -89,12 +71,6 @@ void	expand_cmd_args(t_cmd *cmd, t_env *env, t_builtin builtin_type)
 	}
 }
 
-/*
-** expand_cmd_redirs
-** Purpose: Expands all redirection filenames in t_cmd in place.
-** Used variables: cmd (command), env (env list)
-** Return: None (modifies cmd->redirs in place)
-*/
 void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 {
 	t_redir	*redir;

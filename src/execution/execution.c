@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 15:33:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:43:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	if (!cmd_node->cmd->args || !cmd_node->cmd->args[0])
 		exit(EXIT_GENERAL_ERROR);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
-	expand_cmd(cmd_node->cmd, *ctx->env, type);
+	expand_cmd(cmd_node->cmd, shell, type);
 	setup_redir(cmd_node->cmd);
 	if (type != BUILTIN_NONE)
 	{

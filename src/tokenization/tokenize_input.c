@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/23 13:10:49 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:17:03 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ t_token	*extract_operator_token(char *input, int *pos)
 			return (NULL);
 		return (token);
 	}
-	return (free(token),NULL);
+	return (free(token), NULL);
 }
 
 t_token	**tokenize_input(char *input, t_shell *shell)

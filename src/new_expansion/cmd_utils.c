@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:00:56 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:06:47 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:33:04 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ char	*join_assignment(char *var, char *val)
 ** Used variables: cmd (command), env (env list), builtin_type
 ** Return: None (modifies cmd in place)
 */
-void	expand_cmd(t_cmd *cmd, t_env *env, t_builtin builtin_type)
+void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
 {
 	if (!cmd)
 		return ;
-	expand_cmd_args(cmd, env, builtin_type);
-	expand_cmd_redirs(cmd, env);
+	expand_cmd_args(cmd, shell, type);
+	expand_cmd_redirs(cmd, shell->env);
 }
