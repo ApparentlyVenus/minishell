@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wildcard_helpers.c                                 :+:      :+:    :+:   */
+/*   wildcard_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:50:12 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:53:28 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** sort_matches
-** Purpose: Sorts the matched filenames alphabetically.
-** Used variables: matches (array), count (number of matches)
-** Return: None (modifies matches in place)
-*/
 void	sort_matches(char **matches, int count)
 {
 	int		i;
@@ -42,12 +36,6 @@ void	sort_matches(char **matches, int count)
 	}
 }
 
-/*
-** match_star_pattern
-** Purpose: Checks if a filename matches a wildcard pattern.
-** Used variables: pattern (wildcard), filename (candidate)
-** Return: 1 if match, 0 otherwise
-*/
 int	match_star_pattern(char *pattern, char *filename)
 {
 	const char	*star_p = NULL;
@@ -75,12 +63,6 @@ int	match_star_pattern(char *pattern, char *filename)
 	return (!*pattern);
 }
 
-/*
-** count_star_matches
-** Purpose: Counts files matching the * pattern in the current directory.
-** Used variables: pattern (wildcard)
-** Return: Number of matches found
-*/
 int	count_star_matches(const char *pattern)
 {
 	DIR				*dir;
@@ -104,4 +86,14 @@ int	count_star_matches(const char *pattern)
 		entry = readdir(dir);
 	}
 	return (closedir(dir), count);
+}
+
+int	wildcard_expand(char *pattern, char ***matches)
+{
+	int	count;
+
+	count = collect_star_matches(pattern, matches);
+	if (count > 1)
+		sort_matches(*matches, count);
+	return (count);
 }

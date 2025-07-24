@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:13 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:34:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:51:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** expand_variables_in_args
-** Purpose: Expands variables in each argument string.
-** Used variables: args (array), env (env list)
-** Return: None (modifies args in place)
-*/
 void	expand_variables_in_args(char **args, t_env *env)
 {
 	int		i;
@@ -36,12 +30,6 @@ void	expand_variables_in_args(char **args, t_env *env)
 	}
 }
 
-/*
-** word_split_args
-** Purpose: Splits arguments on unquoted whitespace and expands the array
-** Used variables: args (pointer to array)
-** Return: None (modifies args in place, may reallocate array)
-*/
 void	word_split_args(char ***args)
 {
 	int		i;
@@ -65,12 +53,6 @@ void	word_split_args(char ***args)
 	}
 }
 
-/*
-** replace_args_with_matches
-** Purpose: Replaces argument at position with wildcard matches
-** Used variables: args, matches, i, match_count
-** Return: Number of new arguments added
-*/
 int	replace_args_with_matches(char ***args, char **matches, int i)
 {
 	char	**new_args;
@@ -93,12 +75,6 @@ int	replace_args_with_matches(char ***args, char **matches, int i)
 	return (match_count - 1);
 }
 
-/*
-** expand_wildcards_in_args
-** Purpose: Expands wildcards in each argument, replacing with matches if any
-** Used variables: args (array, pointer to array)
-** Return: None (modifies args in place, may reallocate array)
-*/
 void	expand_wildcards_in_args(char ***args)
 {
 	int		i;

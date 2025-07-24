@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:00:56 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:33:04 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:50:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** is_assignment
-** Purpose: Checks if a string is an assignment (VAR=VAL).
-** Used variables: arg (input string)
-** Return: 1 if assignment, 0 otherwise
-*/
 int	is_assignment(char *arg)
 {
 	char	*eq;
@@ -30,12 +24,6 @@ int	is_assignment(char *arg)
 	return (1);
 }
 
-/*
-** join_assignment
-** Purpose: Joins variable and value with '=' for assignment expansion.
-** Used variables: var (left), val (right)
-** Return: Newly allocated string "var=val"
-*/
 char	*join_assignment(char *var, char *val)
 {
 	char	*tmp;
@@ -51,12 +39,6 @@ char	*join_assignment(char *var, char *val)
 	return (result);
 }
 
-/*
-** expand_cmd
-** Purpose: Expands arguments and redirections in t_cmd for JIT shell expansion.
-** Used variables: cmd (command), env (env list), builtin_type
-** Return: None (modifies cmd in place)
-*/
 void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
 {
 	if (!cmd)

@@ -6,30 +6,18 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:09 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:49:49 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:50:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** cleanup_matches_on_error
-** Purpose: Frees allocated matches when memory allocation fails
-** Used variables: matches (array), count (number to free)
-** Return: None
-*/
 void	cleanup_matches_on_error(char **matches, int count)
 {
 	while (--count >= 0)
 		free(matches[count]);
 }
 
-/*
-** should_skip_entry
-** Purpose: Checks if directory entry should be skipped
-** Used variables: entry (directory entry), pattern (wildcard pattern)
-** Return: 1 if should skip, 0 otherwise
-*/
 int	should_skip_entry(struct dirent *entry, const char *pattern)
 {
 	if (entry->d_name[0] == '.' && pattern[0] != '.')
@@ -37,12 +25,6 @@ int	should_skip_entry(struct dirent *entry, const char *pattern)
 	return (0);
 }
 
-/*
-** add_match_to_array
-** Purpose: Adds a matching filename to the matches array
-** Used variables: matches (array), count (current count), filename
-** Return: 1 on success, 0 on failure
-*/
 int	add_match_to_array(char **matches, int count, char *filename)
 {
 	matches[count] = ft_strdup(filename);
@@ -54,12 +36,6 @@ int	add_match_to_array(char **matches, int count, char *filename)
 	return (1);
 }
 
-/*
-** fill_star_matches
-** Purpose: Fills the matches array with matching filenames.
-** Used variables: pattern (wildcard), matches (output array), expected_count
-** Return: Actual number of matches filled
-*/
 int	fill_star_matches(const char *pattern, char **matches, int expected_count)
 {
 	DIR				*dir;
@@ -89,12 +65,6 @@ int	fill_star_matches(const char *pattern, char **matches, int expected_count)
 	return (closedir(dir), count);
 }
 
-/*
-** collect_star_matches
-** Purpose: Collects all files matching the * pattern.
-** Used variables: pattern (wildcard), matches (output array)
-** Return: Number of matches found
-*/
 int	collect_star_matches(const char *pattern, char ***matches)
 {
 	int		count;

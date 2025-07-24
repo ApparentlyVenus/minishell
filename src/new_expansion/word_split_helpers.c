@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 19:02:46 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:34:12 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 21:52:53 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** contains_whitespace
-** Purpose: Checks if a string contains any whitespace character.
-** Used variables: str (input string)
-** Return: 1 if whitespace found, 0 otherwise
-*/
 int	contains_whitespace(char *str)
 {
 	int	i;
@@ -34,12 +28,6 @@ int	contains_whitespace(char *str)
 	return (0);
 }
 
-/*
-** free_split
-** Purpose: Frees a NULL-terminated array of strings.
-** Used variables: args (array)
-** Return: None
-*/
 void	free_split(char **args)
 {
 	int	i;
@@ -52,12 +40,6 @@ void	free_split(char **args)
 	free(args);
 }
 
-/*
-** create_new_args_array
-** Purpose: Creates new argument array with split results
-** Used variables: args, split, pos, old_count, new_count
-** Return: New argument array
-*/
 char	**create_new_args_array(char ***args, char **split, int pos)
 {
 	char	**new_args;
@@ -77,12 +59,6 @@ char	**create_new_args_array(char ***args, char **split, int pos)
 	return (new_args);
 }
 
-/*
-** replace_args_with_split
-** Purpose: Replaces argument at position with split results
-** Used variables: args, split, i
-** Return: Number of new arguments added
-*/
 int	replace_args_with_split(char ***args, char **split, int i)
 {
 	char	**new_args;
