@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:27:03 by odana             #+#    #+#             */
-/*   Updated: 2025/07/05 12:52:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:51:14 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,23 @@ void	free_split(char **args)
 
 void	free_cmd(t_cmd *cmd)
 {
+	int	i;
+
+	i = 0;
 	if (!cmd)
 		return ;
-	free_split(cmd->args);
+	if (cmd->args)
+	{
+		i = 0;
+		while (cmd->args[i])
+		{
+			if (cmd->args[i]->value)
+				free(cmd->args[i]->value);
+			free(cmd->args[i]);
+			i++;
+		}
+		free(cmd->args);
+	}
 	free_redir(cmd->redirs);
 	free(cmd);
 }

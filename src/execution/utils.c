@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:33:57 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/24 23:44:55 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	wait_child(t_exec *ctx)
 }
 
 void	kill_child(t_exec *ctx, int i)
-{	
+{
 	int	j;
 
 	j = 0;
@@ -114,7 +114,7 @@ void	kill_child(t_exec *ctx, int i)
 	}
 }
 
-t_builtin	get_builtin_type(const char *cmd_name)
+t_builtin	get_builtin_type(char *cmd_name)
 {
 	if (!cmd_name)
 		return (BUILTIN_NONE);

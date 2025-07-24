@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:40:27 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 14:50:46 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:51:27 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,4 @@ void	free_exec(t_exec *ctx)
 		free(ctx->pids);
 	free_pipes(ctx->pipes, ctx->cmd_count);
 	free(ctx);
-}
-
-void	free_split(char **args)
-{
-	int	i;
-
-	if (!args)
-		return ;
-	i = 0;
-	while (args[i])
-		free(args[i++]);
-	free(args);
 }

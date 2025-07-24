@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:43:57 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 13:15:31 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:56:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	*unquote_delimiter(char *delimiter)
 */
 char	*append_heredoc_line(char *content, char *line)
 {
-	char	*temp;
 	char	*line_with_newline;
 	char	*result;
 

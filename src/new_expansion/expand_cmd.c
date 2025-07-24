@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:47:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 00:05:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,19 @@ void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 {
 	int		i;
 	char	*expanded;
+	char	*original;
 
+	if (!cmd || !cmd->args)
+		return ;
 	i = 0;
-	while (cmd->args && cmd->args[i])
+	while (cmd->args[i])
 	{
-		expanded = expand_cmd_arg(cmd->args[i]->value, shell, builtin_type, i);
-		if (expanded && expanded != cmd->args[i]->value)
+		original = cmd->args[i]->value;
+		expanded = expand_cmd_arg(original, shell, builtin_type, i);
+		if (expanded && expanded != original)
 		{
-			free(cmd->args[i]);
-			cmd->args[i] = expanded;
+			free(original);
+			cmd->args[i]->value = expanded;
 		}
 		i++;
 	}

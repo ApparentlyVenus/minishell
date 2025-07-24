@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:38:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:48:32 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:34:14 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*expand_exit(char *str, t_env *env, int exit_code)
 	result = expand_variables(str, env);
 	if (!result)
 		return (ft_strdup(str));
-	if (ft_strstr(result, "$?"))
+	if (ft_strnstr(result, "$?", ft_strlen(result)))
 	{
 		exit_str = ft_itoa(exit_code);
 		if (!exit_str)

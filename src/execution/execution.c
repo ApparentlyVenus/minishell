@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/24 21:43:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:43:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * - If not, search in PATH environment variable
  * - Use execve to replace current process with command
  */
-void	execute_external_command(t_node *cmd_node, t_exec *ctx, char **args)
+void	execute_external_command(t_exec *ctx, char **args)
 {
 	char	*cmd;
 	char	*path;
@@ -122,7 +122,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	if (!cmd_node->cmd->args || !cmd_node->cmd->args[0])
 		exit(EXIT_GENERAL_ERROR);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
-	expand_cmd(cmd_node->cmd, shell, type);
+	expand_cmd(cmd_node->cmd, type, shell);
 	setup_redir(cmd_node->cmd);
 	if (type != BUILTIN_NONE)
 	{
@@ -132,7 +132,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	else
 	{
 		args = convert_args(cmd_node->cmd->args);
-		execute_external_command(cmd_node, ctx, args);
+		execute_external_command(ctx, args);
 		free_split(args);
 		exit(127);
 	}

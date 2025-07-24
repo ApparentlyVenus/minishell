@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:53:28 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:30:49 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	sort_matches(char **matches, int count)
 	}
 }
 
-int	match_star_pattern(char *pattern, char *filename)
+int	match_star_pattern(const char *pattern, const char *filename)
 {
 	const char	*star_p = NULL;
 	const char	*star_f = NULL;

@@ -6,13 +6,13 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:28:13 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:47:38 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-static int	process_input(t_shell *shell, char *input)
+int	process_input(t_shell *shell, char *input)
 {
 	if (!shell_tokenize(shell, input))
 		return (0);
@@ -23,7 +23,7 @@ static int	process_input(t_shell *shell, char *input)
 	return (1);
 }
 
-static char	*get_prompt(void)
+char	*get_prompt(void)
 {
 	char	*cwd;
 	char	*prompt;
@@ -43,7 +43,7 @@ static char	*get_prompt(void)
 	return (prompt);
 }
 
-static int	main_loop(t_shell *shell)
+int	main_loop(t_shell *shell)
 {
 	char	*input;
 

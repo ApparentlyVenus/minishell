@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 19:02:46 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:52:53 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:51:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,6 @@ int	contains_whitespace(char *str)
 		i++;
 	}
 	return (0);
-}
-
-void	free_split(char **args)
-{
-	int	i;
-
-	if (!args)
-		return ;
-	i = 0;
-	while (args[i])
-		free(args[i++]);
-	free(args);
 }
 
 char	**create_new_args_array(char ***args, char **split, int pos)

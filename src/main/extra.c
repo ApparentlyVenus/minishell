@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 17:36:40 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/24 23:47:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // clean up and exit doest have anything specified yet,
 // it should contain the struct and all memory allocations;
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*get_input_line(void)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 23:41:59 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/25 00:18:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	ft_is_numeric(const char *str)
 	return (1);
 }
 
-static int	size_of_arr(char **args)
+int	size_of_arr(char **args)
 {
 	int	i;
 

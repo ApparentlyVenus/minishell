@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/23 12:34:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:51:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_node	*parse_pipeline(t_token **tokens, int min_priority);
 t_node	*parse_command(t_token **tokens);
 t_redir	*parse_redir(t_token **tokens);
 t_node	*parse_group(t_token **tokens);
+t_node	*parse_command_or_group(t_token **tokens);
 
 // node creation
 
@@ -48,12 +49,14 @@ void	cleanup_heredoc_files(t_cmd *cmd);
 
 int		is_redir(t_token *token);
 void	append_redir(t_redir **list, t_redir *new_redir);
-char	**process_args(t_arg *arg_list, int count);
+t_arg	**process_args(t_arg *arg_list, int count);
 int		add_arg_list(t_arg **list, t_token *token);
+int		get_token_priority(t_token *tok);
+t_node	*handle_operator(t_node *left, t_token **tokens,
+			t_token_type op_type, int op_priority);
 
 // frees
 
-void	free_split(char **args);
 void	free_cmd(t_cmd *cmd);
 void	free_redir(t_redir *redir);
 void	free_node(t_node *node);

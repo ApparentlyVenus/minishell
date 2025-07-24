@@ -6,13 +6,13 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 11:12:48 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/24 23:49:43 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	handle_sigint_prompt(int sig)
+void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
 	write(STDOUT_FILENO, "\n", 1);

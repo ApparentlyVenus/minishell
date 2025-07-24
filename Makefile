@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/17 22:14:34 by yitani            #+#    #+#              #
-#    Updated: 2025/07/23 13:09:06 by odana            ###   ########.fr        #
+#    Updated: 2025/07/24 23:56:11 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,14 +98,20 @@ NEW_EXPANSION_SRCS = src/new_expansion/expand_cmd.c \
                      src/new_expansion/expansion.c \
                      src/new_expansion/word_split_helpers.c \
                      src/new_expansion/collect_matches.c \
-                     src/new_expansion/wildcard_helpers.c \
-                     src/new_expansion/wildcard_expand.c
+                     src/new_expansion/wildcard_expansion.c \
+                     src/new_expansion/cmd_utils.c \
+                     src/new_expansion/copy_split.c \
+                     src/new_expansion/expand_exit_code.c \
+                     src/new_expansion/expand_variables.c 
+                     
 
 PARSER_SRCS = src/parser/node_creation.c \
               src/parser/utils.c \
               src/parser/free.c \
               src/parser/parse.c \
-              src/parser/helpers.c
+              src/parser/helpers.c \
+              src/parser/heredoc.c \
+              src/parser/heredoc_helpers.c
 
 EXECUTION_SRCS = src/execution/execution.c \
                  src/execution/free.c \
@@ -115,9 +121,9 @@ EXECUTION_SRCS = src/execution/execution.c \
                  src/execution/pipes.c
 
 SHELL_SRCS = src/shell/init.c \
-             src/shell/utils.c \
              src/shell/cleanup.c \
-             src/shell/error_handle.c
+             src/shell/error_handle.c \
+             src/shell/wrappers.c
 
 MAIN_SRCS = src/main/art.c \
              src/main/extra.c \
