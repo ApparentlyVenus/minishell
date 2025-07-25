@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 07:04:26 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:23:40 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,23 @@ int	run_in_parent(t_node *ast)
 {
 	t_builtin	type;
 
-	if (!ast || ast->type != NODE_CMD)
+	if (!ast)
 		return (0);
-	type = get_builtin_type(ast->cmd->args[0]->value);
-	if (type != BUILTIN_CD && type != BUILTIN_EXPORT
-		&& type != BUILTIN_UNSET && type != BUILTIN_EXIT)
+	if (ast->type == NODE_CMD)
+	{
+		if (!ast->cmd || !ast->cmd->args || !ast->cmd->args[0])
+			return (0);
+		type = get_builtin_type(ast->cmd->args[0]->value);
+		if (type != BUILTIN_CD && type != BUILTIN_EXPORT
+			&& type != BUILTIN_UNSET && type != BUILTIN_EXIT)
+			return (0);
+		if (ast->cmd->redirs)
+			return (0);
+		return (1);
+	}
+	else if (ast->type == NODE_AND || ast->type == NODE_OR)
+		return (run_in_parent(ast->left) && run_in_parent(ast->right));
+	else if (ast->type == NODE_PIPE)
 		return (0);
-	if (ast->cmd->redirs)
-		return (0);
-	return (1);
+	return (0);
 }

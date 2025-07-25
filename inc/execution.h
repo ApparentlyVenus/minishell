@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 07:12:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:51:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,19 @@ int			call_builtin_function(t_builtin builtin_type, char **args,
 				t_exec *ctx, t_shell *shell);
 void		execute_external_command(t_exec *ctx,
 				char **args);
-void		execute_children(t_shell *shell);
-void		execute_parent(t_shell *shell);
 void		parent_process(t_shell *shell, t_exec *ctx);
+void		execute_parent_builtin(t_node *node, t_shell *shell);
+void		execute_children_pipeline(t_node *node, t_shell *shell);
+void		execute_parent_node(t_node *node, t_shell *shell);
+void		execute_children_node(t_node *node, t_shell *shell);
+
+// logical operator handeling
+
+int			execute_and(t_node *node, t_shell *shell,
+				int (*executor)(t_node *, t_shell *));
+int			execute_or(t_node *node, t_shell *shell,
+				int (*executor)(t_node *, t_shell *));
+
 // redirection handeling
 
 void		setup_redir(t_cmd *cmd);

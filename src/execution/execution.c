@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 07:06:28 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:47:41 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	execute_pipeline(t_shell *shell)
 	if (!shell->ast)
 		return ;
 	if (run_in_parent(shell->ast))
-		execute_parent(shell);
+		execute_parent_node(shell->ast, shell);
 	else
-		execute_children(shell);
+		execute_children_node(shell->ast, shell);
 }
