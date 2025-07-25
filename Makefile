@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/25 08:16:25 by odana            ###   ########.fr        #
+#    Updated: 2025/07/25 12:13:36 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -215,8 +215,4 @@ fclean: clean
 
 re: fclean all
 
-norminette:
-	@echo "🔍 Running Norminette on all files…"
-	@norminette $(SRCS) $(HDR) $(LIBFT_DIR)
-
-.PHONY: all clean fclean re norminette
+.PHONY: all clean fclean re 
