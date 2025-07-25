@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:47:32 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 12:11:02 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 ** Used variables: delimiter (stop word)
 ** Return: Newly allocated string with all heredoc content
 */
-char	*collect_heredoc_content(char *delimiter)
+char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 {
 	char	*line;
 	char	*content;
+	char	*expanded_line;
 
 	content = ft_strdup("");
 	if (!content)
@@ -39,7 +40,19 @@ char	*collect_heredoc_content(char *delimiter)
 			free(line);
 			break ;
 		}
-		content = append_heredoc_line(content, line);
+		if (expand)
+		{
+			expanded_line = expand_variables(line, env);
+			if (!expanded_line)
+				expanded_line = ft_strdup("");
+		}
+		else
+			expanded_line = ft_strdup(line);
+		if (expanded_line)
+		{
+			content = append_heredoc_line(content, expanded_line);
+			free(expanded_line);
+		}
 		free(line);
 		if (!content)
 			return (NULL);
@@ -86,31 +99,23 @@ char	*create_temp_file(char *content)
 ** Used variables: delimiter (heredoc delimiter)
 ** Return: Newly allocated t_redir with temp file as filename
 */
-t_redir	*process_heredoc(char *delimiter, t_env *env)
+t_redir	*process_heredoc(char *delimiter, t_env *env,
+		int s_quotes, int d_quotes)
 {
-	char	*unquoted_delimiter;
-	char	*expanded_delimiter;
 	char	*content;
+	char	*temp_delimiter;
 	char	*temp_filename;
 	t_redir	*redir;
 
 	if (!delimiter)
 		return (NULL);
-	unquoted_delimiter = unquote_delimiter(delimiter);
-	if (!unquoted_delimiter)
+	temp_delimiter = ft_strdup(delimiter);
+	if (!temp_delimiter)
 		return (NULL);
-	if (!is_delimiter_quoted(delimiter))
-	{
-		expanded_delimiter = expand_variables(unquoted_delimiter, env);
-		free(unquoted_delimiter);
-		unquoted_delimiter = expanded_delimiter;
-	}
 	signal(SIGINT, SIG_DFL);
-	content = collect_heredoc_content(unquoted_delimiter);
-	free(unquoted_delimiter);
+	content = collect_heredoc_content(temp_delimiter, !(s_quotes || d_quotes), env);
+	free(temp_delimiter);
 	signals_prompt();
-	if (!content)
-		return (NULL);
 	temp_filename = create_temp_file(content);
 	free(content);
 	if (!temp_filename)

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:59:08 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 11:38:09 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_redir	*parse_redir(t_token **tokens, t_env *env)
 {
 	int		type;
 	char	*filename;
+	t_token	*file_token;
 	t_redir	*redir;
 
 	if (!*tokens)
@@ -102,11 +103,13 @@ t_redir	*parse_redir(t_token **tokens, t_env *env)
 	*tokens = (*tokens)->next;
 	if (!*tokens || (*tokens)->type != TOKEN_WORD)
 		return (NULL);
+	file_token = *tokens;
 	filename = (*tokens)->value;
 	*tokens = (*tokens)->next;
 	if (type == TOKEN_HEREDOC)
 	{
-		redir = process_heredoc(filename, env);
+		redir = process_heredoc(filename, env,
+				file_token->single_quotes, file_token->double_quotes);
 		return (redir);
 	}
 	return (create_redir_node(type, ft_strdup(filename)));

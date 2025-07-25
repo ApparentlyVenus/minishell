@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:27:39 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:28:48 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 12:08:42 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,11 @@ char	*append_to_result(char *result, char *to_append)
 	char	*new_result;
 
 	if (!result)
-		return (ft_strdup(to_append));
+	{
+		if (to_append)
+			return (ft_strdup(to_append));
+		return (ft_strdup(""));
+	}
 	if (!to_append)
 		return (result);
 	new_result = ft_strjoin(result, to_append);
