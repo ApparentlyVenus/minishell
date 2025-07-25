@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/25 12:16:11 by odana            ###   ########.fr        #
+#    Updated: 2025/07/25 12:22:22 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RM        = rm -f
 SRCDIR    = src
 INCDIR    = inc
 OBJDIR    = obj
-LIBFT_DIR = minishell_libft
+LIBFT_DIR = libft
 
 # Libraries
 LIBFT     = $(LIBFT_DIR)/libft.a
