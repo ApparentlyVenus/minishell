@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/25 12:13:36 by odana            ###   ########.fr        #
+#    Updated: 2025/07/25 12:16:11 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,7 +126,7 @@ MAIN_STARTED = $(OBJDIR)/.main_started
 
 # Module-specific compilation with progress messages
 $(OBJDIR)/builtin_functions/%.o: $(SRCDIR)/builtin_functions/%.c $(HDR) | $(BUILTIN_STARTED)
-	@echo "builtin module: $(notdir $<)"
+	@echo "[🔨] Builtin module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(BUILTIN_STARTED):
@@ -137,7 +137,7 @@ $(BUILTIN_STARTED):
 	@touch $@
 
 $(OBJDIR)/tokenization/%.o: $(SRCDIR)/tokenization/%.c $(HDR) | $(TOKENIZATION_STARTED)
-	@echo "tokenization module: $(notdir $<)"
+	@echo "[🎯] Tokenization module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(TOKENIZATION_STARTED):
@@ -148,7 +148,7 @@ $(TOKENIZATION_STARTED):
 	@touch $@
 
 $(OBJDIR)/new_expansion/%.o: $(SRCDIR)/new_expansion/%.c $(HDR) | $(EXPANSION_STARTED)
-	@echo "expansion module: $(notdir $<)"
+	@echo "[🔍] Expansion module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(EXPANSION_STARTED):
@@ -159,7 +159,7 @@ $(EXPANSION_STARTED):
 	@touch $@
 
 $(OBJDIR)/parser/%.o: $(SRCDIR)/parser/%.c $(HDR) | $(PARSER_STARTED)
-	@echo "parser module: $(notdir $<)"
+	@echo "[🌳] Parser module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(PARSER_STARTED):
@@ -170,7 +170,7 @@ $(PARSER_STARTED):
 	@touch $@
 
 $(OBJDIR)/execution/%.o: $(SRCDIR)/execution/%.c $(HDR) | $(EXECUTION_STARTED)
-	@echo "execution module: $(notdir $<)"
+	@echo "[⚡] Execution module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(EXECUTION_STARTED):
@@ -181,7 +181,7 @@ $(EXECUTION_STARTED):
 	@touch $@
 
 $(OBJDIR)/shell/%.o: $(SRCDIR)/shell/%.c $(HDR) | $(SHELL_STARTED)
-	@echo "shell module: $(notdir $<)"
+	@echo "[🐚] Shell module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(SHELL_STARTED):
@@ -192,7 +192,7 @@ $(SHELL_STARTED):
 	@touch $@
 
 $(OBJDIR)/main/%.o: $(SRCDIR)/main/%.c $(HDR) | $(MAIN_STARTED)
-	@echo "main module: $(notdir $<)"
+	@echo "[🎮] Main module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(MAIN_STARTED):
