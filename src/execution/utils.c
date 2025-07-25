@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:44:55 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:04:26 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,24 +96,6 @@ int	wait_child(t_exec *ctx)
 	return (exit_code);
 }
 
-void	kill_child(t_exec *ctx, int i)
-{
-	int	j;
-
-	j = 0;
-	if (ctx->pids[i] == -1)
-		ft_putendl_fd("fork failed", STDERR_FILENO);
-	while (j < i)
-	{
-		if (ctx->pids[j] > 0)
-		{
-			if (kill(ctx->pids[j], SIGTERM) == -1)
-				ft_putendl_fd("kill failed", STDERR_FILENO);
-		}
-		j++;
-	}
-}
-
 t_builtin	get_builtin_type(char *cmd_name)
 {
 	if (!cmd_name)
@@ -133,4 +115,19 @@ t_builtin	get_builtin_type(char *cmd_name)
 	if (ft_strcmp(cmd_name, "unset") == 0)
 		return (BUILTIN_UNSET);
 	return (BUILTIN_NONE);
+}
+
+int	run_in_parent(t_node *ast)
+{
+	t_builtin	type;
+
+	if (!ast || ast->type != NODE_CMD)
+		return (0);
+	type = get_builtin_type(ast->cmd->args[0]->value);
+	if (type != BUILTIN_CD && type != BUILTIN_EXPORT
+		&& type != BUILTIN_UNSET && type != BUILTIN_EXIT)
+		return (0);
+	if (ast->cmd->redirs)
+		return (0);
+	return (1);
 }

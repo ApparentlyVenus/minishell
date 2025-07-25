@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/17 22:14:34 by yitani            #+#    #+#              #
-#    Updated: 2025/07/24 23:56:11 by odana            ###   ########.fr        #
+#    Updated: 2025/07/25 07:05:09 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,8 @@ EXECUTION_SRCS = src/execution/execution.c \
                  src/execution/redir.c \
                  src/execution/utils.c \
                  src/execution/utils2.c \
-                 src/execution/pipes.c
+                 src/execution/pipes.c \
+                 src/execution/israel.c
 
 SHELL_SRCS = src/shell/init.c \
              src/shell/cleanup.c \

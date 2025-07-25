@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 02:28:46 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:12:21 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int			call_builtin_function(t_builtin builtin_type, char **args,
 				t_exec *ctx, t_shell *shell);
 void		execute_external_command(t_exec *ctx,
 				char **args);
+void		execute_children(t_shell *shell);
+void		execute_parent(t_shell *shell);
 void		parent_process(t_shell *shell, t_exec *ctx);
 // redirection handeling
 
@@ -57,5 +59,6 @@ t_builtin	get_builtin_type(char *cmd_name);
 char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
+int			run_in_parent(t_node *ast);
 
 #endif

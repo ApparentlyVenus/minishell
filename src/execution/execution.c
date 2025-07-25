@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 01:32:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 07:06:28 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,29 +149,10 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
  */
 void	execute_pipeline(t_shell *shell)
 {
-	t_exec	*ctx;
-	t_node	*cmd_node;
-	int		i;
-
 	if (!shell->ast)
 		return ;
-	ctx = setup_exec(shell->ast, &shell->env);
-	if (!ctx)
-		return ;
-	i = -1;
-	while (++i < ctx->cmd_count)
-	{
-		cmd_node = get_nth_command(shell->ast, i);
-		if (!cmd_node || !cmd_node->cmd)
-			continue ;
-		ctx->pids[i] = fork();
-		if (ctx->pids[i] == -1)
-		{
-			kill_child(ctx, i);
-			break ;
-		}
-		else if (ctx->pids[i] == 0)
-			execute_command(cmd_node, ctx, i, shell);
-	}
-	return (parent_process(shell, ctx));
+	if (run_in_parent(shell->ast))
+		execute_parent(shell);
+	else
+		execute_children(shell);
 }
