@@ -5,193 +5,167 @@
 #                                                     +:+ +:+         +:+      #
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/17 22:14:34 by yitani            #+#    #+#              #
-#    Updated: 2025/07/25 07:05:09 by odana            ###   ########.fr        #
+#    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
+#    Updated: 2025/07/25 07:58:10 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME      = minishell
-
 CC        = cc
+CFLAGS    = -Wall -Wextra -Werror -g
+RM        = rm -f
 
-CFLAGS    = -Wall -Wextra -Werror
+# Directories
+SRCDIR    = src
+INCDIR    = inc
+OBJDIR    = obj
+LIBFT_DIR = minishell_libft
 
 # Libraries
-LIBFT_DIR = minishell_libft
 LIBFT     = $(LIBFT_DIR)/libft.a
-
-# Libft source files
-LIBFT_SRCS = $(LIBFT_DIR)/ft_atoi.c \
-             $(LIBFT_DIR)/ft_atoll.c \
-             $(LIBFT_DIR)/ft_bzero.c \
-             $(LIBFT_DIR)/ft_calloc.c \
-             $(LIBFT_DIR)/ft_isalnum.c \
-             $(LIBFT_DIR)/ft_isalpha.c \
-             $(LIBFT_DIR)/ft_isascii.c \
-             $(LIBFT_DIR)/ft_isdigit.c \
-             $(LIBFT_DIR)/ft_isprint.c \
-             $(LIBFT_DIR)/ft_itoa.c \
-             $(LIBFT_DIR)/ft_lstadd_back.c \
-             $(LIBFT_DIR)/ft_lstadd_front.c \
-             $(LIBFT_DIR)/ft_lstclear.c \
-             $(LIBFT_DIR)/ft_lstdelone.c \
-             $(LIBFT_DIR)/ft_lstiter.c \
-             $(LIBFT_DIR)/ft_lstlast.c \
-             $(LIBFT_DIR)/ft_lstmap.c \
-             $(LIBFT_DIR)/ft_lstnew.c \
-             $(LIBFT_DIR)/ft_lstsize.c \
-             $(LIBFT_DIR)/ft_memchr.c \
-             $(LIBFT_DIR)/ft_memcmp.c \
-             $(LIBFT_DIR)/ft_memcpy.c \
-             $(LIBFT_DIR)/ft_memmove.c \
-             $(LIBFT_DIR)/ft_memset.c \
-             $(LIBFT_DIR)/ft_putchar_fd.c \
-             $(LIBFT_DIR)/ft_putendl_fd.c \
-             $(LIBFT_DIR)/ft_putnbr_fd.c \
-             $(LIBFT_DIR)/ft_putstr_fd.c \
-             $(LIBFT_DIR)/ft_split.c \
-             $(LIBFT_DIR)/ft_strchr.c \
-             $(LIBFT_DIR)/ft_strcmp.c \
-             $(LIBFT_DIR)/ft_strdup.c \
-             $(LIBFT_DIR)/ft_striteri.c \
-             $(LIBFT_DIR)/ft_strjoin.c \
-             $(LIBFT_DIR)/ft_strlcat.c \
-             $(LIBFT_DIR)/ft_strlcpy.c \
-             $(LIBFT_DIR)/ft_strlen.c \
-             $(LIBFT_DIR)/ft_strmapi.c \
-             $(LIBFT_DIR)/ft_strncmp.c \
-             $(LIBFT_DIR)/ft_strnstr.c \
-             $(LIBFT_DIR)/ft_strrchr.c \
-             $(LIBFT_DIR)/ft_strtrim.c \
-             $(LIBFT_DIR)/ft_substr.c \
-             $(LIBFT_DIR)/ft_tolower.c \
-             $(LIBFT_DIR)/ft_toupper.c
-
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
-
-# Include directories
-INCLUDES  = -I inc -I $(LIBFT_DIR)
-
-# External libraries
+INCLUDES  = -I$(INCDIR) -I$(LIBFT_DIR)
 LIBS      = -lreadline -lhistory
 
-# Source files organized by module
-BUILTIN_SRCS = src/builtin_functions/general_helpers.c \
-               src/builtin_functions/A_parsing_environment.c \
-               src/builtin_functions/builtin_cd.c \
-               src/builtin_functions/builtin_echo.c \
-               src/builtin_functions/builtin_env.c \
-               src/builtin_functions/builtin_exit.c \
-               src/builtin_functions/builtin_export.c \
-               src/builtin_functions/builtin_pwd.c \
-               src/builtin_functions/builtin_unset.c \
-               src/builtin_functions/export_helpers.c
+# Source organization by modules
+BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
+                  builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c \
+                  builtin_pwd.c builtin_unset.c export_helpers.c
 
-TOKENIZATION_SRCS = src/tokenization/validation.c \
-                    src/tokenization/validation_utils.c \
-                    src/tokenization/tokenize_input.c \
-                    src/tokenization/tokenization_helpers.c \
-                    src/tokenization/tokenization_helpers_2.c \
-                    src/tokenization/bool_helpers.c
+TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
+                       tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c
 
-NEW_EXPANSION_SRCS = src/new_expansion/expand_cmd.c \
-                     src/new_expansion/expansion.c \
-                     src/new_expansion/word_split_helpers.c \
-                     src/new_expansion/collect_matches.c \
-                     src/new_expansion/wildcard_expansion.c \
-                     src/new_expansion/cmd_utils.c \
-                     src/new_expansion/copy_split.c \
-                     src/new_expansion/expand_exit_code.c \
-                     src/new_expansion/expand_variables.c 
-                     
+EXPANSION_SOURCES = expand_cmd.c expansion.c word_split_helpers.c collect_matches.c \
+                    wildcard_expansion.c cmd_utils.c copy_split.c expand_exit_code.c \
+                    expand_variables.c
 
-PARSER_SRCS = src/parser/node_creation.c \
-              src/parser/utils.c \
-              src/parser/free.c \
-              src/parser/parse.c \
-              src/parser/helpers.c \
-              src/parser/heredoc.c \
-              src/parser/heredoc_helpers.c
+PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
+                 heredoc.c heredoc_helpers.c
 
-EXECUTION_SRCS = src/execution/execution.c \
-                 src/execution/free.c \
-                 src/execution/redir.c \
-                 src/execution/utils.c \
-                 src/execution/utils2.c \
-                 src/execution/pipes.c \
-                 src/execution/israel.c
+EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
+                    pipes.c israel.c operators.c
 
-SHELL_SRCS = src/shell/init.c \
-             src/shell/cleanup.c \
-             src/shell/error_handle.c \
-             src/shell/wrappers.c
+SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
-MAIN_SRCS = src/main/art.c \
-             src/main/extra.c \
-            src/main/signals.c \
-            src/main/main.c
+MAIN_SOURCES = art.c extra.c signals.c main.c
 
-# All source files
-SRC = $(BUILTIN_SRCS) \
-      $(TOKENIZATION_SRCS) \
-      $(EXPANSION_SRCS) \
-      $(NEW_EXPANSION_SRCS) \
-      $(PARSER_SRCS) \
-      $(EXECUTION_SRCS) \
-      $(SHELL_SRCS) \
-      $(MAIN_SRCS)
+# Create full source paths
+BUILTIN_SRCS = $(addprefix $(SRCDIR)/builtin_functions/, $(BUILTIN_SOURCES))
+TOKENIZATION_SRCS = $(addprefix $(SRCDIR)/tokenization/, $(TOKENIZATION_SOURCES))
+EXPANSION_SRCS = $(addprefix $(SRCDIR)/new_expansion/, $(EXPANSION_SOURCES))
+PARSER_SRCS = $(addprefix $(SRCDIR)/parser/, $(PARSER_SOURCES))
+EXECUTION_SRCS = $(addprefix $(SRCDIR)/execution/, $(EXECUTION_SOURCES))
+SHELL_SRCS = $(addprefix $(SRCDIR)/shell/, $(SHELL_SOURCES))
+MAIN_SRCS = $(addprefix $(SRCDIR)/main/, $(MAIN_SOURCES))
 
-# Header files
-HDR = inc/minishell.h \
-      inc/tokenizer.h \
-      inc/parser.h \
-      inc/expansion.h \
-      inc/new_expansion.h \
-      inc/env.h \
-      inc/execution.h \
-      inc/shell.h
+# All sources
+SOURCES = $(BUILTIN_SOURCES) $(TOKENIZATION_SOURCES) $(EXPANSION_SOURCES) \
+          $(PARSER_SOURCES) $(EXECUTION_SOURCES) $(SHELL_SOURCES) $(MAIN_SOURCES)
+SRCS = $(BUILTIN_SRCS) $(TOKENIZATION_SRCS) $(EXPANSION_SRCS) $(PARSER_SRCS) \
+       $(EXECUTION_SRCS) $(SHELL_SRCS) $(MAIN_SRCS)
 
 # Object files
-OBJ = $(SRC:.c=.o)
+BUILTIN_OBJS = $(BUILTIN_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+TOKENIZATION_OBJS = $(TOKENIZATION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+EXPANSION_OBJS = $(EXPANSION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+PARSER_OBJS = $(PARSER_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+EXECUTION_OBJS = $(EXECUTION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SHELL_OBJS = $(SHELL_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+MAIN_OBJS = $(MAIN_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+
+OBJS = $(BUILTIN_OBJS) $(TOKENIZATION_OBJS) $(EXPANSION_OBJS) $(PARSER_OBJS) \
+       $(EXECUTION_OBJS) $(SHELL_OBJS) $(MAIN_OBJS)
+
+# Libft sources and objects
+LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
+                ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
+                ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
+                ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
+                ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
+                ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
+                ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c ft_striteri.c \
+                ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
+                ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
+                ft_tolower.c ft_toupper.c
+
+LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
+LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
+
+# Header files
+HDR = $(INCDIR)/minishell.h $(INCDIR)/tokenizer.h $(INCDIR)/parser.h \
+      $(INCDIR)/expansion.h $(INCDIR)/env.h $(INCDIR)/execution.h \
+      $(INCDIR)/shell.h $(INCDIR)/structs.h
 
 all: $(NAME)
 
-# Build libft first
+# Build libft
 $(LIBFT): $(LIBFT_OBJS)
 	@echo "[📚] Creating libft archive..."
 	@ar rcs $(LIBFT) $(LIBFT_OBJS)
 	@echo "[✅] Libft ready!"
 
 $(LIBFT_DIR)/%.o: $(LIBFT_DIR)/%.c
-	@echo "[🔧] Compiling libft: $<"
+	@echo "[🔧] Compiling libft: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJ)
+# Build main program
+$(NAME): $(LIBFT) $(OBJS)
 	@echo "┌────────────────────────────────┐"
 	@echo "│   🚀  Building minishell...    │"
 	@echo "└────────────────────────────────┘"
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJ) $(LIBFT) $(LIBS)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(LIBFT) $(LIBS)
 	@echo "✅  Build complete! Enjoy your shell."
 
-%.o: %.c $(HDR)
-	@echo "[🛠️ ] Compiling $<…"
+# Module-specific compilation with progress messages
+$(OBJDIR)/builtin_functions/%.o: $(SRCDIR)/builtin_functions/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/builtin_functions
+	@echo "[🔨] Building builtin module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo "[✔️ ] Created $@"
+
+$(OBJDIR)/tokenization/%.o: $(SRCDIR)/tokenization/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/tokenization
+	@echo "[🎯] Building tokenization module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/new_expansion/%.o: $(SRCDIR)/new_expansion/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/new_expansion
+	@echo "[🔍] Building expansion module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/parser/%.o: $(SRCDIR)/parser/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/parser
+	@echo "[🌳] Building parser module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/execution/%.o: $(SRCDIR)/execution/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/execution
+	@echo "[⚡] Building execution module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/shell/%.o: $(SRCDIR)/shell/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/shell
+	@echo "[🐚] Building shell module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/main/%.o: $(SRCDIR)/main/%.c $(HDR)
+	@mkdir -p $(OBJDIR)/main
+	@echo "[🎮] Building main module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@echo "[🧹] Cleaning object files…"
-	@rm -f $(OBJ) $(LIBFT_OBJS)
+	@$(RM) -r $(OBJDIR)
+	@$(RM) $(LIBFT_OBJS)
 	@echo "[✔️ ] Objects removed."
 
 fclean: clean
-	@echo "[💣] Nuking $(NAME) and libft"
-	@rm -f $(NAME) $(LIBFT)
+	@echo "[💣] Nuking $(NAME) and libft..."
+	@$(RM) $(NAME) $(LIBFT)
 	@echo "[✔️ ] $(NAME) has been nuked."
 
 re: fclean all
 
 norminette:
 	@echo "🔍 Running Norminette on all files…"
-	@norminette $(SRC) $(HDR) $(LIBFT_DIR)
+	@norminette $(SRCS) $(HDR) $(LIBFT_DIR)
 
 .PHONY: all clean fclean re norminette
