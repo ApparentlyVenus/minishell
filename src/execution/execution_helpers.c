@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 06:42:18 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 08:14:16 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:08:44 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	execute_parent_node(t_node *node, t_shell *shell)
 	if (!node)
 		return (EXIT_SUCCESS);
 	if (node->type == NODE_AND)
-		return (execute_and(node, shell, execute_parent_node));
+		return (execute_and(node, shell));
 	else if (node->type == NODE_OR)
-		return (execute_or(node, shell, execute_parent_node));
+		return (execute_or(node, shell));
 	else if (node->type == NODE_CMD)
 	{
 		execute_parent_builtin(node, shell);
@@ -100,9 +100,9 @@ int	execute_children_node(t_node *node, t_shell *shell)
 	if (!node)
 		return (EXIT_SUCCESS);
 	if (node->type == NODE_AND)
-		return (execute_and(node, shell, execute_children_node));
+		return (execute_and(node, shell));
 	else if (node->type == NODE_OR)
-		return (execute_or(node, shell, execute_children_node));
+		return (execute_or(node, shell));
 	else
 	{
 		execute_children_pipeline(node, shell);

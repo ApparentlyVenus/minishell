@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 08:11:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:07:55 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ int			execute_children_node(t_node *node, t_shell *shell);
 
 // logical operator handeling
 
-int			execute_and(t_node *node, t_shell *shell,
-				int (*executor)(t_node *, t_shell *));
-int			execute_or(t_node *node, t_shell *shell,
-				int (*executor)(t_node *, t_shell *));
+int			execute_and(t_node *node, t_shell *shell);
+int			execute_or(t_node *node, t_shell *shell);
 
 // redirection handeling
 
