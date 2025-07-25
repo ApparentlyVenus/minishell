@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 07:51:31 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 08:11:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void		execute_external_command(t_exec *ctx,
 void		parent_process(t_shell *shell, t_exec *ctx);
 void		execute_parent_builtin(t_node *node, t_shell *shell);
 void		execute_children_pipeline(t_node *node, t_shell *shell);
-void		execute_parent_node(t_node *node, t_shell *shell);
-void		execute_children_node(t_node *node, t_shell *shell);
+int			execute_parent_node(t_node *node, t_shell *shell);
+int			execute_children_node(t_node *node, t_shell *shell);
 
 // logical operator handeling
 

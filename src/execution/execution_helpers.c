@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 06:42:18 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 07:50:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 08:14:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,21 @@ void	execute_parent_builtin(t_node *node, t_shell *shell)
 {
 	t_builtin	type;
 	char		**args;
-	t_exec		*ctx;
+	t_exec		ctx;
 
 	type = get_builtin_type(node->cmd->args[0]->value);
 	expand_cmd(node->cmd, type, shell);
 	args = convert_args(node->cmd->args);
 	if (!args)
-		return (EXIT_GENERAL_ERROR);
-	ctx->env = &shell->env;
-	ctx->cmd_count = 1;
-	ctx->pipes = NULL;
-	ctx->pids = NULL;
-	shell->exit_code = call_builtin_function(type, args, ctx, shell);
+	{
+		shell->exit_code = EXIT_GENERAL_ERROR;
+		return ;
+	}
+	ctx.env = &shell->env;
+	ctx.cmd_count = 1;
+	ctx.pipes = NULL;
+	ctx.pids = NULL;
+	shell->exit_code = call_builtin_function(type, args, &ctx, shell);
 	free_split(args);
 }
 
@@ -76,26 +79,33 @@ void	execute_children_pipeline(t_node *node, t_shell *shell)
 	parent_process(shell, ctx);
 }
 
-void	execute_parent_node(t_node *node, t_shell *shell)
+int	execute_parent_node(t_node *node, t_shell *shell)
 {
 	if (!node)
-		return ;
+		return (EXIT_SUCCESS);
 	if (node->type == NODE_AND)
-		shell->exit_code = execute_and(node, shell, execute_parent_node);
+		return (execute_and(node, shell, execute_parent_node));
 	else if (node->type == NODE_OR)
-		shell->exit_code = execute_or(node, shell, execute_parent_node);
+		return (execute_or(node, shell, execute_parent_node));
 	else if (node->type == NODE_CMD)
+	{
 		execute_parent_builtin(node, shell);
+		return (shell->exit_code);
+	}
+	return (EXIT_GENERAL_ERROR);
 }
 
-void	execute_children_node(t_node *node, t_shell *shell)
+int	execute_children_node(t_node *node, t_shell *shell)
 {
 	if (!node)
-		return ;
+		return (EXIT_SUCCESS);
 	if (node->type == NODE_AND)
-		shell->exit_code = execute_and(node, shell, execute_children_node);
+		return (execute_and(node, shell, execute_children_node));
 	else if (node->type == NODE_OR)
-		shell->exit_code = execute_or(node, shell, execute_children_node);
+		return (execute_or(node, shell, execute_children_node));
 	else
+	{
 		execute_children_pipeline(node, shell);
+		return (shell->exit_code);
+	}
 }

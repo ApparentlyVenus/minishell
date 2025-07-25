@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/25 07:58:10 by odana            ###   ########.fr        #
+#    Updated: 2025/07/25 08:16:25 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
-                    pipes.c israel.c operators.c
+                    pipes.c execution_helpers.c operators.c
 
 SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
@@ -115,41 +115,92 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(LIBFT) $(LIBS)
 	@echo "✅  Build complete! Enjoy your shell."
 
+# Module tracking variables
+BUILTIN_STARTED = $(OBJDIR)/.builtin_started
+TOKENIZATION_STARTED = $(OBJDIR)/.tokenization_started
+EXPANSION_STARTED = $(OBJDIR)/.expansion_started
+PARSER_STARTED = $(OBJDIR)/.parser_started
+EXECUTION_STARTED = $(OBJDIR)/.execution_started
+SHELL_STARTED = $(OBJDIR)/.shell_started
+MAIN_STARTED = $(OBJDIR)/.main_started
+
 # Module-specific compilation with progress messages
-$(OBJDIR)/builtin_functions/%.o: $(SRCDIR)/builtin_functions/%.c $(HDR)
+$(OBJDIR)/builtin_functions/%.o: $(SRCDIR)/builtin_functions/%.c $(HDR) | $(BUILTIN_STARTED)
+	@echo "builtin module: $(notdir $<)"
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(BUILTIN_STARTED):
 	@mkdir -p $(OBJDIR)/builtin_functions
-	@echo "[🔨] Building builtin module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│   🔨  Building builtin module  │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/tokenization/%.o: $(SRCDIR)/tokenization/%.c $(HDR) | $(TOKENIZATION_STARTED)
+	@echo "tokenization module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/tokenization/%.o: $(SRCDIR)/tokenization/%.c $(HDR)
+$(TOKENIZATION_STARTED):
 	@mkdir -p $(OBJDIR)/tokenization
-	@echo "[🎯] Building tokenization module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│  🎯  Building tokenizer module │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/new_expansion/%.o: $(SRCDIR)/new_expansion/%.c $(HDR) | $(EXPANSION_STARTED)
+	@echo "expansion module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/new_expansion/%.o: $(SRCDIR)/new_expansion/%.c $(HDR)
+$(EXPANSION_STARTED):
 	@mkdir -p $(OBJDIR)/new_expansion
-	@echo "[🔍] Building expansion module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│  🔍  Building expansion module │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/parser/%.o: $(SRCDIR)/parser/%.c $(HDR) | $(PARSER_STARTED)
+	@echo "parser module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/parser/%.o: $(SRCDIR)/parser/%.c $(HDR)
+$(PARSER_STARTED):
 	@mkdir -p $(OBJDIR)/parser
-	@echo "[🌳] Building parser module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│   🌳  Building parser module   │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/execution/%.o: $(SRCDIR)/execution/%.c $(HDR) | $(EXECUTION_STARTED)
+	@echo "execution module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/execution/%.o: $(SRCDIR)/execution/%.c $(HDR)
+$(EXECUTION_STARTED):
 	@mkdir -p $(OBJDIR)/execution
-	@echo "[⚡] Building execution module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│  ⚡  Building execution module │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/shell/%.o: $(SRCDIR)/shell/%.c $(HDR) | $(SHELL_STARTED)
+	@echo "shell module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/shell/%.o: $(SRCDIR)/shell/%.c $(HDR)
+$(SHELL_STARTED):
 	@mkdir -p $(OBJDIR)/shell
-	@echo "[🐚] Building shell module: $(notdir $<)"
+	@echo "┌────────────────────────────────┐"
+	@echo "│   🐚  Building shell module    │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
+
+$(OBJDIR)/main/%.o: $(SRCDIR)/main/%.c $(HDR) | $(MAIN_STARTED)
+	@echo "main module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJDIR)/main/%.o: $(SRCDIR)/main/%.c $(HDR)
+$(MAIN_STARTED):
 	@mkdir -p $(OBJDIR)/main
-	@echo "[🎮] Building main module: $(notdir $<)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@echo "┌────────────────────────────────┐"
+	@echo "│    🎮  Building main module    │"
+	@echo "└────────────────────────────────┘"
+	@touch $@
 
 clean:
 	@echo "[🧹] Cleaning object files…"
