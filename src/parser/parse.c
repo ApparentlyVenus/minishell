@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:37:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:59:08 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 /*
 **  call pipeline, if there are trailing tokens free and return NULL
 */
-t_node	*parse_input(t_token **tokens)
+t_node	*parse_input(t_token **tokens, t_env *env)
 {
 	t_node	*ast;
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	ast = parse_pipeline(tokens, 1);
+	ast = parse_pipeline(tokens, env, 1);
 	if (!ast)
 		return (NULL);
 	if (*tokens)
@@ -32,22 +32,21 @@ t_node	*parse_input(t_token **tokens)
 	return (ast);
 }
 
-t_node	*parse_pipeline(t_token **tokens, int min_priority)
+t_node	*parse_pipeline(t_token **tokens, t_env *env, int min_priority)
 {
 	t_node			*left;
-	int				op_priority;
-	t_token_type	op_type;
+	t_op_info		op;
 
-	left = parse_command_or_group(tokens);
+	left = parse_command_or_group(tokens, env);
 	if (!left)
 		return (NULL);
 	while (*tokens)
 	{
-		op_priority = get_token_priority(*tokens);
-		if (op_priority < min_priority || op_priority == 0)
+		op.priority = get_token_priority(*tokens);
+		if (op.priority < min_priority || op.priority == 0)
 			break ;
-		op_type = (*tokens)->type;
-		left = handle_operator(left, tokens, op_type, op_priority);
+		op.type = (*tokens)->type;
+		left = handle_operator(left, tokens, env, op);
 		if (!left)
 			return (NULL);
 	}
@@ -62,7 +61,7 @@ t_node	*parse_pipeline(t_token **tokens, int min_priority)
 ** 2 Possible Patterns: 1. WORD+ redir*(at least one word, optional redirection)
 **                          2. redir+ (at least one redirection)
 */
-t_node	*parse_command(t_token **tokens)
+t_node	*parse_command(t_token **tokens, t_env *env)
 {
 	int		count;
 	t_arg	*arg_list;
@@ -81,7 +80,7 @@ t_node	*parse_command(t_token **tokens)
 	}
 	while (*tokens && is_redir(*tokens))
 	{
-		redir = parse_redir(tokens);
+		redir = parse_redir(tokens, env);
 		if (!redir)
 			return (free_arg(arg_list), free_redir(redir_list), (NULL));
 		append_redir(&redir_list, redir);
@@ -91,7 +90,7 @@ t_node	*parse_command(t_token **tokens)
 	return (create_cmd_node(process_args(arg_list, count), redir_list));
 }
 
-t_redir	*parse_redir(t_token **tokens)
+t_redir	*parse_redir(t_token **tokens, t_env *env)
 {
 	int		type;
 	char	*filename;
@@ -107,13 +106,13 @@ t_redir	*parse_redir(t_token **tokens)
 	*tokens = (*tokens)->next;
 	if (type == TOKEN_HEREDOC)
 	{
-		redir = process_heredoc(filename);
+		redir = process_heredoc(filename, env);
 		return (redir);
 	}
 	return (create_redir_node(type, ft_strdup(filename)));
 }
 
-t_node	*parse_group(t_token **tokens)
+t_node	*parse_group(t_token **tokens, t_env *env)
 {
 	t_node	*node;
 
@@ -121,7 +120,7 @@ t_node	*parse_group(t_token **tokens)
 	if (*tokens && (*tokens)->type == TOKEN_LPAREN)
 	{
 		*tokens = (*tokens)->next;
-		node = parse_pipeline(tokens, 0);
+		node = parse_pipeline(tokens, env, 0);
 		if (!node || !*tokens || (*tokens)->type != TOKEN_RPAREN)
 		{
 			if (node)

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:14:28 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:52:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,12 @@ typedef struct s_node
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
+
+typedef struct s_op_info
+{
+	t_token_type	type;
+	int				priority;
+}	t_op_info;
 
 typedef struct s_exec
 {

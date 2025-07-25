@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:33:55 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:37:47 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:59:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	shell_parse(t_shell *shell)
 		return (0);
 	shell->current_phase = PHASE_PARSE;
 	token_copy = shell->tokens;
-	shell->ast = parse_input(&token_copy);
+	shell->ast = parse_input(&token_copy, shell->env);
 	if (!shell->ast)
 	{
 		set_error(shell, "parsing failed");
