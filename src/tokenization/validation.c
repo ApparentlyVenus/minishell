@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 14:22:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:39:59 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,15 @@ int	pipe_validation(t_token **token)
 int	valid_heredoc(t_token **token)
 {
 	t_token	*current;
-	t_token	*prev;
 
 	current = (*token);
-	prev = NULL;
 	while (current)
 	{
-		if (current->type == TOKEN_HERDOC
-			&& (prev == NULL || current->next == NULL
-				|| current->next->type != TOKEN_WORD))
-			return (0);
-		prev = current;
+		if (current->type == TOKEN_HEREDOC)
+		{
+			if (current->next == NULL || current->next->type != TOKEN_WORD)
+				return (0);
+		}
 		current = current->next;
 	}
 	return (1);

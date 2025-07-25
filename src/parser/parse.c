@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 15:04:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:37:35 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_redir	*parse_redir(t_token **tokens)
 		return (NULL);
 	filename = (*tokens)->value;
 	*tokens = (*tokens)->next;
-	if (type == TOKEN_HERDOC)
+	if (type == TOKEN_HEREDOC)
 	{
 		redir = process_heredoc(filename);
 		return (redir);

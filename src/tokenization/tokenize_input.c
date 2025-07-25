@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 02:28:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:14:28 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_token	*extract_operator_token(char *input, int *pos)
 			token->type = TOKEN_OR, token->priority = 1, *pos += 2, token);
 	else if (input[*pos] == '<' && input[*pos + 1] == '<')
 		return (token->value = ft_substr(input, *pos, 2),
-			token->type = TOKEN_HERDOC, (*pos) += 2, token);
+			token->type = TOKEN_HEREDOC, (*pos) += 2, token);
 	else
 	{
 		token = extract_bonus_token(input, pos, token);

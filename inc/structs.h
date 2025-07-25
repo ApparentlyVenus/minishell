@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:57:09 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:14:28 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_token_type
 	TOKEN_REDIR_IN,
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_OUT_APPEND,
-	TOKEN_HERDOC,
+	TOKEN_HEREDOC,
 	TOKEN_OR,
 	TOKEN_AND,
 	TOKEN_WILDCARD,

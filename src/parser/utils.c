@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 11:56:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 09:37:14 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redir(t_token *token)
 {
-	if (token->type == TOKEN_HERDOC || token->type == TOKEN_REDIR_IN
+	if (token->type == TOKEN_HEREDOC || token->type == TOKEN_REDIR_IN
 		|| token->type == TOKEN_REDIR_OUT
 		|| token->type == TOKEN_REDIR_OUT_APPEND)
 		return (1);
