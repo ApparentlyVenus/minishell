@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 07:14:34 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 13:28:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_exec	*setup_exec(t_node *cmd_list, t_env **env)
 	ctx->pids = malloc(sizeof(pid_t) * ctx->cmd_count);
 	if (!ctx->pids)
 		return (free(ctx), NULL);
+	ft_memset(ctx->pids, 0, sizeof(pid_t) * ctx->cmd_count);
 	ctx->pipes = allocate_pipes(ctx->cmd_count);
 	if (ctx->cmd_count > 1 && !ctx->pipes)
 		return (free(ctx->pids), free(ctx), NULL);

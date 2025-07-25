@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:29:06 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 02:08:34 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 13:29:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	shell_exit(t_shell *shell, int exit_code)
 		shell->exit_code = exit_code;
 		shell_cleanup(shell);
 	}
+	rl_clear_history();
 	exit(exit_code);
 }
 

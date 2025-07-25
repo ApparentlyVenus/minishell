@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 01:06:12 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 13:31:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,36 @@ void	env_init(t_env **env_list, char **envp)
 		if (equal_sign)
 		{
 			new_node->equal = 1;
-			new_node->value = ft_strdup(equal_sign + 1);
 			new_node->key = ft_substr(envp[i], 0, equal_sign - envp[i]);
+			if (!new_node->key)
+			{
+				free(new_node);
+				free_env(*env_list);
+				*env_list = NULL;
+				return ;
+			}
+			new_node->value = ft_strdup(equal_sign + 1);
+			if (!new_node->value)
+			{
+				free(new_node->key);
+				free(new_node);
+				free_env(*env_list);
+				*env_list = NULL;
+				return ;
+			}
 		}
 		else
 		{
 			new_node->equal = 0;
 			new_node->value = NULL;
 			new_node->key = ft_strdup(envp[i]);
+			if (!new_node->key)
+			{
+				free(new_node);
+				free_env(*env_list);
+				*env_list = NULL;
+				return ;
+			}
 		}
 		if (!new_node->key || (equal_sign && !new_node->value))
 		{

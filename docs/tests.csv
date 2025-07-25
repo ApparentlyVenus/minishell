@@ -1,41 +1,41 @@
 Category,Test Case,Command,Expected Result,Status,Priority,Notes
-Basic Shell,Simple command,ls,Directory listing,Not Tested,High,
-Basic Shell,Command with args,ls -la,Detailed listing,Not Tested,High,
-Basic Shell,Absolute path,/bin/ls,Directory listing,Not Tested,High,
-Basic Shell,Relative path,./minishell,Start new shell,Not Tested,Medium,
+Basic Shell,Simple command,ls,Directory listing,PASS,High,
+Basic Shell,Command with args,ls -la,Detailed listing,PASS,High,
+Basic Shell,Absolute path,/bin/ls,Directory listing,PASS,High,
+Basic Shell,Relative path,./minishell,Start new shell,PASS,Medium,
 Basic Shell,Command not found,nonexistent,Error message,Not Tested,High,
-Basic Shell,Empty command,(Enter),New prompt,Not Tested,High,
-Basic Shell,Only spaces,   ,New prompt,Not Tested,Medium,
-echo,Basic echo,echo hello world,hello world,Not Tested,High,
-echo,No newline,echo -n hello,hello (no newline),Not Tested,High,
-echo,Multiple -n,echo -n -n hello,hello (no newline),Not Tested,Medium,
-echo,Empty echo,echo,Empty line,Not Tested,Medium,
-echo,Empty string,echo "",Empty line,Not Tested,Medium,
-echo,-n not first,echo hello -n,hello -n,Not Tested,Low,
-cd,Absolute path,cd /tmp,Change to /tmp,Not Tested,High,
-cd,Relative path,cd ..,Go up one level,Not Tested,High,
-cd,Go home,cd,Go to $HOME,Not Tested,High,
-cd,Previous dir,cd -,Go to $OLDPWD,Not Tested,Medium,
-cd,Tilde expansion,cd ~,Go to $HOME,Not Tested,Medium,
-cd,Tilde with path,cd ~/Documents,Go to ~/Documents,Not Tested,Medium,
-cd,Invalid dir,cd /nonexistent,Error message,Not Tested,High,
-cd,Permission denied,cd /root,Error message,Not Tested,Medium,
-cd,Too many args,cd a b,Error message,Not Tested,Low,
-cd,PWD updates,Check pwd after cd,Correct path,Not Tested,High,
-pwd,Basic pwd,pwd,Current directory,Not Tested,High,
-pwd,After cd,cd /tmp && pwd,/tmp,Not Tested,High,
-export,List variables,export,All exported vars,Not Tested,Medium,
-export,Set variable,export VAR=value,Variable set,Not Tested,High,
-export,Declare only,export VAR,Variable declared,Not Tested,Medium,
-export,Empty value,export VAR=,Empty variable,Not Tested,Medium,
-export,Quoted value,export VAR="test",Variable set,Not Tested,Medium,
-export,Invalid name,export 123=invalid,Error message,Not Tested,Low,
-export,Multiple exports,export A=1 B=2,Both variables set,Not Tested,Medium,
-unset,Remove variable,unset VAR,Variable removed,Not Tested,High,
-unset,Nonexistent var,unset FAKE,No error,Not Tested,Medium,
-unset,Multiple unset,unset A B C,All removed,Not Tested,Medium,
-unset,Invalid name,unset 123,Error message,Not Tested,Low,
-env,List all env,env,All environment vars,Not Tested,Medium,
+Basic Shell,Empty command,(Enter),New prompt,PASS,High,
+Basic Shell,Only spaces,   ,New prompt,PASS,Medium,
+echo,Basic echo,echo hello world,hello world,PASS,High,
+echo,No newline,echo -n hello,hello (no newline),PASS,High,
+echo,Multiple -n,echo -n -n hello,hello (no newline),PASS,Medium,
+echo,Empty echo,echo,Empty line,PASS,Medium,
+echo,Empty string,echo "",Empty line,FAIL,Medium,"minishell: unclose quotes"
+echo,-n not first,echo hello -n,hello -n,PASS,Low,
+cd,Absolute path,cd /tmp,Change to /tmp,PASS,High,checked pwd after each call
+cd,Relative path,cd ..,Go up one level,PASS,High,checked pwd after each call
+cd,Go home,cd,Go to $HOME,PASS,High,checked pwd after each call
+cd,Previous dir,cd -,Go to $OLDPWD,PASS,Medium,checked pwd after each call
+cd,Tilde expansion,cd ~,Go to $HOME,PASS,Medium,checked pwd after each call
+cd,Tilde with path,cd ~/Documents,Go to ~/Documents,PASS,Medium,checked pwd after each call
+cd,Invalid dir,cd /nonexistent,Error message,PASS,High,checked pwd after each call
+cd,Permission denied,cd /root,Error message,PASS,Medium,checked pwd after each call
+cd,Too many args,cd a b,Error message,PASS,Low,checked pwd after each call
+cd,PWD updates,Check pwd after cd,Correct path,PASS,High,checked pwd after each call
+pwd,Basic pwd,pwd,Current directory,PASS,High,
+pwd,After cd,cd /tmp && pwd,/tmp,PASS,High,
+export,List variables,export,All exported vars,PASS,Medium,
+export,Set variable,export VAR=value,Variable set,PASS,High,
+export,Declare only,export VAR,Variable declared,CHECK,Medium,nothing happened in env
+export,Empty value,export VAR=,Empty variable,PASS,Medium,
+export,Quoted value,export VAR="test",Variable set,PASS,Medium,
+export,Invalid name,export 123=invalid,Error message,CHECK,Low,variable wasnt declared but no error message
+export,Multiple exports,export A=1 B=2,Both variables set,PASS,Medium,
+unset,Remove variable,unset VAR,Variable removed,PASS,High,
+unset,Nonexistent var,unset FAKE,No error,PASS,Medium,
+unset,Multiple unset,unset A B C,All removed,PASS,Medium,
+unset,Invalid name,unset 123,Error message,CHECK,Low,nothing happened in env but no error message
+env,List all env,env,All environment vars,PASS,Medium,
 exit,Default exit,exit,Exit with code 0,Not Tested,High,
 exit,Specific code,exit 42,Exit with code 42,Not Tested,High,
 exit,Large number,exit 256,Exit with code 0,Not Tested,Medium,
