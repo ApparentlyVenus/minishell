@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/26 12:23:18 by odana            ###   ########.fr        #
+#    Updated: 2025/07/26 19:18:08 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
-                    pipes.c execution_helpers.c operators.c
+                    pipes.c execution_helpers.c operators.c error_handle.c
 
 SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
