@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 09:07:55 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 13:17:11 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int			execute_or(t_node *node, t_shell *shell);
 // redirection handeling
 
 void		setup_redir(t_cmd *cmd);
-void		redir_in(t_redir *redir);
-void		redir_out(t_redir *redir);
-void		redir_out_append(t_redir *redir);
+int			open_redir_file(t_redir *redir);
+void		handle_redir_error(t_redir *redir);
+void		update_redir_fd(t_redir *redir, int new_fd,
+				int *input_fd, int *output_fd);
+void		apply_final_redir(int input_fd, int output_fd);
 
 // setup pipes
 

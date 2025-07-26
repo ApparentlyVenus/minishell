@@ -6,87 +6,103 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 11:22:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 13:15:18 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	redir_in(t_redir *redir)
+int	open_redir_file(t_redir *redir)
 {
 	int		fd;
+	int		flags;
+	mode_t	mode;
 
-	fd = open(redir->filename, O_RDONLY);
-	if (fd == -1)
+	fd = -1;
+	if (redir->type == REDIR_IN)
+		fd = open(redir->filename, O_RDONLY);
+	else if (redir->type == REDIR_OUT)
 	{
-		ft_putstr_fd(redir->filename, STDERR_FILENO);
+		flags = O_WRONLY | O_CREAT | O_TRUNC;
+		mode = 0644;
+		fd = open(redir->filename, flags, mode);
+	}
+	else if (redir->type == REDIR_OUT_APPEND)
+	{
+		flags = O_WRONLY | O_CREAT | O_APPEND;
+		mode = 0644;
+		fd = open(redir->filename, flags, mode);
+	}
+	return (fd);
+}
+
+void	handle_redir_error(t_redir *redir)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(redir->filename, STDERR_FILENO);
+	if (redir->type == REDIR_IN)
 		ft_putendl_fd(": no such file or directory", STDERR_FILENO);
-		exit(EXIT_GENERAL_ERROR);
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-}
-
-void	redir_out(t_redir *redir)
-{
-	int	fd;
-
-	fd = open(redir->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-	{
-		ft_putstr_fd(redir->filename, STDERR_FILENO);
+	else
 		ft_putendl_fd(": permission denied", STDERR_FILENO);
-		exit(EXIT_GENERAL_ERROR);
-	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	exit(EXIT_GENERAL_ERROR);
 }
 
-void	redir_out_append(t_redir *redir)
+void	update_redir_fd(t_redir *redir, int new_fd,
+	int *input_fd, int *output_fd)
 {
-	int	fd;
-
-	fd = open(redir->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
+	if (redir->type == REDIR_IN)
 	{
-		ft_putstr_fd(redir->filename, STDERR_FILENO);
-		ft_putendl_fd(": permission denied", STDERR_FILENO);
-		exit(EXIT_GENERAL_ERROR);
+		if (*input_fd != -1)
+			close(*input_fd);
+		*input_fd = new_fd;
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	else
+	{
+		if (*output_fd != -1)
+			close(*output_fd);
+		*output_fd = new_fd;
+	}
 }
 
-/*
-** setup_redir - Handles file redirections
-**
-** Supports: < (input), > (output), >> (append) and << LIM (heredoc)
-*/
+void	apply_final_redir(int input_fd, int output_fd)
+{
+	if (input_fd != -1)
+	{
+		dup2(input_fd, STDIN_FILENO);
+		close(input_fd);
+	}
+	if (output_fd != -1)
+	{
+		dup2(output_fd, STDOUT_FILENO);
+		close(output_fd);
+	}
+}
+
 void	setup_redir(t_cmd *cmd)
 {
 	t_redir	*redir;
-	t_redir	*last_input;
-	t_redir	*last_output;
-	t_redir	*last_append;
+	int		fd;
+	int		input_fd;
+	int		output_fd;
 
-	last_input = NULL;
-	last_output = NULL;
-	last_append = NULL;
+	if (!cmd || !cmd->redirs)
+		return ;
+	input_fd = -1;
+	output_fd = -1;
 	redir = cmd->redirs;
 	while (redir)
 	{
-		if (redir->type == REDIR_IN)
-			last_input = redir;
-		else if (redir->type == REDIR_OUT)
-			last_output = redir;
-		else if (redir->type == REDIR_OUT_APPEND)
-			last_append = redir;
+		fd = open_redir_file(redir);
+		if (fd == -1)
+		{
+			if (input_fd != -1)
+				close(input_fd);
+			if (output_fd != -1)
+				close(output_fd);
+			handle_redir_error(redir);
+		}
+		update_redir_fd(redir, fd, &input_fd, &output_fd);
 		redir = redir->next;
 	}
-	if (last_input)
-		redir_in(last_input);
-	if (last_append)
-		redir_out_append(last_append);
-	else if (last_output)
-		redir_out(last_output);
+	apply_final_redir(input_fd, output_fd);
 }

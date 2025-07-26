@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 12:01:09 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:24:01 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@
 // Main expansion entry point
 void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell);
 
+// Quote REmoval
+
+char	*remove_all_quotes(char *str);
+char	*remove_quotes_extra(char *str);
+int		process_quotes(char c);
+char	*remove_quotes(char *str);
+char	*remove_adjacent_quotes(char *str);
+
 // Assignment and argument expansion
 
 char	*expand_assignment_value(char *arg, t_env *env);
@@ -50,14 +58,6 @@ int		is_assignment(char *arg);
 char	*join_assignment(char *var, char *val);
 char	*remove_quotes(char *filename);
 char	*remove_adjacent_quotes(char *filename);
-
-// Quote REmoval
-
-char	*remove_all_quotes(char *str);
-char	*remove_quotes_extra(char *str);
-int		process_quote(char c);
-char	*remove_quotes(char *str);
-char	*remove_adjacent_quotes(char *str);
 
 // Variable expansion in arguments
 

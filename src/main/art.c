@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:04:03 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 00:02:45 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 13:15:03 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	art(void)
 	printf("\033[38;5;208m%s\033[0m", "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝");
 	printf("\033[1;37m%s\033[0m", "╚══════╝");
 	printf("\033[38;5;208m%s\n", "╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝");
-	printf("\033[38;5;208m%s\033[0m\n", "      		by Youssef & Omar     ");
+	printf("\033[38;5;208m%s\033[0m\n", "      		      by Youssef & Omar");
 	printf("\033[1;37m%s\033[0m\n", "");
 	printf("\033[1;32m%s", "\"THE RETURN STATEMENTS MUST ROLL! ");
 	printf("DOWN WITH NORMINETTE OPPRESSION!\"\033[0m\n");

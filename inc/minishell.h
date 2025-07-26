@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 12:22:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:47:33 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# include "structs.h"
+
 // minishell modules
 
+# include "structs.h"
 # include "tokenizer.h"
 # include "parser.h"
 # include "expansion.h"
