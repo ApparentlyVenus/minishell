@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 15:54:18 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/26 18:09:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	builtin_export(char **args, t_env **env)
 		return (print_sorted_env(env), 0);
 	if (args[0][0] == '=')
 	{
-		printf("minishell: export: `%s': not a valid identifier\n", args[0]);
+		// printf("minishell: export: `%s': not a valid identifier\n", args[0]);
+		ft_putendl_fd(" not a valid identifier", 2);
 		failure[0] = 1;
 		i++;
 	}

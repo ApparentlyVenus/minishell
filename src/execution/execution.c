@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 14:37:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/26 18:06:47 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,41 @@
  * - If not, search in PATH environment variable
  * - Use execve to replace current process with command
  */
+
+void	if_directory_or_invalid(char *path, char *cmd, char **envp)
+{
+	struct stat sb;
+
+	if (stat(path, &sb) == 0)
+	{
+		if (S_ISDIR(sb.st_mode))
+		{
+			ft_putstr_fd(cmd, 2);
+			ft_putendl_fd(": Is a directory", STDERR_FILENO);
+			if (path != cmd)
+				free(path);
+			free_split(envp);
+			exit(126);	
+		}
+		if (access(path, X_OK) != 0)
+		{
+			perror(cmd);
+			if (path != cmd)
+				free(path);
+			free_split(envp);
+			exit(126);	
+		}
+	}
+	else
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		perror("");
+		free_split(envp);
+		exit(127);
+	}
+}
+
 void	execute_external_command(t_exec *ctx, char **args)
 {
 	char	*cmd;
@@ -27,6 +62,8 @@ void	execute_external_command(t_exec *ctx, char **args)
 	char	**envp;
 
 	cmd = args[0];
+	// if (cmd[0] == '\0')
+	// 	exit(0);
 	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
@@ -39,6 +76,7 @@ void	execute_external_command(t_exec *ctx, char **args)
 		free_split(envp);
 		exit(127);
 	}
+	if_directory_or_invalid(path, cmd, envp);
 	execve(path, args, envp);
 	ft_putendl_fd("execve failed", STDERR_FILENO);
 	if (path != cmd)
@@ -111,6 +149,14 @@ int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
  * - Executes the command appropriately
  * - Only called in child processes
  */
+
+char	**skip_empty_args(char **args)
+{
+	while (args[0] && args[0][0] == '\0')
+		args++;
+	return (args);
+}
+
 void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 {
 	t_builtin	type;
@@ -132,6 +178,9 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	else
 	{
 		args = convert_args(cmd_node->cmd->args);
+		args = skip_empty_args(args);
+		if (!args[0])
+			exit(0);
 		execute_external_command(ctx, args);
 		free_split(args);
 		exit(127);
