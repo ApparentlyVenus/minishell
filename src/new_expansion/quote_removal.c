@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 11:51:57 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 12:01:13 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:24:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*remove_all_quotes(char *str)
 			return (result);
 		free(result);
 	}
-	return (remove_quotes_compex(str));
+	return (remove_quotes_extra(str));
 }
 
 char	*remove_quotes_extra(char *str)
@@ -34,16 +34,12 @@ char	*remove_quotes_extra(char *str)
 	char	*result;
 	int		i;
 	int		j;
-	int		in_single;
-	int		in_double;
 
 	result = malloc(ft_strlen(str) + 1);
 	if (!result)
 		return (ft_strdup(str));
 	i = 0;
 	j = 0;
-	in_single = 0;
-	in_double = 0;
 	while (str[i])
 	{
 		if (process_quotes(str[i]))
@@ -55,7 +51,7 @@ char	*remove_quotes_extra(char *str)
 	return (result);
 }
 
-int	process_quote(char c)
+int	process_quotes(char c)
 {
 	int	in_single;
 	int	in_double;
