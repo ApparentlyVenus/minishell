@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 11:38:04 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:05:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,37 @@ void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 {
 	int		i;
 	char	*expanded;
-	char	*original;
+	char	*unquoted;
 
 	if (!cmd || !cmd->args)
 		return ;
 	i = 0;
 	while (cmd->args[i])
 	{
-		original = cmd->args[i]->value;
 		if (cmd->args[i]->single_quotes)
 		{
-			i++;
-			continue ;
+			unquoted = remove_all_quotes(cmd->args[i]->value);
+			if (unquoted)
+			{
+				free(cmd->args[i]->value);
+				cmd->args[i]->value = unquoted;
+			}
 		}
-		expanded = expand_cmd_arg(original, shell, builtin_type, i);
-		if (expanded && expanded != original)
+		else
 		{
-			free(original);
-			cmd->args[i]->value = expanded;
+			expanded = expand_cmd_arg(cmd->args[i]->value,
+					shell, builtin_type, i);
+			if (expanded && expanded != cmd->args[i]->value)
+			{
+				free(cmd->args[i]->value);
+				cmd->args[i]->value = expanded;
+			}
+			unquoted = remove_all_quotes(cmd->args[i]->value);
+			if (unquoted)
+			{
+				free(cmd->args[i]->value);
+				cmd->args[i]->value = unquoted;
+			}
 		}
 		i++;
 	}
@@ -98,7 +111,7 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 				free(redir->filename);
 				redir->filename = expanded;
 			}
-			unquoted = remove_quotes(redir->filename);
+			unquoted = remove_all_quotes(redir->filename);
 			if (unquoted)
 			{
 				free(redir->filename);

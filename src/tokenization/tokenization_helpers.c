@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 02:09:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:18:09 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 	int		start;
 
 	start = *i;
+	if ((input[*i] == '\'' && input[*i + 1] == '\'')
+		|| (input[*i] == '"' && input[*i + 1] == '"'))
+		return (handle_empty_quotes(input, i));
 	word = extract_word(input, i);
 	if (!word)
 		return (handle_error(shell, "malloc failure",
@@ -31,6 +34,24 @@ t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 		return (handle_error(shell, "malloc failure",
 				EXIT_GENERAL_ERROR), NULL);
 	return (new_token);
+}
+
+t_token	*handle_empty_quotes(char *input, int *i)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->value = ft_strdup("");
+	token->type = TOKEN_WORD;
+	token->single_quotes = (input[*i] == '\'');
+	token->double_quotes = (input[*i] == '"');
+	token->priority = 0;
+	token->has_wildcard = 0;
+	token->next = NULL;
+	*i += 2;
+	return (token);
 }
 
 t_token	*create_next_token(char *input, int *i, t_shell *shell)

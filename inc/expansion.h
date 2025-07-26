@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 11:36:41 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:01:09 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,20 @@ char	*expand_exit(char *str, t_env *env, int exit_code);
 char	*replace_exit_code(char *str, char *exit_code_str);
 char	*replace_substring(char *str, char *pos, char *old_str, char *new_str);
 
-// Utils
+// Assginemtn Utils
 
 int		is_assignment(char *arg);
 char	*join_assignment(char *var, char *val);
 char	*remove_quotes(char *filename);
 char	*remove_adjacent_quotes(char *filename);
+
+// Quote REmoval
+
+char	*remove_all_quotes(char *str);
+char	*remove_quotes_extra(char *str);
+int		process_quote(char c);
+char	*remove_quotes(char *str);
+char	*remove_adjacent_quotes(char *str);
 
 // Variable expansion in arguments
 
