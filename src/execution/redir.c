@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 13:15:18 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 13:21:26 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	handle_redir_error(t_redir *redir)
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(redir->filename, STDERR_FILENO);
 	if (redir->type == REDIR_IN)
-		ft_putendl_fd(": no such file or directory", STDERR_FILENO);
+		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	else
-		ft_putendl_fd(": permission denied", STDERR_FILENO);
+		ft_putendl_fd(": Permission denied", STDERR_FILENO);
 	exit(EXIT_GENERAL_ERROR);
 }
 
