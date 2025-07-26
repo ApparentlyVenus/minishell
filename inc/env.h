@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 00:20:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 15:13:29 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int		builtin_pwd(void);
 int		builtin_unset(char **args, t_env **env);
 int		builtin_cd(char **args, t_env **env);
 void	builtin_env(t_env **env);
-void	builtin_exit(char **args, t_shell *shell);
+int		builtin_exit(char **args, t_shell *shell);
 
 // Helpers
 
 void	handle_new_key(t_env **env, char *key, char *value);
 void	set_env_value(t_env **env, char *key, char *value);
-void	export_helper(t_env **envp, char *equal_sign, char *args);
+void	export_helper(t_env **envp, char *equal_sign, char *args, int *failure);
 void	swap_env_nodes(t_env *a, t_env *b);
 t_env	**do_something(t_env **envp);
 char	*get_env_value(t_env *env, char *key);

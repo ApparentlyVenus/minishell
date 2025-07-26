@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 23:42:02 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/26 15:54:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,29 @@ static void	print_sorted_env(t_env **envp)
 int	builtin_export(char **args, t_env **env)
 {
 	char	*equal_sign;
-	int		failure;
+	int		failure[1];
 	int		i;
 
 	i = 0;
-	failure = 0;
+	failure[0] = 0;
 	if (!args || !args[0])
 		return (print_sorted_env(env), 0);
+	if (args[0][0] == '=')
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", args[0]);
+		failure[0] = 1;
+		i++;
+	}
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
 		if (equal_sign)
-			export_helper(env, equal_sign, args[i]);
+			export_helper(env, equal_sign, args[i], failure);
 		else if (is_valid_key(args[i]))
 			set_env_value(env, args[i], NULL);
 		else
-			failure = 1;
+			failure[0] = 1;
 		i++;
 	}
-	return (failure);
+	return (failure[0]);
 }

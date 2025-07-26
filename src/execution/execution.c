@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 07:47:41 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 14:37:50 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	}
 	else if (builtin_type == BUILTIN_EXIT)
 	{
-		builtin_exit(args, shell);
-		return (EXIT_SUCCESS);
+		return (builtin_exit(args, shell));
+		// return (EXIT_SUCCESS);
 	}
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(args + 1, ctx->env));

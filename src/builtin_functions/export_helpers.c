@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/23 13:03:50 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 15:37:52 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_env_value(t_env **env, char *key, char *value)
 	handle_new_key(env, key, value);
 }
 
-void	export_helper(t_env **envp, char *equal_sign, char *args)
+void	export_helper(t_env **envp, char *equal_sign, char *args, int *failure)
 {
 	char	*key;
 	char	*value;
@@ -73,6 +73,7 @@ void	export_helper(t_env **envp, char *equal_sign, char *args)
 	{
 		free(key);
 		free(value);
+		failure[0] = 1;
 	}
 	else
 	{

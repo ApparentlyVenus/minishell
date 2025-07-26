@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 15:39:32 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 15:17:07 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,19 @@ void	update_pwd(t_env **env, char *old_pwd, char *new_pwd)
 {
 	char	*oldpwd_var;
 	char	*pwd_var;
+	int		x[1];
 
+	x[0] = 0;
 	pwd_var = ft_strjoin("PWD=", new_pwd);
 	oldpwd_var = ft_strjoin("OLDPWD=", old_pwd);
 	if (pwd_var)
 	{
-		export_helper(env, ft_strchr(pwd_var, '='), pwd_var);
+		export_helper(env, ft_strchr(pwd_var, '='), pwd_var, x);
 		free(pwd_var);
 	}
 	if (oldpwd_var)
 	{
-		export_helper(env, ft_strchr(oldpwd_var, '='), oldpwd_var);
+		export_helper(env, ft_strchr(oldpwd_var, '='), oldpwd_var, x);
 		free(oldpwd_var);
 	}
 }
