@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/23 12:35:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 12:20:11 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token	*clean_word_token(char *word);
 t_token	*extract_operator_token(char *input, int *pos);
 t_token	*handle_word_token(char *input, int *i, t_shell *shell);
 t_token	*create_next_token(char *input, int *i, t_shell *shell);
+t_token	*handle_empty_quotes(char *input, int *i);
 char	*trim_quotes(char *word, t_token *token);
 void	toggle_quotes(char c, int *in_single, int *in_double);
 int		continue_word(char c, int in_single, int in_double);
