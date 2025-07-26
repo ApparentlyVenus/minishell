@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 12:11:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 16:48:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 	return (content);
 }
 
-/*
-** create_temp_file
-** Purpose: Creates a temporary file and writes heredoc content to it
-** Used variables: content (heredoc text)
-** Return: Newly allocated filename string
-*/
 char	*create_temp_file(char *content)
 {
 	char	*temp_filename;
@@ -93,12 +87,6 @@ char	*create_temp_file(char *content)
 	return (temp_filename);
 }
 
-/*
-** process_heredoc
-** Purpose: Main function to process heredoc during parsing
-** Used variables: delimiter (heredoc delimiter)
-** Return: Newly allocated t_redir with temp file as filename
-*/
 t_redir	*process_heredoc(char *delimiter, t_env *env,
 		int s_quotes, int d_quotes)
 {

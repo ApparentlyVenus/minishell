@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 21:00:42 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:44:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 11:22:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,28 @@ void	redir_out_append(t_redir *redir)
 void	setup_redir(t_cmd *cmd)
 {
 	t_redir	*redir;
+	t_redir	*last_input;
+	t_redir	*last_output;
+	t_redir	*last_append;
 
+	last_input = NULL;
+	last_output = NULL;
+	last_append = NULL;
 	redir = cmd->redirs;
 	while (redir)
 	{
 		if (redir->type == REDIR_IN)
-			redir_in(redir);
+			last_input = redir;
 		else if (redir->type == REDIR_OUT)
-			redir_out(redir);
+			last_output = redir;
 		else if (redir->type == REDIR_OUT_APPEND)
-			redir_out_append(redir);
+			last_append = redir;
 		redir = redir->next;
 	}
+	if (last_input)
+		redir_in(last_input);
+	if (last_append)
+		redir_out_append(last_append);
+	else if (last_output)
+		redir_out(last_output);
 }

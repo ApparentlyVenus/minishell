@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:37:14 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 11:15:22 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,23 @@ int	is_redir(t_token *token)
 
 void	append_redir(t_redir **list, t_redir *new_redir)
 {
+	t_redir	*current;
+
 	if (!new_redir)
 		return ;
-	new_redir->next = *list;
-	*list = new_redir;
+	if (!*list)
+	{
+		*list = new_redir;
+		new_redir->next = NULL;
+		return ;
+	}
+	current = *list;
+	while (current->next)
+		current = current->next;
+	current->next = new_redir;
+	new_redir->next = NULL;
 }
 
-// /*
-// ** add_arg_list
-// ** Purpose: Adds a new t_arg to the list,
-//			copying value and quoting info from t_token.
-// ** Used variables: list (t_arg **), token (t_token *)
-// ** Return: 1 on success, 0 on failure
-// */
 int	add_arg_list(t_arg **list, t_token *token)
 {
 	t_arg	*cur;
@@ -62,12 +66,6 @@ int	add_arg_list(t_arg **list, t_token *token)
 	return (1);
 }
 
-/*
-** process_args
-** Purpose: Converts a linked list of t_arg to a NULL-terminated array of t_arg*.
-** Used variables: arg_list (t_arg *), count (int)
-** Return: t_arg** (NULL-terminated array)
-*/
 t_arg	**process_args(t_arg *arg_list, int count)
 {
 	t_arg	**args;

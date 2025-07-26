@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 08:27:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 11:38:04 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 {
 	t_redir	*redir;
 	char	*expanded;
+	char	*unquoted;
 
 	redir = cmd->redirs;
 	while (redir)
@@ -96,6 +97,12 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 			{
 				free(redir->filename);
 				redir->filename = expanded;
+			}
+			unquoted = remove_quotes(redir->filename);
+			if (unquoted)
+			{
+				free(redir->filename);
+				redir->filename = unquoted;
 			}
 		}
 		redir = redir->next;

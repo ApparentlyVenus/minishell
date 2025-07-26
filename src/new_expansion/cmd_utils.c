@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:00:56 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 21:50:39 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 11:40:44 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,52 @@ void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
 		return ;
 	expand_cmd_args(cmd, shell, type);
 	expand_cmd_redirs(cmd, shell->env);
+}
+
+char	*remove_quotes(char *filename)
+{
+	char	*result;
+	int		len;
+
+	len = ft_strlen(filename);
+	if (!filename)
+		return (NULL);
+	if (len >= 2 && filename[0] == '\'' && filename[len - 1] == '\'')
+	{
+		result = ft_substr(filename, 1, len -2);
+		return (result);
+	}
+	if (len >= 2 && filename[0] == '"' && filename[len - 1] == '"')
+	{
+		result = ft_substr(filename, 1, len -2);
+		return (result);
+	}
+	if (ft_strchr(filename, '"') || ft_strchr(filename, '\''))
+	{
+		result = remove_adjacent_quotes(filename);
+		return (result);
+	}
+	return (result);
+}
+
+char	*remove_adjacent_quotes(char *str)
+{
+	char	*result;
+	int		i;
+	int		j;
+
+	result = malloc(ft_strlen(str) + 1);
+	if (!result)
+		return (ft_strdup(str));
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+			i++;
+		else
+			result[j++] = str[i++];
+	}
+	result[j] = '\0';
+	return (result);
 }
