@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:40:27 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 00:20:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 19:19:13 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,12 @@ void	free_exec(t_exec *ctx)
 		free(ctx->pids);
 	free_pipes(ctx->pipes, ctx->cmd_count);
 	free(ctx);
+}
+
+void	cleanup_and_exit(char *path, char *cmd, char **envp, int exit_code)
+{
+	if (path != cmd)
+		free(path);
+	free_split(envp);
+	exit(exit_code);
 }

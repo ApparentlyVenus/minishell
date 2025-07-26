@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 13:17:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 19:19:30 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void		execute_children_pipeline(t_node *node, t_shell *shell);
 int			execute_parent_node(t_node *node, t_shell *shell);
 int			execute_children_node(t_node *node, t_shell *shell);
 
+// error handeling files
+
+void		handle_directory_error(char *path, char *cmd, char **envp);
+void		handle_permission_error(char *path, char *cmd, char **envp);
+void		handle_not_found_error(char *path, char *cmd, char **envp);
+
 // logical operator handeling
 
 int			execute_and(t_node *node, t_shell *shell);
@@ -58,6 +64,7 @@ void		close_pipes(t_exec *ctx);
 
 void		free_pipes(int **pipes, int cmd_count);
 void		free_exec(t_exec *ctx);
+void		cleanup_and_exit(char *path, char *cmd, char **envp, int exit_code);
 
 // utils
 
@@ -70,5 +77,6 @@ char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
 int			run_in_parent(t_node *ast);
+char		**skip_empty_args(char **args);
 
 #endif

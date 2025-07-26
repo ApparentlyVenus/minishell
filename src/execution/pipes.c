@@ -6,20 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:55:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/15 18:46:48 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 19:13:59 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** setup_pipes - Configures pipe connections for a command
-**
-** Pipeline flow: a | b | c
-** - a: stdout -> pipe[0][1]
-** - b: stdin <- pipe[0][0], stdout -> pipe[1][1]
-** - c: stdin <- pipe[1][0]
-*/
 void	setup_pipes(t_exec *ctx, int cmd_index)
 {
 	int	i;
@@ -37,13 +29,6 @@ void	setup_pipes(t_exec *ctx, int cmd_index)
 	}
 }
 
-/*
-** allocate_pipes - Creates pipe pairs for inter-process communication
-**
-** For n commands, we need (n-1) pipes
-** Each pipe has 2 file descriptors: [0] for reading, [1] for writing
-** Example: "cmd1 | cmd2 | cmd3" needs 2 pipes
-*/
 int	**allocate_pipes(int cmd_count)
 {
 	int	**pipes;
@@ -82,4 +67,14 @@ void	close_pipes(t_exec *ctx)
 		close(ctx->pipes[i][1]);
 		i++;
 	}
+}
+
+void	execute_pipeline(t_shell *shell)
+{
+	if (!shell->ast)
+		return ;
+	if (run_in_parent(shell->ast))
+		execute_parent_node(shell->ast, shell);
+	else
+		execute_children_node(shell->ast, shell);
 }
