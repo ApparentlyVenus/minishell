@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/25 12:22:22 by odana            ###   ########.fr        #
+#    Updated: 2025/07/26 12:23:18 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
 
 EXPANSION_SOURCES = expand_cmd.c expansion.c word_split_helpers.c collect_matches.c \
                     wildcard_expansion.c cmd_utils.c copy_split.c expand_exit_code.c \
-                    expand_variables.c
+                    expand_variables.c quote_removal.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c
