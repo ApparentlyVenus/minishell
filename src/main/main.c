@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 22:32:32 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/27 22:37:39 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		art();
 	exit_code = main_loop(shell);
 	shell_cleanup(shell);
-	// rl_clear_history();
+	rl_clear_history();
 	clear_history();
 	return (exit_code);
 }
