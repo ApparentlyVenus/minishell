@@ -25,7 +25,7 @@ A Unix shell implementation written in C, recreating bash behavior with modern f
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/minishell.git
+git clone https://github.com/ApparentlyVenus/minishell.git
 cd minishell
 make
 ```
@@ -73,4 +73,4 @@ Input → Tokenization → Parsing → Expansion → Execution → Cleanup
 
 ## Authors
 
-**Youssef Itani** & **Omar Dana** - 42 Beirut
+**Omar Dana (odana)** & **Yousef Itani (yitani)** - 42 Beirut
