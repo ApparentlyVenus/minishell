@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 19:23:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/25 16:46:52 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_node	*parse_command(t_token **tokens, t_env *env)
 	t_redir	*redir;
 
 	count = 0;
+	arg_list = NULL;
+	redir_list = NULL;
 	while (*tokens && ((*tokens)->type == TOKEN_WORD || is_redir(*tokens)))
 	{
 		if ((*tokens)->type == TOKEN_WORD)

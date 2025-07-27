@@ -3,28 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 19:16:28 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 18:06:47 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/*
+ * execute_external_command - Executes external programs
+ *
+ * Steps:
+ * - Check if command has '/' (absolute/relative path)
+ * - If not, search in PATH environment variable
+ * - Use execve to replace current process with command
+ */
+
 void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 {
-	struct stat	sb;
+	struct stat sb;
 
 	if (stat(path, &sb) == 0)
 	{
 		if (S_ISDIR(sb.st_mode))
-			handle_directory_error(path, cmd, envp);
+		{
+			ft_putstr_fd(cmd, 2);
+			ft_putendl_fd(": Is a directory", STDERR_FILENO);
+			if (path != cmd)
+				free(path);
+			free_split(envp);
+			exit(126);	
+		}
 		if (access(path, X_OK) != 0)
-			handle_permission_error(path, cmd, envp);
+		{
+			perror(cmd);
+			if (path != cmd)
+				free(path);
+			free_split(envp);
+			exit(126);	
+		}
 	}
 	else
-		handle_not_found_error(path, cmd, envp);
+	{
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		perror("");
+		free_split(envp);
+		exit(127);
+	}
 }
 
 void	execute_external_command(t_exec *ctx, char **args)
@@ -34,6 +62,8 @@ void	execute_external_command(t_exec *ctx, char **args)
 	char	**envp;
 
 	cmd = args[0];
+	// if (cmd[0] == '\0')
+	// 	exit(0);
 	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;
@@ -55,6 +85,17 @@ void	execute_external_command(t_exec *ctx, char **args)
 	exit(127);
 }
 
+// ! yitani when you implement the builtins name them the way I named them
+// ! or change the names directly in the execute_builtin function
+
+/*
+ * execute_builtin - Executes built-in shell commands
+ *
+ * Steps:
+ * - Dispatches to appropriate builtin function based on command type
+ * - Sets ctx->exit for proper exit code handling
+ * - Called only in child processes for pipeline commands
+ */
 int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	t_shell *shell)
 {
@@ -68,7 +109,10 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 		return (EXIT_SUCCESS);
 	}
 	else if (builtin_type == BUILTIN_EXIT)
+	{
 		return (builtin_exit(args, shell));
+		// return (EXIT_SUCCESS);
+	}
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(args + 1, ctx->env));
 	else if (builtin_type == BUILTIN_PWD)
@@ -96,6 +140,23 @@ int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
 	return (exit_code);
 }
 
+/*
+ * execute_single_command - Handles execution of one command
+ *
+ * Steps:
+ * - Checks if command is built-in or external
+ * - Sets up pipes and redirections
+ * - Executes the command appropriately
+ * - Only called in child processes
+ */
+
+char	**skip_empty_args(char **args)
+{
+	while (args[0] && args[0][0] == '\0')
+		args++;
+	return (args);
+}
+
 void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 {
 	t_builtin	type;
@@ -121,6 +182,26 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 		if (!args[0])
 			exit(0);
 		execute_external_command(ctx, args);
-		return (free_split(args), exit(127));
+		free_split(args);
+		exit(127);
 	}
+}
+
+/*
+ * execute_pipeline - Main execution function
+ *
+ * Process flow:
+ * 1. Set up execution context
+ * 2. Fork child process for each command
+ * 3. In child: set up pipes/redirections and execute
+ * 4. In parent: close pipes and wait for children
+ */
+void	execute_pipeline(t_shell *shell)
+{
+	if (!shell->ast)
+		return ;
+	if (run_in_parent(shell->ast))
+		execute_parent_node(shell->ast, shell);
+	else
+		execute_children_node(shell->ast, shell);
 }

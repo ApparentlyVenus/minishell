@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 19:09:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/26 18:12:24 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int	builtin_exit(char **args, t_shell *shell)
 	{
 		if (size_of_arr(args) > 2)
 		{
+			// printf("minishell: exit: too many arguments\n");
 			ft_putendl_fd(" too many arguments", 2);
 			shell->exit_code = EXIT_FAILURE;
 			return (shell->exit_code);
 		}
 		if (!ft_is_numeric(args[1]))
 		{
+			// printf("minishell: exit: %s: numeric argument required\n", args[1]);
 			ft_putendl_fd(" numeric argument required", 2);
 			shell->exit_code = EXIT_MISUSE;
 			shell_exit(shell, shell->exit_code);
