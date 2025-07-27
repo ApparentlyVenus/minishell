@@ -82,7 +82,7 @@ Input → Tokenization → Parsing → Expansion → Execution → Cleanup
         <sub><b>Youssef Itani (yitani)</b></sub>
       </a>
       <br />
-      <sub>Core Development</sub>
+      <sub>Tokenization, Builtins</sub>
     </td>
     <td align="center">
       <a href="https://github.com/ApparentlyVenus">
@@ -91,7 +91,7 @@ Input → Tokenization → Parsing → Expansion → Execution → Cleanup
         <sub><b>Omar Dana (odana)</b></sub>
       </a>
       <br />
-      <sub>Architecture & Design</sub>
+      <sub>Parsing, Execution, Expansion</sub>
     </td>
   </tr>
 </table>
