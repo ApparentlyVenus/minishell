@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 12:24:01 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 17:31:12 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,7 @@ void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell);
 // Quote REmoval
 
 char	*remove_all_quotes(char *str);
-char	*remove_quotes_extra(char *str);
-int		process_quotes(char c);
 char	*remove_quotes(char *str);
-char	*remove_adjacent_quotes(char *str);
 
 // Assignment and argument expansion
 

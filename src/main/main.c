@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 15:43:54 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 18:10:35 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	main(int argc, char **argv, char **envp)
 		art();
 	exit_code = main_loop(shell);
 	shell_cleanup(shell);
-	rl_clear_history();
+	// rl_clear_history();
+	clear_history();
 	return (exit_code);
 }

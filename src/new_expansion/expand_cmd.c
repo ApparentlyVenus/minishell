@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 12:05:31 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 17:42:34 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 	while (cmd->args[i])
 	{
 		if (cmd->args[i]->single_quotes)
+			;
+		else if (cmd->args[i]->double_quotes)
 		{
-			unquoted = remove_all_quotes(cmd->args[i]->value);
-			if (unquoted)
+			expanded = expand_cmd_arg(cmd->args[i]->value,
+					shell, builtin_type, i);
+			if (expanded && expanded != cmd->args[i]->value)
 			{
 				free(cmd->args[i]->value);
-				cmd->args[i]->value = unquoted;
+				cmd->args[i]->value = expanded;
 			}
 		}
 		else
