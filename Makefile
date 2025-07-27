@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/26 12:23:18 by odana            ###   ########.fr        #
+#    Updated: 2025/07/27 13:06:19 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,18 +15,15 @@ CC        = cc
 CFLAGS    = -Wall -Wextra -Werror -g
 RM        = rm -f
 
-# Directories
 SRCDIR    = src
 INCDIR    = inc
 OBJDIR    = obj
 LIBFT_DIR = libft
 
-# Libraries
 LIBFT     = $(LIBFT_DIR)/libft.a
 INCLUDES  = -I$(INCDIR) -I$(LIBFT_DIR)
 LIBS      = -lreadline -lhistory
 
-# Source organization by modules
 BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
                   builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c \
                   builtin_pwd.c builtin_unset.c export_helpers.c
@@ -48,7 +45,6 @@ SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
 MAIN_SOURCES = art.c extra.c signals.c main.c
 
-# Create full source paths
 BUILTIN_SRCS = $(addprefix $(SRCDIR)/builtin_functions/, $(BUILTIN_SOURCES))
 TOKENIZATION_SRCS = $(addprefix $(SRCDIR)/tokenization/, $(TOKENIZATION_SOURCES))
 EXPANSION_SRCS = $(addprefix $(SRCDIR)/new_expansion/, $(EXPANSION_SOURCES))
@@ -57,13 +53,11 @@ EXECUTION_SRCS = $(addprefix $(SRCDIR)/execution/, $(EXECUTION_SOURCES))
 SHELL_SRCS = $(addprefix $(SRCDIR)/shell/, $(SHELL_SOURCES))
 MAIN_SRCS = $(addprefix $(SRCDIR)/main/, $(MAIN_SOURCES))
 
-# All sources
 SOURCES = $(BUILTIN_SOURCES) $(TOKENIZATION_SOURCES) $(EXPANSION_SOURCES) \
           $(PARSER_SOURCES) $(EXECUTION_SOURCES) $(SHELL_SOURCES) $(MAIN_SOURCES)
 SRCS = $(BUILTIN_SRCS) $(TOKENIZATION_SRCS) $(EXPANSION_SRCS) $(PARSER_SRCS) \
        $(EXECUTION_SRCS) $(SHELL_SRCS) $(MAIN_SRCS)
 
-# Object files
 BUILTIN_OBJS = $(BUILTIN_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 TOKENIZATION_OBJS = $(TOKENIZATION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 EXPANSION_OBJS = $(EXPANSION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
@@ -75,7 +69,6 @@ MAIN_OBJS = $(MAIN_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 OBJS = $(BUILTIN_OBJS) $(TOKENIZATION_OBJS) $(EXPANSION_OBJS) $(PARSER_OBJS) \
        $(EXECUTION_OBJS) $(SHELL_OBJS) $(MAIN_OBJS)
 
-# Libft sources and objects
 LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
                 ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
                 ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
@@ -90,14 +83,12 @@ LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
 LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
-# Header files
 HDR = $(INCDIR)/minishell.h $(INCDIR)/tokenizer.h $(INCDIR)/parser.h \
       $(INCDIR)/expansion.h $(INCDIR)/env.h $(INCDIR)/execution.h \
       $(INCDIR)/shell.h $(INCDIR)/structs.h
 
 all: $(NAME)
 
-# Build libft
 $(LIBFT): $(LIBFT_OBJS)
 	@echo "[📚] Creating libft archive..."
 	@ar rcs $(LIBFT) $(LIBFT_OBJS)
@@ -107,7 +98,6 @@ $(LIBFT_DIR)/%.o: $(LIBFT_DIR)/%.c
 	@echo "[🔧] Compiling libft: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# Build main program
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "┌────────────────────────────────┐"
 	@echo "│   🚀  Building minishell...    │"
@@ -115,7 +105,6 @@ $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(LIBFT) $(LIBS)
 	@echo "✅  Build complete! Enjoy your shell."
 
-# Module tracking variables
 BUILTIN_STARTED = $(OBJDIR)/.builtin_started
 TOKENIZATION_STARTED = $(OBJDIR)/.tokenization_started
 EXPANSION_STARTED = $(OBJDIR)/.expansion_started
@@ -124,7 +113,6 @@ EXECUTION_STARTED = $(OBJDIR)/.execution_started
 SHELL_STARTED = $(OBJDIR)/.shell_started
 MAIN_STARTED = $(OBJDIR)/.main_started
 
-# Module-specific compilation with progress messages
 $(OBJDIR)/builtin_functions/%.o: $(SRCDIR)/builtin_functions/%.c $(HDR) | $(BUILTIN_STARTED)
 	@echo "[🔨] Builtin module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@

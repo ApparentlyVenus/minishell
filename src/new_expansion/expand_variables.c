@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 23:27:39 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 12:08:42 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 13:05:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** expand_variables
-** Purpose: Expands environment variables in a string ($VAR -> value)
-** Used variables: str (input string), env (environment list)
-** Return: Newly allocated expanded string
-*/
 char	*expand_variables(char *str, t_env *env)
 {
 	char	*result;
@@ -47,12 +41,6 @@ char	*expand_variables(char *str, t_env *env)
 	return (result);
 }
 
-/*
-** expand_single_var
-** Purpose: Expands a single variable occurrence starting at position i
-** Used variables: str, pos (pointer to position), env
-** Return: Expanded variable value or empty string
-*/
 char	*expand_single_var(char *str, int *pos, t_env *env)
 {
 	char	*var_name;

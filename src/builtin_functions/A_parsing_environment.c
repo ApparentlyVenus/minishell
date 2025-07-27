@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 13:06:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 13:31:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 13:27:11 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,22 +127,39 @@ char	**convert_env_to_array(t_env *env)
 	char	*temp[2];
 	t_env	*curr;
 
-	i = 0;
 	count = valid_entries_count(env);
-	curr = env;
 	envp = malloc(sizeof(char *) * (count + 1));
-	while (i < count && curr)
+	if (!envp)
+		return (NULL);
+	i = 0;
+	curr = env;
+	while (curr && i < count)
 	{
 		if (curr->equal == 1)
 		{
 			temp[0] = ft_strjoin(curr->key, "=");
-			temp[1] = ft_strjoin(temp[0], curr->value);
-			envp[i] = temp[1];
+			if (!temp[0])
+				return (cleanup_envp(envp, i), NULL);
+			if (curr->value == NULL)
+				temp[1] = ft_strdup(temp[0]);
+			else
+				temp[1] = ft_strjoin(temp[0], curr->value);
 			free(temp[0]);
+			if (!temp[1])
+				return (cleanup_envp(envp, i), NULL);
+			envp[i] = temp[1];
 			i++;
 		}
 		curr = curr->next;
 	}
 	envp[i] = NULL;
 	return (envp);
+}
+
+char	**cleanup_envp(char **envp, int count)
+{
+	while (--count >= 0)
+		free(envp[count]);
+	free(envp);
+	return (NULL);
 }

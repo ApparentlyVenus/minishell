@@ -7,3 +7,6 @@ obj/
 minishell_libft/*.o
 minishell_libft/libft.a
 .vscode
+test.txt
+test
+minishell_tester

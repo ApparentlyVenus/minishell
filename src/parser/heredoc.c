@@ -6,18 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 16:48:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 12:54:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** collect_heredoc_content
-** Purpose: Collects heredoc input from user until delimiter is found
-** Used variables: delimiter (stop word)
-** Return: Newly allocated string with all heredoc content
-*/
 char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 {
 	char	*line;
@@ -101,7 +95,8 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	if (!temp_delimiter)
 		return (NULL);
 	signal(SIGINT, SIG_DFL);
-	content = collect_heredoc_content(temp_delimiter, !(s_quotes || d_quotes), env);
+	content = collect_heredoc_content(temp_delimiter,
+			!(s_quotes || d_quotes), env);
 	free(temp_delimiter);
 	signals_prompt();
 	temp_filename = create_temp_file(content);

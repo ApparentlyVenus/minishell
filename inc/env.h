@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 15:13:29 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/27 13:27:23 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 void	env_init(t_env **env_list, char **envp);
 int		valid_entries_count(t_env *env);
 char	**convert_env_to_array(t_env *env);
+char	**cleanup_envp(char **envp, int count);
 
 // Builtin functions
 

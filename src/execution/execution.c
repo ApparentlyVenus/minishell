@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 18:06:47 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/27 13:05:05 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 {
-	struct stat sb;
+	struct stat		sb;
 
 	if (stat(path, &sb) == 0)
 	{
@@ -34,7 +34,7 @@ void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 			if (path != cmd)
 				free(path);
 			free_split(envp);
-			exit(126);	
+			exit(126);
 		}
 		if (access(path, X_OK) != 0)
 		{
@@ -42,7 +42,7 @@ void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 			if (path != cmd)
 				free(path);
 			free_split(envp);
-			exit(126);	
+			exit(126);
 		}
 	}
 	else
@@ -109,10 +109,7 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 		return (EXIT_SUCCESS);
 	}
 	else if (builtin_type == BUILTIN_EXIT)
-	{
 		return (builtin_exit(args, shell));
-		// return (EXIT_SUCCESS);
-	}
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(args + 1, ctx->env));
 	else if (builtin_type == BUILTIN_PWD)
@@ -139,16 +136,6 @@ int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
 	free_split(args);
 	return (exit_code);
 }
-
-/*
- * execute_single_command - Handles execution of one command
- *
- * Steps:
- * - Checks if command is built-in or external
- * - Sets up pipes and redirections
- * - Executes the command appropriately
- * - Only called in child processes
- */
 
 char	**skip_empty_args(char **args)
 {
@@ -187,15 +174,6 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	}
 }
 
-/*
- * execute_pipeline - Main execution function
- *
- * Process flow:
- * 1. Set up execution context
- * 2. Fork child process for each command
- * 3. In child: set up pipes/redirections and execute
- * 4. In parent: close pipes and wait for children
- */
 void	execute_pipeline(t_shell *shell)
 {
 	if (!shell->ast)
