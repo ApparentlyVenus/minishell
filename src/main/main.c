@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 02:08:22 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 15:43:54 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*get_prompt(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (ft_strdup("minishell$ "));
-	temp = ft_strjoin("minishell:", cwd);
+	temp = ft_strjoin("minishell: @", cwd);
 	free(cwd);
 	if (!temp)
 		return (ft_strdup("minishell$ "));

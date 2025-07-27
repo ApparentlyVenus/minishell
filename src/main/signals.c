@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/24 23:49:43 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 15:34:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_sigint_prompt(int sig)
 {
 	(void)sig;
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();

@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/27 13:49:17 by odana            ###   ########.fr        #
+#    Updated: 2025/07/27 15:14:27 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 
 BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
                   builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c \
-                  builtin_pwd.c builtin_unset.c export_helpers.c
+                  builtin_pwd.c builtin_unset.c export_helpers.c cd_helpers.c
 
 TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
                        tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c

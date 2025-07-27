@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/24 23:47:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 15:30:45 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@
 char	*get_input_line(void)
 {
 	char	*buffer;
+	char	*prompt;
 
-	buffer = readline("minishell@~$ ");
+	prompt = get_prompt();
+	buffer = readline(prompt);
 	if (!buffer)
-		return (NULL);
+		return (free(prompt), NULL);
 	if (ft_strlen(buffer) > 0)
 		add_history(buffer);
-	return (buffer);
+	return (free(prompt), buffer);
 }
 
 void	update_shlvl(t_shell *shell)

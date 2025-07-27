@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 13:27:23 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 15:24:58 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	*get_env_value(t_env *env, char *key);
 int		is_valid_key(const char *key);
 void	env_add_back(t_env **env_list, t_env *new_node);
 int		size_of_arr(char **args);
+char	*safe_getcwd(t_env **env);
 
 #endif

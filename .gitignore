@@ -9,4 +9,4 @@ minishell_libft/libft.a
 .vscode
 test.txt
 test
-minishell_tester
+minishell_tester/
