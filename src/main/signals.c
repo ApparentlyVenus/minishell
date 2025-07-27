@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 15:34:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 01:55:16 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,17 @@ void	signals_parent(void)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+// void	handle_heredoc_sigint(int sig)
+// {
+// 	(void)sig;
+// 	write(STDOUT_FILENO, "\n", 1);
+// 	exit(130);
+// }
+
+void	reset_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }

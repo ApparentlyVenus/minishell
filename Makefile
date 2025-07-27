@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
+#    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/27 18:08:56 by odana            ###   ########.fr        #
+#    Updated: 2025/07/28 00:30:05 by yitani           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ EXPANSION_SOURCES = expand_cmd.c expansion.c word_split_helpers.c collect_matche
                     expand_variables.c quote_removal.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
-                 heredoc.c heredoc_helpers.c
+                 heredoc.c heredoc_helpers.c forking_heredoc.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
                     pipes.c execution_helpers.c operators.c
