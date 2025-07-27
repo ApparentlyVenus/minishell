@@ -6,7 +6,7 @@
 #    By: odana <odana@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/27 13:06:19 by odana            ###   ########.fr        #
+#    Updated: 2025/07/27 13:49:17 by odana            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,17 @@ LIBFT_DIR = libft
 LIBFT     = $(LIBFT_DIR)/libft.a
 INCLUDES  = -I$(INCDIR) -I$(LIBFT_DIR)
 LIBS      = -lreadline -lhistory
+
+LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
+                ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
+                ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
+                ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
+                ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
+                ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
+                ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c ft_striteri.c \
+                ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
+                ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
+                ft_tolower.c ft_toupper.c
 
 BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
                   builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c \
@@ -45,6 +56,7 @@ SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
 MAIN_SOURCES = art.c extra.c signals.c main.c
 
+LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
 BUILTIN_SRCS = $(addprefix $(SRCDIR)/builtin_functions/, $(BUILTIN_SOURCES))
 TOKENIZATION_SRCS = $(addprefix $(SRCDIR)/tokenization/, $(TOKENIZATION_SOURCES))
 EXPANSION_SRCS = $(addprefix $(SRCDIR)/new_expansion/, $(EXPANSION_SOURCES))
@@ -65,23 +77,12 @@ PARSER_OBJS = $(PARSER_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 EXECUTION_OBJS = $(EXECUTION_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 SHELL_OBJS = $(SHELL_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 MAIN_OBJS = $(MAIN_SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+LIBFT_OBJS = $(LIBFT_SRCS:$(LIBFT_DIR)/%.c=$(OBJDIR)/libft/%.o)
 
 OBJS = $(BUILTIN_OBJS) $(TOKENIZATION_OBJS) $(EXPANSION_OBJS) $(PARSER_OBJS) \
        $(EXECUTION_OBJS) $(SHELL_OBJS) $(MAIN_OBJS)
 
-LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
-                ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
-                ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c \
-                ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c \
-                ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-                ft_putchar_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_putstr_fd.c \
-                ft_split.c ft_strchr.c ft_strcmp.c ft_strdup.c ft_striteri.c \
-                ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-                ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
-                ft_tolower.c ft_toupper.c
 
-LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
-LIBFT_OBJS = $(LIBFT_SRCS:.c=.o)
 
 HDR = $(INCDIR)/minishell.h $(INCDIR)/tokenizer.h $(INCDIR)/parser.h \
       $(INCDIR)/expansion.h $(INCDIR)/env.h $(INCDIR)/execution.h \
@@ -89,14 +90,18 @@ HDR = $(INCDIR)/minishell.h $(INCDIR)/tokenizer.h $(INCDIR)/parser.h \
 
 all: $(NAME)
 
+# Build libft - UPDATED to use new object paths
 $(LIBFT): $(LIBFT_OBJS)
 	@echo "[📚] Creating libft archive..."
 	@ar rcs $(LIBFT) $(LIBFT_OBJS)
 	@echo "[✅] Libft ready!"
 
-$(LIBFT_DIR)/%.o: $(LIBFT_DIR)/%.c
+$(OBJDIR)/libft/%.o: $(LIBFT_DIR)/%.c | $(OBJDIR)/libft
 	@echo "[🔧] Compiling libft: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJDIR)/libft:
+	@mkdir -p $(OBJDIR)/libft
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "┌────────────────────────────────┐"
@@ -193,7 +198,6 @@ $(MAIN_STARTED):
 clean:
 	@echo "[🧹] Cleaning object files…"
 	@$(RM) -r $(OBJDIR)
-	@$(RM) $(LIBFT_OBJS)
 	@echo "[✔️ ] Objects removed."
 
 fclean: clean
@@ -203,4 +207,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
