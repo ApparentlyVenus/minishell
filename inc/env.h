@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 15:24:58 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 21:26:42 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**cleanup_envp(char **envp, int count);
 
 int		builtin_echo(char **args);
 int		builtin_export(char **args, t_env **env);
-int		builtin_pwd(void);
+int		builtin_pwd(t_env **env);
 int		builtin_unset(char **args, t_env **env);
 int		builtin_cd(char **args, t_env **env);
 void	builtin_env(t_env **env);
@@ -43,6 +43,7 @@ char	*get_env_value(t_env *env, char *key);
 int		is_valid_key(const char *key);
 void	env_add_back(t_env **env_list, t_env *new_node);
 int		size_of_arr(char **args);
-char	*safe_getcwd(t_env **env);
+void	handle_fail_old_pwd(char *old_pwd, char *pwd_env);
+void	handle_fail_new_pwd(char *old_pwd, char *pwd_env);
 
 #endif

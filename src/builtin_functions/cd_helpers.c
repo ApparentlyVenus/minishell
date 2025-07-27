@@ -3,45 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   cd_helpers.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 13:54:07 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 15:19:59 by odana            ###   ########.fr       */
+/*   Created: 2025/07/27 21:23:46 by yitani            #+#    #+#             */
+/*   Updated: 2025/07/27 21:27:55 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	current_directory_exists(void)
+void	handle_fail_new_pwd(char *new_pwd, char *pwd_env)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (0);
-	free(cwd);
-	return (1);
+	if (!new_pwd)
+	{
+		if (!pwd_env)
+			new_pwd = ft_strdup("/");
+		else
+			new_pwd = ft_strjoin(pwd_env, "/..");
+	}
 }
 
-char	*safe_getcwd(t_env **env)
+void	handle_fail_old_pwd(char *old_pwd, char *pwd_env)
 {
-	char	*cwd;
-	char	*home;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd)
-		return (cwd);
-	ft_putendl_fd("minishell: current directory removed, returning to HOME", 2);
-	home = get_env_value(*env, "HOME");
-	if (!home)
+	if (!old_pwd)
 	{
-		if (chdir("/") == 0)
-			return (set_env_value(env, "PWD", "/"), ft_strdup("/"));
-		return (NULL);
+		if (!pwd_env)
+			old_pwd = ft_strdup("");
+		else
+			old_pwd = ft_strdup(pwd_env);
 	}
-	if (chdir(home) == 0)
-		return (set_env_value(env, "PWD", home), ft_strdup(home));
-	if (chdir("/") == 0)
-		return (set_env_value(env, "PWD", "/"), ft_strdup("/"));
-	return (NULL);
 }

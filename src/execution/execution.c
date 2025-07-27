@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 15:25:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 20:49:55 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(args + 1, ctx->env));
 	else if (builtin_type == BUILTIN_PWD)
-		return (builtin_pwd());
+		return (builtin_pwd(ctx->env));
 	else if (builtin_type == BUILTIN_UNSET)
 		return (builtin_unset(args + 1, ctx->env));
 	else
