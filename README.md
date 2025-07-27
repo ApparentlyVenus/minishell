@@ -1,4 +1,4 @@
-# 🐚 Minishell <img src="https://badge42.vercel.app/api/v2/cl1lyscd5001109mhhwvx96kv/project/3242" alt="42" width="30" height="30">
+# 🐚 Minishell <img src="https://42.fr/wp-content/uploads/2021/05/42-Final-sigle-seul.svg" alt="42" width="30" height="30">
 
 A Unix shell implementation written in C, recreating bash behavior with modern features.
 
