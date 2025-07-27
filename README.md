@@ -73,4 +73,25 @@ Input → Tokenization → Parsing → Expansion → Execution → Cleanup
 
 ## Authors
 
-**Omar Dana (odana)** & **Yousef Itani (yitani)** - 42 Beirut
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/yousseff907">
+        <img src="https://github.com/yousseff907.png" width="100px;" alt=""/>
+        <br />
+        <sub><b>Youssef Itani (yitani)</b></sub>
+      </a>
+      <br />
+      <sub>Core Development</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/ApparentlyVenus">
+        <img src="https://github.com/ApparentlyVenus.png" width="100px;" alt=""/>
+        <br />
+        <sub><b>Omar Dana (odana)</b></sub>
+      </a>
+      <br />
+      <sub>Architecture & Design</sub>
+    </td>
+  </tr>
+</table>
