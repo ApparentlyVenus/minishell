@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:50:44 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 22:22:34 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ int		handle_error(t_shell *shell, char *msg, int exit_code);
 
 int		main_loop(t_shell *shell);
 int		process_input(t_shell *shell, char *input);
-char	*get_prompt(void);
-char	*get_input_line(void);
+char	*get_prompt(t_env **env);
+char	*get_input_line(t_env **env);
 void	update_shlvl(t_shell *shell);
 void	art(void);
+
 #endif

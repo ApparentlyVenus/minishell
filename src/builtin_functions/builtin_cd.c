@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 21:32:38 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/27 22:14:26 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,40 +93,37 @@ void	update_pwd(t_env **env, char *old_pwd, char *new_pwd)
 	}
 }
 
+/*
+for 	char	*old_new_pwd[2];
+old_new_pwd[0] == old_Pwd;
+old_new_pwd[1] == new_pwd
+*/
+
 int	builtin_cd(char **args, t_env **env)
 {
 	int		status;
 	int		print;
-	char	*old_pwd;
-	char	*new_pwd;
+	char	*old_new_pwd[2];
 	char	*pwd_env;
 
 	if (size_of_arr(args) > 1)
 		return (ft_putendl_fd("cd: too many arguments", STDERR_FILENO), 1);
 	pwd_env = get_env_value(*env, "PWD");
-	old_pwd = getcwd(NULL, 0);
-	if (!old_pwd)
-	{
-		if (!pwd_env)
-			old_pwd = ft_strdup("");
-		else
-			old_pwd = ft_strdup(pwd_env);
-	}
+	old_new_pwd[0] = getcwd(NULL, 0);
+	if (!old_new_pwd[0] && !pwd_env)
+		old_new_pwd[0] = ft_strdup("");
+	else if (!old_new_pwd[0])
+		old_new_pwd[0] = ft_strdup(pwd_env);
 	status = change_directory(args, env, &print);
 	if (status == -1)
-		return (free(old_pwd), 1);
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		if (!pwd_env)
-			new_pwd = ft_strdup("/");
-		else
-			new_pwd = ft_strjoin(pwd_env, "/..");
-	}
-	update_pwd(env, old_pwd, new_pwd);
+		return (free(old_new_pwd[0]), 1);
+	old_new_pwd[1] = getcwd(NULL, 0);
+	if (!old_new_pwd[1] && !pwd_env)
+		old_new_pwd[1] = ft_strdup("/");
+	else if (!old_new_pwd[1])
+			old_new_pwd[1] = ft_strjoin(pwd_env, "/..");
+	update_pwd(env, old_new_pwd[0], old_new_pwd[1]);
 	if (print == 1)
-		printf("%s\n", new_pwd);
-	free (old_pwd);
-	free(new_pwd);
-	return (0);
+		printf("%s\n", old_new_pwd[1]);
+	return (free (old_new_pwd[0]), free(old_new_pwd[1]), (0));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 18:10:35 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 22:32:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,25 @@ int	process_input(t_shell *shell, char *input)
 	return (1);
 }
 
-char	*get_prompt(void)
+char	*get_prompt(t_env **env)
 {
 	char	*cwd;
-	char	*prompt;
+	char	*path;
 	char	*temp;
+	char	*prompt;
 
 	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (ft_strdup("minishell$ "));
-	temp = ft_strjoin("minishell: @", cwd);
-	free(cwd);
+	if (cwd)
+		path = cwd;
+	else
+	{
+		path = get_env_value(*env, "PWD");
+		if (!path)
+			return (ft_strdup("minishell$ "));
+	}
+	temp = ft_strjoin("minishell: @", path);
+	if (cwd)
+		free(cwd);
 	if (!temp)
 		return (ft_strdup("minishell$ "));
 	prompt = ft_strjoin(temp, "$ ");
@@ -51,7 +59,7 @@ int	main_loop(t_shell *shell)
 	{
 		if (shell->interactive)
 			signals_prompt();
-		input = get_input_line();
+		input = get_input_line(&shell->env);
 		if (!input)
 		{
 			if (shell->interactive)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 15:30:45 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/27 22:22:52 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 #include "../../inc/minishell.h"
 
-char	*get_input_line(void)
+char	*get_input_line(t_env **env)
 {
 	char	*buffer;
 	char	*prompt;
 
-	prompt = get_prompt();
+	prompt = get_prompt(env);
 	buffer = readline(prompt);
 	if (!buffer)
 		return (free(prompt), NULL);
