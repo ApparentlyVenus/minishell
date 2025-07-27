@@ -1,31 +1,76 @@
-General requirements :
-----------------------------------------------------------------------
-Run command with absolute path.
-Run command with relative path.
-Run command with no path.
-----------------------------------------------------------------------
-Implement pipes (|).
-Implement redirections (< , > , >>).
-Implement here_doc (<<).
-----------------------------------------------------------------------
-Handle double quotes (" ").
-Handle single quotes (' ').
-----------------------------------------------------------------------
-Handle environment variables ($).
-Handle signals (ctrl + C, ctrl + D, ctrl + \).
-----------------------------------------------------------------------
-Implement :
-echo.
-exit.
-env.
-export.
-unset.
-cd.
-pwd.
-----------------------------------------------------------------------
-For bonus :
-Handle (&&).
-Handle (||).
-Handle ( () ).
-Handle (*).
-----------------------------------------------------------------------
+# 🐚 Minishell <img src="https://github.com/42School/42-project-badges/blob/main/badges/minishellm.png" alt="42" width="30" height="30">
+
+A Unix shell implementation written in C, recreating bash behavior with modern features.
+
+*42 Beirut Project*
+
+---
+
+## Features
+
+- Interactive command line with history
+- Command execution with PATH resolution
+- Signal handling (Ctrl+C, Ctrl+D, Ctrl+\\)
+- Environment variables with `$VAR` and `$?` expansion
+- I/O redirection (`<`, `>`, `>>`)
+- Heredoc (`<<`) with delimiter support
+- Pipes (`|`) for command chaining
+- Quote handling (single and double quotes)
+- Wildcard expansion (`*`)
+- Logical operators (`&&`, `||`) with parentheses
+- Built-in commands: `cd`, `echo`, `env`, `exit`, `export`, `pwd`, `unset`
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/yourusername/minishell.git
+cd minishell
+make
+```
+
+## Usage
+
+```bash
+./minishell
+
+# Examples
+minishell@~$ ls -la | grep ".c"
+minishell@~$ echo "Hello $USER" > file.txt
+minishell@~$ cat << EOF
+Hello World
+EOF
+minishell@~$ mkdir test && cd test || echo "Failed"
+```
+
+---
+
+## Built-in Commands
+
+| Command | Description |
+|---------|-------------|
+| `cd` | Change directory (`cd`, `cd -`, `cd ~`, `cd path`) |
+| `echo` | Display text (`echo [-n] text`) |
+| `env` | Display environment variables |
+| `exit` | Exit shell (`exit [code]`) |
+| `export` | Set environment variables (`export VAR=value`) |
+| `pwd` | Print working directory |
+| `unset` | Remove environment variables |
+
+## Architecture
+
+```
+Input → Tokenization → Parsing → Expansion → Execution → Cleanup
+```
+
+**Modules:**
+- **Tokenizer**: Lexical analysis and quote handling
+- **Parser**: AST construction with operator precedence
+- **Expansion**: Variable, wildcard, and quote expansion
+- **Execution**: Process management and I/O redirection
+- **Built-ins**: Shell command implementations
+
+## Authors
+
+**Youssef Itani** & **Omar Dana** - 42 Beirut
