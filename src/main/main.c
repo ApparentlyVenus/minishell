@@ -6,13 +6,13 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:24:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 21:26:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int g_signal_received = 0;
+int	g_signal_received = 0;
 
 int	process_input(t_shell *shell, char *input)
 {
