@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 17:38:18 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 19:56:21 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ int	main_loop(t_shell *shell)
 
 	while (1)
 	{
-		if (g_signal_received == SIGINT)
-		{
-			write(STDOUT_FILENO, "^C\n", 3);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-			g_signal_received = 0;
-		}
 		if (shell->interactive)
 			signals_prompt();
 		input = get_input_line(&shell->env);
@@ -93,8 +85,11 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*shell;
 	int		exit_code;
 
-	(void)argc;
-	(void)argv;
+	if (argc > 1)
+	{
+		printf("minishell: %s: No such file or directory", argv[1]);
+		exit(ERROR);
+	}
 	rl_catch_signals = 0;
 	shell = shell_init(envp);
 	if (!shell)

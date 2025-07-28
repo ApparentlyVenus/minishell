@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:43:57 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:56:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 19:52:19 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,6 @@ char	*unquote_delimiter(char *delimiter)
 	len = ft_strlen(delimiter);
 	unquoted = ft_substr(delimiter, 1, len - 2);
 	return (unquoted);
-}
-
-/*
-** append_heredoc_line
-** Purpose: Appends a line to heredoc content with newline
-** Used variables: content (existing), line (new line)
-** Return: Newly allocated combined string
-*/
-char	*append_heredoc_line(char *content, char *line)
-{
-	char	*line_with_newline;
-	char	*result;
-
-	if (!content)
-		content = ft_strdup("");
-	if (!content)
-		return (NULL);
-	line_with_newline = ft_strjoin(line, "\n");
-	if (!line_with_newline)
-		return (free(content), NULL);
-	result = ft_strjoin(content, line_with_newline);
-	free(content);
-	free(line_with_newline);
-	return (result);
 }
 
 char	*get_suffix(void)

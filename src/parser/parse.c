@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 16:21:26 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 20:00:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,7 @@ t_redir	*parse_redir(t_token **tokens, t_env *env)
 		redir = process_heredoc(filename, env,
 				file_token->single_quotes, file_token->double_quotes);
 		if (!redir)
-		{
-			printf("here-document delimited by end-of-file (wanted `%s')\n", filename);
 			return (NULL);
-		}
 		return (redir);
 	}
 	return (create_redir_node(type, ft_strdup(filename)));

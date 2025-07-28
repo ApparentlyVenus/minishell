@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 16:41:17 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 19:52:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*unquote_delimiter(char *delimiter);
 int		is_delimiter_quoted(char *delimiter);
 char	*create_temp_file(char *content);
 char	*collect_heredoc_content(char *delimiter, int expand, t_env *env);
-char	*append_heredoc_line(char *content, char *line);
 char	*get_suffix(void);
 void	cleanup_heredoc_files(t_cmd *cmd);
 void	heredoc_child_process(int pipe_fd, char *delimiter, int expand, t_env *env);

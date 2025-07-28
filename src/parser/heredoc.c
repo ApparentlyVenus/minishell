@@ -6,21 +6,18 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 17:35:18 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 20:08:55 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
+static int	setup_heredoc_fork(int pipe_fd[2], char *delimiter, int expand, t_env *env)
 {
-	int		pipe_fd[2];
-	char	*content;
-	int		status;
 	pid_t	pid;
 
 	if (pipe(pipe_fd) == -1)
-		return (NULL);
+		return (-1);
 	signals_parent();
 	pid = fork();
 	if (pid == -1)
@@ -28,7 +25,7 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 		signals_prompt();
-		return (NULL);
+		return (-1);
 	}
 	if (pid == 0)
 	{
@@ -37,8 +34,27 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 		heredoc_child_process(pipe_fd[1], delimiter, expand, env);
 	}
 	close(pipe_fd[1]);
+	return (pid);
+}
+
+char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
+{
+	int		pipe_fd[2];
+	char	*content;
+	int		status;
+	pid_t	pid;
+
+	pid = setup_heredoc_fork(pipe_fd, delimiter, expand, env);
+	if (pid == -1)
+		return (NULL);
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) ==  SIGINT)
+	signals_prompt();
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		close(pipe_fd[0]);
+		return ((char *)-1);
+	}
+	if (WIFEXITED(status) && WEXITSTATUS(status) == 42)
 	{
 		close(pipe_fd[0]);
 		return (NULL);
@@ -75,6 +91,11 @@ char	*create_temp_file(char *content)
 	return (temp_filename);
 }
 
+void	CTRL_D_ERR(char *del)
+{
+	printf("here-document delimited by end-of-file (wanted `%s')\n", del);
+}
+
 t_redir	*process_heredoc(char *delimiter, t_env *env,
 		int s_quotes, int d_quotes)
 {
@@ -91,8 +112,10 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	content = collect_heredoc_content(temp_delimiter,
 			!(s_quotes || d_quotes), env);
 	free(temp_delimiter);
+	if (content == (char *) - 1)
+		return (printf("\n"), NULL);
 	if (!content)
-		return (NULL);
+		return(CTRL_D_ERR(delimiter), NULL);
 	temp_filename = create_temp_file(content);
 	free(content);
 	if (!temp_filename)
@@ -100,6 +123,5 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	redir = create_redir_node(REDIR_IN, temp_filename);
 	if (!redir)
 		return (unlink(temp_filename), free(temp_filename), NULL);
-	signals_prompt();
 	return (redir);
 }
