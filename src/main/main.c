@@ -6,11 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 22:37:39 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 17:38:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int g_signal_received = 0;
 
 int	process_input(t_shell *shell, char *input)
 {
@@ -57,6 +59,14 @@ int	main_loop(t_shell *shell)
 
 	while (1)
 	{
+		if (g_signal_received == SIGINT)
+		{
+			write(STDOUT_FILENO, "^C\n", 3);
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+			g_signal_received = 0;
+		}
 		if (shell->interactive)
 			signals_prompt();
 		input = get_input_line(&shell->env);

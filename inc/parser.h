@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 12:03:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 16:41:17 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env);
 char	*append_heredoc_line(char *content, char *line);
 char	*get_suffix(void);
 void	cleanup_heredoc_files(t_cmd *cmd);
+void	heredoc_child_process(int pipe_fd, char *delimiter, int expand, t_env *env);
+char	*read_from_pipe(int pipe_fd);
 
 // utils
 

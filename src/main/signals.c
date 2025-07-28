@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 15:34:51 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 17:37:15 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	handle_sigint_prompt(int sig)
+// void	handle_sigint_prompt(int sig)
+// {
+// 	(void)sig;
+// 	write(STDOUT_FILENO, "^C\n", 3);
+// 	rl_replace_line("", 0);
+// 	rl_on_new_line();
+// 	rl_redisplay();
+// }
+
+void	signal_handler(int sig)
 {
-	(void)sig;
-	write(STDOUT_FILENO, "^C\n", 3);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	g_signal_received = sig;
 }
 
 void	signals_prompt(void)
 {
-	signal(SIGINT, handle_sigint_prompt);
+	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 

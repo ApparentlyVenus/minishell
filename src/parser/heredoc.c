@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 12:54:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 17:35:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,37 @@
 
 char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 {
-	char	*line;
+	int		pipe_fd[2];
 	char	*content;
-	char	*expanded_line;
+	int		status;
+	pid_t	pid;
 
-	content = ft_strdup("");
-	if (!content)
+	if (pipe(pipe_fd) == -1)
 		return (NULL);
-	while (1)
+	signals_parent();
+	pid = fork();
+	if (pid == -1)
 	{
-		line = readline("heredoc> ");
-		if (!line)
-		{
-			write(STDOUT_FILENO, "\n", 1);
-			break ;
-		}
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		if (expand)
-		{
-			expanded_line = expand_variables(line, env);
-			if (!expanded_line)
-				expanded_line = ft_strdup("");
-		}
-		else
-			expanded_line = ft_strdup(line);
-		if (expanded_line)
-		{
-			content = append_heredoc_line(content, expanded_line);
-			free(expanded_line);
-		}
-		free(line);
-		if (!content)
-			return (NULL);
+		close(pipe_fd[0]);
+		close(pipe_fd[1]);
+		signals_prompt();
+		return (NULL);
 	}
+	if (pid == 0)
+	{
+		close(pipe_fd[0]);
+		signals_child();
+		heredoc_child_process(pipe_fd[1], delimiter, expand, env);
+	}
+	close(pipe_fd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) ==  SIGINT)
+	{
+		close(pipe_fd[0]);
+		return (NULL);
+	}
+	content = read_from_pipe(pipe_fd[0]);
+	close(pipe_fd[0]);
 	return (content);
 }
 
@@ -94,11 +88,11 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	temp_delimiter = ft_strdup(delimiter);
 	if (!temp_delimiter)
 		return (NULL);
-	signal(SIGINT, SIG_DFL);
 	content = collect_heredoc_content(temp_delimiter,
 			!(s_quotes || d_quotes), env);
 	free(temp_delimiter);
-	signals_prompt();
+	if (!content)
+		return (NULL);
 	temp_filename = create_temp_file(content);
 	free(content);
 	if (!temp_filename)
@@ -106,5 +100,6 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	redir = create_redir_node(REDIR_IN, temp_filename);
 	if (!redir)
 		return (unlink(temp_filename), free(temp_filename), NULL);
+	signals_prompt();
 	return (redir);
 }
