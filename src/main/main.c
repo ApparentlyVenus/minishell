@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 19:56:21 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:24:15 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,5 @@ int	main(int argc, char **argv, char **envp)
 	exit_code = main_loop(shell);
 	shell_cleanup(shell);
 	rl_clear_history();
-	clear_history();
 	return (exit_code);
 }
