@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 00:26:16 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/25 09:52:50 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,6 @@ typedef struct s_exec	t_exec;
 typedef struct s_shell	t_shell;
 
 // struct definitions
-
-typedef struct s_heredoc_data
-{
-	char	*delimiter;
-	t_env	*env;
-	int		s_quotes;
-	int		d_quotes;
-	int		*pipe_fd;
-}	t_heredoc_data;
-
 typedef struct s_env
 {
 	char			*key;
