@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:05:38 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 13:25:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 04:35:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,22 @@ void	handle_new_key(t_env **env, char *key, char *value)
 
 	if (!key)
 		return ;
+	new_key = malloc(sizeof(t_env));
+	if (!new_key)
+		return ;
+	new_key->key = ft_strdup(key);
+	if (!value)
+	{
+		new_key->value = NULL;
+		new_key->equal = 0;
+	}
 	else
 	{
-		new_key = malloc(sizeof(t_env));
-		new_key->key = ft_strdup(key);
-		if (!value)
-			new_key->value = NULL;
-		else
-			new_key->value = ft_strdup(value);
-		new_key->equal = (value != NULL);
-		new_key->next = NULL;
-		env_add_back(env, new_key);
+		new_key->value = ft_strdup(value);
+		new_key->equal = 1;
 	}
+	new_key->next = NULL;
+	env_add_back(env, new_key);
 }
 
 void	set_env_value(t_env **env, char *key, char *value)
@@ -43,12 +47,17 @@ void	set_env_value(t_env **env, char *key, char *value)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			current->equal = (value != NULL);
 			free(current->value);
-			if (!value)
-				current->value = NULL;
-			else
+			if (value != NULL)
+			{
+				current->equal = 1;
 				current->value = ft_strdup(value);
+			}
+			else
+			{
+				current->equal = 0;
+				current->value = NULL;
+			}
 			return ;
 		}
 		current = current->next;
