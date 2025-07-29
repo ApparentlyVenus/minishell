@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 21:28:18 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 20:54:08 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,13 @@ int	builtin_export(char **args, t_env **env)
 	while (args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
-		if (equal_sign)
+		if ((equal_sign && ft_strncmp(args[i], "_", equal_sign - args[i]) == 0 && equal_sign - args[i] == 1)
+			|| (!equal_sign && ft_strcmp(args[i], "_") == 0))
+		{
+			ft_putendl_fd("minishell: export: `_': not a valid identifier", 2);
+			failure[0] = 1;
+		}
+		else if (equal_sign)
 			export_helper(env, equal_sign, args[i], failure);
 		else if (is_valid_key(args[i]))
 			set_env_value(env, args[i], NULL);

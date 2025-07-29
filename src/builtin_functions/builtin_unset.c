@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:07:04 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/16 23:42:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/29 20:49:43 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ int	builtin_unset(char **args, t_env **env)
 	i = 0;
 	while (args[i])
 	{
-		if (unset_env_value(env, args[i]) == 1)
+		if (ft_strcmp(args[i], "_") == 0)
+		{
+			ft_putendl_fd("minishell: unset: `_': not a valid identifier", 2);
+			failure = 1;
+		}
+		else if (unset_env_value(env, args[i]) == 1)
 			failure = 1;
 		i++;
 	}
