@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 18:08:19 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:10:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	signal_handler(int sig)
 {
+	t_shell	*shell;
+
 	g_signal_received = sig;
+	shell = get_shell();
+	if (shell)
+		shell->exit_code = 130;
 	write(STDOUT_FILENO, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_on_new_line();

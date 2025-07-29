@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 22:22:34 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:08:42 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,11 @@ char	*get_prompt(t_env **env);
 char	*get_input_line(t_env **env);
 void	update_shlvl(t_shell *shell);
 void	art(void);
+
+// Set shell
+
+t_shell	**get_shell_ref(void);
+void	set_shell(t_shell *sh);
+t_shell	*get_shell(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 17:30:29 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 00:40:15 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ extern int g_signal_received;
 # define NO_CHANGE			0
 # define SPLIT_SUCCESS		1
 # define TOKEN_REMOVED		2
+# define BLUE    "\001\033[34m\002"
+# define RESET   "\001\033[0m\002"
 
 #endif

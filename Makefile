@@ -42,7 +42,7 @@ EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
 
 SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
-MAIN_SOURCES = art.c extra.c signals.c main.c
+MAIN_SOURCES = art.c extra.c signals.c main.c set_shell_sig.c
 
 LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
 BUILTIN_SRCS = $(addprefix $(SRCDIR)/builtin_functions/, $(BUILTIN_SOURCES))

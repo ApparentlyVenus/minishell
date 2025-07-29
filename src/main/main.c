@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 19:25:57 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 01:09:01 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,35 @@ int	process_input(t_shell *shell, char *input)
 	return (1);
 }
 
+char	*ft_strjoin3(char *s1, char *s2, char *s3)
+{
+	char	*tmp;
+	char	*res;
+
+	tmp = ft_strjoin(s1, s2);
+	if (!tmp)
+		return (NULL);
+	res = ft_strjoin(tmp, s3);
+	free(tmp);
+	return (res);
+}
+
 char	*get_prompt(t_env **env)
 {
-	char	*cwd;
-	char	*path;
+	char	*cwd = getcwd(NULL, 0);
+	char	*path = cwd ? cwd : get_env_value(*env, "PWD");
 	char	*temp;
 	char	*prompt;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd)
-		path = cwd;
-	else
-	{
-		path = get_env_value(*env, "PWD");
-		if (!path)
-			return (ft_strdup("minishell$ "));
-	}
+	if (!path)
+		return (ft_strdup("minishell$ "));
+
 	temp = ft_strjoin("minishell: @", path);
 	if (cwd)
 		free(cwd);
 	if (!temp)
 		return (ft_strdup("minishell$ "));
-	prompt = ft_strjoin(temp, "$ ");
+	prompt = ft_strjoin3(BLUE, temp, "$ " RESET);
 	free(temp);
 	if (!prompt)
 		return (ft_strdup("minishell$ "));
@@ -59,6 +66,7 @@ int	main_loop(t_shell *shell)
 
 	while (1)
 	{
+		set_shell(shell);
 		if (shell->interactive)
 			signals_prompt();
 		input = get_input_line(&shell->env);
