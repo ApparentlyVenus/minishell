@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 21:27:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 16:27:23 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,11 @@ int	builtin_cd(char **args, t_env **env)
 		return (free(old_new_pwd[0]), 1);
 	old_new_pwd[1] = getcwd(NULL, 0);
 	if (!old_new_pwd[1] && !pwd_env)
-		old_new_pwd[1] = ft_strdup("/");
+	{
+		old_new_pwd[1] = ft_strdup(getenv("HOME"));
+		if (!old_new_pwd[1])
+			old_new_pwd[1] = ft_strdup("/");
+	}
 	else if (!old_new_pwd[1])
 		old_new_pwd[1] = ft_strjoin(pwd_env, "/..");
 	update_pwd(env, old_new_pwd[0], old_new_pwd[1]);
