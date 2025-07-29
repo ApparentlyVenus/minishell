@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:45 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/29 18:39:40 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/29 21:28:59 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	builtin_env(t_env **env, char **args)
 	}
 	if (args[0] != NULL)
 	{
-		printf("hon\n");
 		current = *env;
 		while (current)
 		{
