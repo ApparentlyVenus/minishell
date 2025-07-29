@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 22:41:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 03:50:42 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int		is_var_char(char c);
 char	*char_to_string(char c);
 char	*append_to_result(char *result, char *to_append);
 
-// Word splitting and wildcard expansion for t_arg
+// Word splitting and wildcard expansion wrapper
 int		perform_word_split(t_arg ***args, int index);
 int		perform_wildcard_expand(t_arg ***args, int index);
 
-// Wildcard expansion (original char** functions)
-int		wildcard_expand(char *pattern, char ***matches);
+// Wildcard expansion
+int		expand_wildcard(char *pattern, char ***matches);
 void	sort_matches(char **matches, int count);
 int		match_star_pattern(const char *pattern, const char *filename);
 int		count_star_matches(const char *pattern);
@@ -92,8 +92,6 @@ char	*join_assignment(char *var, char *val);
 int		contains_whitespace(char *str);
 int		has_wildcard(char *word);
 void	free_split(char **args);
-
-// Legacy char** functions (still used by existing wildcard code)
 int		count_args(char **args);
 
 #endif

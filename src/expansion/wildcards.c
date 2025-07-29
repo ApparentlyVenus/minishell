@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:21:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 22:34:57 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 03:51:12 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@ static int	insert_wildcard_matches(t_arg ***args, int index, char **matches,
 	return (match_count - 1);
 }
 
-static int	insert_match_args(t_arg **new_args, char **matches,
-		int start_index, int match_count)
-{
-	int	i;
-	int	j;
+// static int	insert_match_args(t_arg **new_args, char **matches,
+// 		int start_index, int match_count)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = start_index;
-	j = 0;
-	while (j < match_count)
-	{
-		new_args[i] = malloc(sizeof(t_arg));
-		if (!new_args[i])
-			return (i);
-		new_args[i]->value = ft_strdup(matches[j]);
-		new_args[i]->single_quotes = 0;
-		new_args[i]->double_quotes = 0;
-		new_args[i]->next = NULL;
-		i++;
-		j++;
-	}
-	return (i);
-}
+// 	i = start_index;
+// 	j = 0;
+// 	while (j < match_count)
+// 	{
+// 		new_args[i] = malloc(sizeof(t_arg));
+// 		if (!new_args[i])
+// 			return (i);
+// 		new_args[i]->value = ft_strdup(matches[j]);
+// 		new_args[i]->single_quotes = 0;
+// 		new_args[i]->double_quotes = 0;
+// 		new_args[i]->next = NULL;
+// 		i++;
+// 		j++;
+// 	}
+// 	return (i);
+// }
 
 int	perform_wildcard_expand(t_arg ***args, int index)
 {

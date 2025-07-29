@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: yitani <yitani@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/25 07:58:09 by odana             #+#    #+#              #
-#    Updated: 2025/07/28 16:47:58 by yitani           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME      = minishell
 CC        = cc
 CFLAGS    = -Wall -Wextra -Werror -g
@@ -42,15 +30,15 @@ BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
 TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
                        tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c
 
-EXPANSION_SOURCES = expand_cmd.c expansion.c word_split_helpers.c collect_matches.c \
-                    wildcard_expansion.c cmd_utils.c copy_split.c expand_exit_code.c \
-                    expand_variables.c quote_removal.c
+EXPANSION_SOURCES = cmd_utils.c collect_matches.c copy_split.c expansion.c phases.c \
+                    quote_removal.c wildcard_expansion.c wildcards.c word_splitting.c \
+                    expand_exit_code.c expand_variables.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c fork_heredoc.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
-                    pipes.c execution_helpers.c operators.c
+                    pipes.c execution_helpers.c execution_helpers2.c operators.c
 
 SHELL_SOURCES = init.c cleanup.c error_handle.c wrappers.c
 
@@ -59,7 +47,7 @@ MAIN_SOURCES = art.c extra.c signals.c main.c
 LIBFT_SRCS = $(addprefix $(LIBFT_DIR)/, $(LIBFT_SOURCES))
 BUILTIN_SRCS = $(addprefix $(SRCDIR)/builtin_functions/, $(BUILTIN_SOURCES))
 TOKENIZATION_SRCS = $(addprefix $(SRCDIR)/tokenization/, $(TOKENIZATION_SOURCES))
-EXPANSION_SRCS = $(addprefix $(SRCDIR)/new_expansion/, $(EXPANSION_SOURCES))
+EXPANSION_SRCS = $(addprefix $(SRCDIR)/expansion/, $(EXPANSION_SOURCES))
 PARSER_SRCS = $(addprefix $(SRCDIR)/parser/, $(PARSER_SOURCES))
 EXECUTION_SRCS = $(addprefix $(SRCDIR)/execution/, $(EXECUTION_SOURCES))
 SHELL_SRCS = $(addprefix $(SRCDIR)/shell/, $(SHELL_SOURCES))
@@ -81,8 +69,6 @@ LIBFT_OBJS = $(LIBFT_SRCS:$(LIBFT_DIR)/%.c=$(OBJDIR)/libft/%.o)
 
 OBJS = $(BUILTIN_OBJS) $(TOKENIZATION_OBJS) $(EXPANSION_OBJS) $(PARSER_OBJS) \
        $(EXECUTION_OBJS) $(SHELL_OBJS) $(MAIN_OBJS)
-
-
 
 HDR = $(INCDIR)/minishell.h $(INCDIR)/tokenizer.h $(INCDIR)/parser.h \
       $(INCDIR)/expansion.h $(INCDIR)/env.h $(INCDIR)/execution.h \
@@ -140,12 +126,12 @@ $(TOKENIZATION_STARTED):
 	@echo "└────────────────────────────────┘"
 	@touch $@
 
-$(OBJDIR)/new_expansion/%.o: $(SRCDIR)/new_expansion/%.c $(HDR) | $(EXPANSION_STARTED)
+$(OBJDIR)/expansion/%.o: $(SRCDIR)/expansion/%.c $(HDR) | $(EXPANSION_STARTED)
 	@echo "[🔍] Expansion module: $(notdir $<)"
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(EXPANSION_STARTED):
-	@mkdir -p $(OBJDIR)/new_expansion
+	@mkdir -p $(OBJDIR)/expansion
 	@echo "┌────────────────────────────────┐"
 	@echo "│  🔍  Building expansion module │"
 	@echo "└────────────────────────────────┘"

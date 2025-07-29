@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:31:05 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:32:37 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 03:53:25 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	execute_external_command(t_exec *ctx, char **args)
 	free_split(envp);
 	exit(127);
 }
-
 
 char	**skip_empty_args(char **args)
 {

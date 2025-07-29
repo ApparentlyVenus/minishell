@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 22:13:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 04:10:18 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,19 @@ char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
 	return (expanded);
 }
 
-void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
+char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
+	int index)
 {
-	if (!cmd || !cmd->args)
-		return ;
-	expand_variables_phase(cmd, shell, builtin_type);
-	expand_splitting_phase(&cmd->args);
+	char	*expanded;
+
+	expanded = NULL;
+	if (builtin_type == BUILTIN_EXPORT && is_assignment(arg))
+		expanded = expand_assignment_value(arg, shell->env);
+	else if (is_assignment(arg) && index == 0)
+		expanded = expand_assignment_value(arg, shell->env);
+	else
+		expanded = expand_exit(arg, shell->env, shell->exit_code);
+	return (expanded);
 }
 
 void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
