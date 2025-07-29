@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 03:32:22 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/29 20:57:04 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:25:14 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	is_valid_key(const char *key)
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
-			return (printf("minishell: `%s': not a valid identifier\n", key), 0);
+			return (printf("minishell: `%s': not a valid identifier\n",
+					key), 0);
 		i++;
 	}
 	return (1);

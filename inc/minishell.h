@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 00:40:15 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 02:00:58 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 // macros
 
-extern int g_signal_received;
+extern int	g_signal_received;
 
 # define EXIT_SUCCESS		0
 # define EXIT_GENERAL_ERROR	1

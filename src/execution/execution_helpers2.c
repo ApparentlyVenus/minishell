@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execution_helpers2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:31:05 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 03:53:25 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 01:55:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static	void	print_something(char *cmd, char **envp)
+{
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	perror("");
+	free_split(envp);
+	exit(127);
+}
 
 void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 {
@@ -37,13 +46,7 @@ void	if_directory_or_invalid(char *path, char *cmd, char **envp)
 		}
 	}
 	else
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		perror("");
-		free_split(envp);
-		exit(127);
-	}
+		print_something(cmd, envp);
 }
 
 void	execute_external_command(t_exec *ctx, char **args)
@@ -53,8 +56,6 @@ void	execute_external_command(t_exec *ctx, char **args)
 	char	**envp;
 
 	cmd = args[0];
-	// if (cmd[0] == '\0')
-	// 	exit(0);
 	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
 		path = cmd;

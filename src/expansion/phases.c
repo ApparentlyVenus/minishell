@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phases.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 16:29:43 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 01:47:21 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,32 +68,34 @@ void	expand_variables_phase(t_cmd *cmd,
 	}
 }
 
+// i[0] = indexing;
+// i[1] = added_args;
+
 void	expand_splitting_phase(t_arg ***args)
 {
-	int	i;
-	int	added_args;
+	int	i[2];
 
-	i = 0;
-	while ((*args)[i])
+	i[0] = 0;
+	while ((*args)[i[0]])
 	{
-		if ((*args)[i]->single_quotes || (*args)[i]->double_quotes)
+		if ((*args)[i[0]]->single_quotes || (*args)[i[0]]->double_quotes)
 		{
-			i++;
+			i[0]++;
 			continue ;
 		}
-		if (i > 0 && (*args)[0] && ft_strcmp((*args)[0]->value, "export") == 0
-			&& is_assignment((*args)[i]->value))
+		if (i[0] > 0 && (*args)[0] && ft_strcmp((*args)[0]->value, "export")
+		== 0 && is_assignment((*args)[i[0]]->value))
 		{
-			i++;
+			i[0]++;
 			continue ;
 		}
-		added_args = perform_word_split(args, i);
-		if (added_args > 0)
+		i[1] = perform_word_split(args, i[0]);
+		if (i[1] > 0)
 		{
-			i += added_args + 1;
+			i[0] += i[1] + 1;
 			continue ;
 		}
-		added_args = perform_wildcard_expand(args, i);
-		i += added_args + 1;
+		i[1] = perform_wildcard_expand(args, i[0]);
+		i[0] += i[1] + 1;
 	}
 }

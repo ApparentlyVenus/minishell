@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/29 18:13:00 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:22:18 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ void	env_add_back(t_env **env_list, t_env *new_node);
 int		size_of_arr(char **args);
 void	handle_fail_old_pwd(char *old_pwd, char *pwd_env);
 void	handle_fail_new_pwd(char *old_pwd, char *pwd_env);
+int		change_directory(char **args, t_env **env, int *print);
+void	update_pwd(t_env **env, char *old_pwd, char *new_pwd);
 
 #endif

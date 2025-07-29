@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:09:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 01:56:34 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,18 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 
 char	*get_prompt(t_env **env)
 {
-	char	*cwd = getcwd(NULL, 0);
-	char	*path = cwd ? cwd : get_env_value(*env, "PWD");
+	char	*cwd;
+	char	*path;
 	char	*temp;
 	char	*prompt;
 
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+		path = cwd;
+	else
+		path = get_env_value(*env, "PWD");
 	if (!path)
 		return (ft_strdup("minishell$ "));
-
 	temp = ft_strjoin("minishell: @", path);
 	if (cwd)
 		free(cwd);
