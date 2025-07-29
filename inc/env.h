@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 21:26:42 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/29 18:13:00 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		builtin_export(char **args, t_env **env);
 int		builtin_pwd(t_env **env);
 int		builtin_unset(char **args, t_env **env);
 int		builtin_cd(char **args, t_env **env);
-void	builtin_env(t_env **env);
+int		builtin_env(t_env **env, char **args);
 int		builtin_exit(char **args, t_shell *shell);
 
 // Helpers
