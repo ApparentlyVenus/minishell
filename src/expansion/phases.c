@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 04:11:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 16:29:43 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void	expand_splitting_phase(t_arg ***args)
 	while ((*args)[i])
 	{
 		if ((*args)[i]->single_quotes || (*args)[i]->double_quotes)
+		{
+			i++;
 			continue ;
+		}
 		if (i > 0 && (*args)[0] && ft_strcmp((*args)[0]->value, "export") == 0
 			&& is_assignment((*args)[i]->value))
 		{
