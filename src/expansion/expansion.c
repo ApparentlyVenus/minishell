@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 04:10:18 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 04:13:14 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,6 @@ char	*expand_assignment_value(char *arg, t_env *env)
 	if (!result)
 		result = ft_strdup(arg);
 	return (result);
-}
-
-char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
-	int index)
-{
-	char	*expanded;
-
-	expanded = NULL;
-	if (builtin_type == BUILTIN_EXPORT && is_assignment(arg))
-		expanded = expand_assignment_value(arg, shell->env);
-	else if (is_assignment(arg) && index == 0)
-		expanded = expand_assignment_value(arg, shell->env);
-	else
-		expanded = expand_exit(arg, shell->env, shell->exit_code);
-	return (expanded);
 }
 
 char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
