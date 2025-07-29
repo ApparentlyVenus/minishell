@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 04:13:14 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 04:14:19 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
 	else
 		expanded = expand_exit(arg, shell->env, shell->exit_code);
 	return (expanded);
+}
+
+void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
+{
+	if (!cmd || !cmd->args)
+		return ;
+	expand_variables_phase(cmd, shell, builtin_type);
+	expand_splitting_phase(&cmd->args);
 }
 
 void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
