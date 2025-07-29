@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:26:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/29 19:25:57 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,14 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc > 1)
 	{
-		printf("minishell: %s: No such file or directory", argv[1]);
+		printf("minishell: %s: No such file or directory\n", argv[1]);
 		exit(ERROR);
 	}
 	rl_catch_signals = 0;
 	shell = shell_init(envp);
 	if (!shell)
 	{
-		ft_putendl_fd("minishell: initialization failed", STDERR_FILENO);
+		ft_putendl_fd("minishell: initialization failed\n", STDERR_FILENO);
 		return (EXIT_GENERAL_ERROR);
 	}
 	update_shlvl(shell);
