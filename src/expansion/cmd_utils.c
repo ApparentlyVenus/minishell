@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:00:56 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 11:52:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 22:18:36 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,18 @@ char	*join_assignment(char *var, char *val)
 	return (result);
 }
 
-void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
+int	contains_whitespace(char *str)
 {
-	if (!cmd)
-		return ;
-	expand_cmd_args(cmd, shell, type);
-	expand_cmd_redirs(cmd, shell->env);
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }

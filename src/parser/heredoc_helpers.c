@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:43:57 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 19:52:19 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:35:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-** is_delimiter_quoted
-** Purpose: Checks if heredoc delimiter was quoted (affects expansion)
-** Used variables: delimiter (string to check)
-** Return: 1 if quoted, 0 if not
-*/
 int	is_delimiter_quoted(char *delimiter)
 {
 	int	len;
@@ -32,12 +26,6 @@ int	is_delimiter_quoted(char *delimiter)
 	return (0);
 }
 
-/*
-** unquote_delimiter
-** Purpose: Removes quotes from delimiter if present
-** Used variables: delimiter (quoted string)
-** Return: Newly allocated unquoted string
-*/
 char	*unquote_delimiter(char *delimiter)
 {
 	int		len;
@@ -58,12 +46,6 @@ char	*get_suffix(void)
 	return (ft_itoa(counter));
 }
 
-/*
-** cleanup_heredoc_files
-** Purpose: Removes temporary heredoc files (call during cleanup)
-** Used variables: cmd (command with redirections)
-** Return: None
-*/
 void	cleanup_heredoc_files(t_cmd *cmd)
 {
 	t_redir	*redir;

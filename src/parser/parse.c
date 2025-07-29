@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 22:54:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 20:00:25 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:37:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
-**  call pipeline, if there are trailing tokens free and return NULL
-*/
 t_node	*parse_input(t_token **tokens, t_env *env)
 {
 	t_node	*ast;
@@ -53,14 +50,6 @@ t_node	*parse_pipeline(t_token **tokens, t_env *env, int min_priority)
 	return (left);
 }
 
-/*
-**  we need to build both a list of arguments and a list of redirections,
-**  eventually we are going to convert the list of arguments to a double array
-**  using the process_args function
-**
-** 2 Possible Patterns: 1. WORD+ redir*(at least one word, optional redirection)
-**                          2. redir+ (at least one redirection)
-*/
 t_node	*parse_command(t_token **tokens, t_env *env)
 {
 	int		count;

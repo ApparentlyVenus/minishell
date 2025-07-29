@@ -3,99 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 20:49:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:50:14 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
- * execute_external_command - Executes external programs
- *
- * Steps:
- * - Check if command has '/' (absolute/relative path)
- * - If not, search in PATH environment variable
- * - Use execve to replace current process with command
- */
-
-void	if_directory_or_invalid(char *path, char *cmd, char **envp)
-{
-	struct stat		sb;
-
-	if (stat(path, &sb) == 0)
-	{
-		if (S_ISDIR(sb.st_mode))
-		{
-			ft_putstr_fd(cmd, 2);
-			ft_putendl_fd(": Is a directory", STDERR_FILENO);
-			if (path != cmd)
-				free(path);
-			free_split(envp);
-			exit(126);
-		}
-		if (access(path, X_OK) != 0)
-		{
-			perror(cmd);
-			if (path != cmd)
-				free(path);
-			free_split(envp);
-			exit(126);
-		}
-	}
-	else
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd(": ", STDERR_FILENO);
-		perror("");
-		free_split(envp);
-		exit(127);
-	}
-}
-
-void	execute_external_command(t_exec *ctx, char **args)
-{
-	char	*cmd;
-	char	*path;
-	char	**envp;
-
-	cmd = args[0];
-	// if (cmd[0] == '\0')
-	// 	exit(0);
-	envp = convert_env_to_array(*ctx->env);
-	if (ft_strchr(cmd, '/'))
-		path = cmd;
-	else
-		path = find_path(cmd, *ctx->env);
-	if (!path)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", STDERR_FILENO);
-		free_split(envp);
-		exit(127);
-	}
-	if_directory_or_invalid(path, cmd, envp);
-	execve(path, args, envp);
-	ft_putendl_fd("execve failed", STDERR_FILENO);
-	if (path != cmd)
-		free(path);
-	free_split(envp);
-	exit(127);
-}
-
-// ! yitani when you implement the builtins name them the way I named them
-// ! or change the names directly in the execute_builtin function
-
-/*
- * execute_builtin - Executes built-in shell commands
- *
- * Steps:
- * - Dispatches to appropriate builtin function based on command type
- * - Sets ctx->exit for proper exit code handling
- * - Called only in child processes for pipeline commands
- */
 int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	t_shell *shell)
 {
@@ -137,13 +53,6 @@ int	execute_builtin(t_node *cmd_node, t_exec *ctx, t_shell *shell)
 	return (exit_code);
 }
 
-char	**skip_empty_args(char **args)
-{
-	while (args[0] && args[0][0] == '\0')
-		args++;
-	return (args);
-}
-
 void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 {
 	t_builtin	type;
@@ -155,7 +64,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	if (!cmd_node->cmd->args || !cmd_node->cmd->args[0])
 		exit(EXIT_GENERAL_ERROR);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
-	expand_cmd(cmd_node->cmd, type, shell);
+	expand_all_args(cmd_node->cmd, type, shell);
 	setup_redir(cmd_node->cmd);
 	if (type != BUILTIN_NONE)
 	{
@@ -169,8 +78,7 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 		if (!args[0])
 			exit(0);
 		execute_external_command(ctx, args);
-		free_split(args);
-		exit(127);
+		return (free_split(args), exit(127));
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 13:17:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 22:40:04 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
 int			run_in_parent(t_node *ast);
+char		**skip_empty_args(char **args);
 
 #endif

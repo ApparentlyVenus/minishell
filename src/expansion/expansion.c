@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_cmd.c                                       :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/13 18:58:11 by odana             #+#    #+#             */
-/*   Updated: 2025/07/27 17:42:34 by odana            ###   ########.fr       */
+/*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
+/*   Updated: 2025/07/28 22:13:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,45 +55,10 @@ char	*expand_cmd_arg(char *arg, t_shell *shell, t_builtin builtin_type,
 
 void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 {
-	int		i;
-	char	*expanded;
-	char	*unquoted;
-
 	if (!cmd || !cmd->args)
 		return ;
-	i = 0;
-	while (cmd->args[i])
-	{
-		if (cmd->args[i]->single_quotes)
-			;
-		else if (cmd->args[i]->double_quotes)
-		{
-			expanded = expand_cmd_arg(cmd->args[i]->value,
-					shell, builtin_type, i);
-			if (expanded && expanded != cmd->args[i]->value)
-			{
-				free(cmd->args[i]->value);
-				cmd->args[i]->value = expanded;
-			}
-		}
-		else
-		{
-			expanded = expand_cmd_arg(cmd->args[i]->value,
-					shell, builtin_type, i);
-			if (expanded && expanded != cmd->args[i]->value)
-			{
-				free(cmd->args[i]->value);
-				cmd->args[i]->value = expanded;
-			}
-			unquoted = remove_all_quotes(cmd->args[i]->value);
-			if (unquoted)
-			{
-				free(cmd->args[i]->value);
-				cmd->args[i]->value = unquoted;
-			}
-		}
-		i++;
-	}
+	expand_variables_phase(cmd, shell, builtin_type);
+	expand_splitting_phase(&cmd->args);
 }
 
 void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
@@ -123,4 +88,12 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 		}
 		redir = redir->next;
 	}
+}
+
+void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
+{
+	if (!cmd)
+		return ;
+	expand_cmd_args(cmd, shell, type);
+	expand_cmd_redirs(cmd, shell->env);
 }

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/24 23:30:49 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 22:31:40 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	count_star_matches(const char *pattern)
 	return (closedir(dir), count);
 }
 
-int	wildcard_expand(char *pattern, char ***matches)
+int	expand_wildcard(char *pattern, char ***matches)
 {
 	int	count;
 

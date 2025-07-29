@@ -6,20 +6,12 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 13:28:25 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 21:33:20 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/*
- *
- * Sets up the context structure with:
- * - Command count
- * - Pipe array
- * - Process ID array
- * - Environment variables
- */
 t_exec	*setup_exec(t_node *cmd_list, t_env **env)
 {
 	t_exec	*ctx;
@@ -42,12 +34,6 @@ t_exec	*setup_exec(t_node *cmd_list, t_env **env)
 	return (ctx);
 }
 
-/*
- * get_nth_command - Retrieves the nth command node from pipeline
- *
- * Navigates the left-associative AST to find a specific command
- * Used to iterate through commands in execution order
- */
 t_node	*get_nth_command(t_node *node, int n)
 {
 	int	left_count;

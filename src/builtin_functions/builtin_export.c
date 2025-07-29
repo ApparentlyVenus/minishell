@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:06:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 18:09:01 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:28:18 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ int	builtin_export(char **args, t_env **env)
 		return (print_sorted_env(env), 0);
 	if (args[0][0] == '=')
 	{
-		// printf("minishell: export: `%s': not a valid identifier\n", args[0]);
-		ft_putendl_fd(" not a valid identifier", 2);
-		failure[0] = 1;
-		i++;
+		ft_putendl_fd("minishell: export: not a valid identifier", 2);
+		failure[i++] = 1;
 	}
 	while (args[i])
 	{

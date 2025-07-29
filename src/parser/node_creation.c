@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:33:54 by odana             #+#    #+#             */
-/*   Updated: 2025/07/07 08:21:08 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/28 21:36:56 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ t_node	*create_or_node(t_node *left, t_node *right)
 	return (or_node);
 }
 
-/*
-** create_cmd_node
-** Purpose: Creates a command node with t_arg **args and redirections.
-** Used variables: args (t_arg **), redir_list (t_redir *)
-** Return: t_node *
-*/
 t_node	*create_cmd_node(t_arg **args, t_redir *redir_list)
 {
 	t_cmd	*command;

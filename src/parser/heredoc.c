@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 20:08:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:38:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	setup_heredoc_fork(int pipe_fd[2], char *delimiter, int expand, t_env *env)
+int	setup_heredoc_fork(int pipe_fd[2], char *delimiter, int expand, t_env *env)
 {
 	pid_t	pid;
 
@@ -91,7 +91,7 @@ char	*create_temp_file(char *content)
 	return (temp_filename);
 }
 
-void	CTRL_D_ERR(char *del)
+void	ctrl_d_err(char *del)
 {
 	printf("here-document delimited by end-of-file (wanted `%s')\n", del);
 }
@@ -115,7 +115,7 @@ t_redir	*process_heredoc(char *delimiter, t_env *env,
 	if (content == (char *) - 1)
 		return (printf("\n"), NULL);
 	if (!content)
-		return(CTRL_D_ERR(delimiter), NULL);
+		return (ctrl_d_err(delimiter), NULL);
 	temp_filename = create_temp_file(content);
 	free(content);
 	if (!temp_filename)

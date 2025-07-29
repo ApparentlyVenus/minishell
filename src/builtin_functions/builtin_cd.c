@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 22:14:26 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/28 21:27:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	builtin_cd(char **args, t_env **env)
 	if (!old_new_pwd[1] && !pwd_env)
 		old_new_pwd[1] = ft_strdup("/");
 	else if (!old_new_pwd[1])
-			old_new_pwd[1] = ft_strjoin(pwd_env, "/..");
+		old_new_pwd[1] = ft_strjoin(pwd_env, "/..");
 	update_pwd(env, old_new_pwd[0], old_new_pwd[1]);
 	if (print == 1)
 		printf("%s\n", old_new_pwd[1]);
