@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 13:26:54 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 01:39:26 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,15 @@ typedef enum e_phase
 	PHASE_EXECUTE,
 }	t_phase;
 
-typedef struct s_token	t_token;
-typedef struct s_node	t_node;
-typedef struct s_cmd	t_cmd;
-typedef struct s_arg	t_arg;
-typedef struct s_redir	t_redir;
-typedef struct s_env	t_env;
-typedef struct s_exec	t_exec;
-typedef struct s_shell	t_shell;
+typedef struct s_token		t_token;
+typedef struct s_node		t_node;
+typedef struct s_cmd		t_cmd;
+typedef struct s_arg		t_arg;
+typedef struct s_redir		t_redir;
+typedef struct s_env		t_env;
+typedef struct s_exec		t_exec;
+typedef struct s_shell		t_shell;
+typedef struct s_parse_data	t_parse_data;
 
 // struct definitions
 typedef struct s_env
@@ -151,5 +152,11 @@ typedef struct s_shell
 	char		*last_error;
 	t_phase		current_phase;
 }	t_shell;
+
+typedef struct s_parse_data
+{
+	int		count;
+	t_redir	*redir_list;
+}	t_parse_data;
 
 #endif

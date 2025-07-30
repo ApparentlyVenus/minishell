@@ -25,17 +25,20 @@ LIBFT_SOURCES = ft_atoi.c ft_atoll.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 
 BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
                   builtin_echo.c builtin_env.c builtin_exit.c builtin_export.c \
-                  builtin_pwd.c builtin_unset.c export_helpers.c cd_helpers.c builtin_cd_helpers.c
+                  builtin_pwd.c builtin_unset.c export_helpers.c cd_helpers.c builtin_cd_helpers.c \
+				  env_init.c
 
 TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
-                       tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c
+                       tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c \
+					   extract_operator_token.c
 
 EXPANSION_SOURCES = cmd_utils.c collect_matches.c copy_split.c expansion.c phases.c \
                     quote_removal.c wildcard_expansion.c wildcards.c word_splitting.c \
                     expand_exit_code.c expand_variables.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
-                 heredoc.c heredoc_helpers.c fork_heredoc.c
+                 heredoc.c heredoc_helpers.c fork_heredoc.c parse_redir.c \
+				 parse_command.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
                     pipes.c execution_helpers.c execution_helpers2.c operators.c

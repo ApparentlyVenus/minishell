@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 23:01:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 00:06:47 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,88 +55,6 @@ t_token	*clean_word_token(char *word)
 	else
 		token->has_wildcard = 0;
 	return (token);
-}
-
-t_token	*extract_operator_token(char *input, int *pos)
-{
-	t_token	*token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (NULL);
-	token->next = NULL;
-	token->priority = 0;
-	token->has_wildcard = 0;
-	token->single_quotes = 0;
-	token->double_quotes = 0;
-	if (input[*pos] == '>' && input[*pos + 1] == '>')
-	{
-		token->value = ft_substr(input, *pos, 2);
-		token->type = TOKEN_REDIR_OUT_APPEND;
-		(*pos) += 2;
-		return (token);
-	}
-	else if (input[*pos] == '>')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_REDIR_OUT;
-		(*pos)++;
-		return (token);
-	}
-	else if (input[*pos] == '|' && input[*pos + 1] == '|')
-	{
-		token->value = ft_substr(input, *pos, 2);
-		token->type = TOKEN_OR;
-		token->priority = 1;
-		(*pos) += 2;
-		return (token);
-	}
-	else if (input[*pos] == '|')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_PIPE;
-		token->priority = 2;
-		(*pos)++;
-		return (token);
-	}
-	else if (input[*pos] == '<' && input[*pos + 1] == '<')
-	{
-		token->value = ft_substr(input, *pos, 2);
-		token->type = TOKEN_HEREDOC;
-		(*pos) += 2;
-		return (token);
-	}
-	else if (input[*pos] == '<')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_REDIR_IN;
-		(*pos)++;
-		return (token);
-	}
-	else if (input[*pos] == '&' && input[*pos + 1] == '&')
-	{
-		token->value = ft_substr(input, *pos, 2);
-		token->type = TOKEN_AND;
-		token->priority = 1;
-		(*pos) += 2;
-		return (token);
-	}
-	else if (input[*pos] == '(')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_LPAREN;
-		(*pos)++;
-		return (token);
-	}
-	else if (input[*pos] == ')')
-	{
-		token->value = ft_substr(input, *pos, 1);
-		token->type = TOKEN_RPAREN;
-		(*pos)++;
-		return (token);
-	}
-	free(token);
-	return (NULL);
 }
 
 t_token	**tokenize_input(char *input, t_shell *shell)

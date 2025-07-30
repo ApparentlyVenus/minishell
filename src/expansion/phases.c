@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   phases.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 23:08:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 00:20:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static void	expand_single_quoted_arg(t_arg *arg)
-{
-	(void)arg;
-}
 
 static void	expand_double_quoted_arg(t_arg *arg, t_shell *shell,
 			t_builtin builtin_type, int index)
@@ -59,7 +54,10 @@ void	expand_variables_phase(t_cmd *cmd,
 	while (cmd->args[i])
 	{
 		if (cmd->args[i]->single_quotes)
-			expand_single_quoted_arg(cmd->args[i]);
+		{
+			i++;
+			continue ;
+		}
 		else if (cmd->args[i]->double_quotes)
 			expand_double_quoted_arg(cmd->args[i], shell, builtin_type, i);
 		else
@@ -68,39 +66,41 @@ void	expand_variables_phase(t_cmd *cmd,
 	}
 }
 
-// i[0] = indexing;
-// i[1] = added_args;
+static int	skip_expansion_conditions(t_arg **args, int i)
+{
+	if (args[i]->single_quotes || args[i]->double_quotes)
+		return (1);
+	if (i > 0 && args[0] && ft_strcmp(args[0]->value, "export") == 0
+		&& is_assignment(args[i]->value))
+		return (1);
+	return (0);
+}
 
 void	expand_splitting_phase(t_arg ***args)
 {
-	int	i[2];
+	int	i;
+	int	expanded;
 
-	i[0] = 0;
-	while ((*args)[i[0]])
+	i = 0;
+	while ((*args)[i])
 	{
-		if ((*args)[i[0]]->single_quotes || (*args)[i[0]]->double_quotes)
+		if (skip_expansion_conditions(*args, i))
 		{
-			i[0]++;
+			i++;
 			continue ;
 		}
-		if (i[0] > 0 && (*args)[0] && ft_strcmp((*args)[0]->value, "export")
-		== 0 && is_assignment((*args)[i[0]]->value))
+		expanded = perform_word_split(args, i);
+		if (expanded > 0)
 		{
-			i[0]++;
+			i += expanded + 1;
 			continue ;
 		}
-		i[1] = perform_word_split(args, i[0]);
-		if (i[1] > 0)
+		expanded = perform_wildcard_expand(args, i);
+		if (expanded > 0)
 		{
-			i[0] += i[1] + 1;
+			i += expanded + 1;
 			continue ;
 		}
-		i[1] = perform_wildcard_expand(args, i[0]);
-		if (i[1] > 0)
-		{
-			i[0] += i[1] + 1;
-			continue ;
-		}
-		i[0]++;
+		i++;
 	}
 }

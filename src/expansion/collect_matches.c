@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collect_matches.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:09 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 21:28:53 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 00:10:29 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,7 @@ int	collect_star_matches(const char *pattern, char ***matches)
 		return (0);
 	count = count_star_matches(pattern);
 	if (count == 0)
-	{
-		*matches = NULL;
-		return (0);
-	}
+		return (*matches = NULL, 0);
 	temp_matches = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!temp_matches)
 		return (0);
@@ -93,12 +90,7 @@ int	collect_star_matches(const char *pattern, char ***matches)
 	}
 	actual_count = fill_star_matches(pattern, temp_matches, count);
 	if (actual_count == 0)
-	{
-		free(temp_matches);
-		*matches = NULL;
-		return (0);
-	}
-	temp_matches[actual_count] = NULL;
-	*matches = temp_matches;
-	return (actual_count);
+		return (free(temp_matches), *matches = NULL, (0));
+	return (*matches = temp_matches,
+		temp_matches[actual_count] = NULL, actual_count);
 }
