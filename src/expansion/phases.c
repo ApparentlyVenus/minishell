@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phases.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 00:20:25 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:39:44 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	expand_variables_phase(t_cmd *cmd,
 			expand_unquoted_arg(cmd->args[i], shell, builtin_type, i);
 		i++;
 	}
+	concat_args(cmd);
 }
 
 static int	skip_expansion_conditions(t_arg **args, int i)

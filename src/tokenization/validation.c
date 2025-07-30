@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 22:53:05 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 02:46:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	validate_tokens(t_shell *shell)
 {
+	if (!valid_quotes(&shell->tokens))
+		return (handle_error(shell, "unclosed quotes", EXIT_MISUSE), 0);
 	if (!redirection_validation(&shell->tokens))
 		return (handle_error(shell,
 				"minishell: unexpected token near `redirection`",

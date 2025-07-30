@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 00:06:58 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:44:32 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 	if ((input[*i] == '\'' && input[*i + 1] == '\'')
 		|| (input[*i] == '"' && input[*i + 1] == '"'))
 		return (handle_empty_quotes(input, i));
+	if (has_adjacent_quotes(input, *i))
+		return (tokenize_complex_word(input, i, shell));
 	word = extract_word(input, i);
 	if (!word)
 		return (handle_error(shell, "malloc failure",

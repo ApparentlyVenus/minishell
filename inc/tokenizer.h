@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 12:20:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 02:47:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ t_token	*handle_empty_quotes(char *input, int *i);
 char	*trim_quotes(char *word, t_token *token);
 void	toggle_quotes(char c, int *in_single, int *in_double);
 int		continue_word(char c, int in_single, int in_double);
+
+// quotes and complex tokens
+
+int		has_adjacent_quotes(char *input, int pos);
+char	*extract_quote_segment(char *input, int *pos,
+			int *s_quote, int *d_quote);
+t_token	*create_segment_token(char *segment, int s_quote, int d_quote);
+t_token	*tokenize_complex_word(char *input, int *i, t_shell *shell);
+void	add_tokens(t_token *new_token, t_shell *shell, int had_space);
 
 // bool helpers
 
@@ -57,6 +66,7 @@ int		pipe_validation(t_token **token);
 int		valid_heredoc(t_token **token);
 int		valid_logic_op(t_token **token);
 int		valid_parentheses(t_token **tokens);
+int     valid_quotes(t_token **tokens);
 
 // validation utils
 

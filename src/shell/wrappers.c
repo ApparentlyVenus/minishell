@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wrappers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:33:55 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 13:48:28 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:51:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	shell_tokenize(t_shell *shell, char *input)
 	shell->current_phase = PHASE_TOKEN;
 	if (!tokenize_input(input, shell))
 	{
-		handle_error(shell, "tokenization failed", EXIT_FAILURE);
+		shell->exit_code = EXIT_FAILURE;
 		return (0);
 	}
 	if (!validate_tokens(shell))

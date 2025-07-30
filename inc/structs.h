@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 01:39:26 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 02:36:02 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_token
 	int				double_quotes;
 	int				priority;
 	int				has_wildcard;
+	int				concat;
 	struct s_token	*next;
 }	t_token;
 
@@ -110,6 +111,7 @@ typedef struct s_arg
 	char			*value;
 	int				single_quotes;
 	int				double_quotes;
+	int				concat;
 	struct s_arg	*next;
 }	t_arg;
 

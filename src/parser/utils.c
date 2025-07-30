@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:47:00 by odana             #+#    #+#             */
-/*   Updated: 2025/07/26 11:15:22 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 02:40:47 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	add_arg_list(t_arg **list, t_token *token)
 		return (free(new), 0);
 	new->single_quotes = token->single_quotes;
 	new->double_quotes = token->double_quotes;
+	new->concat = token->concat;
 	new->next = NULL;
 	if (!*list)
 		*list = new;

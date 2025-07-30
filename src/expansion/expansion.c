@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 04:14:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 02:39:00 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ void	expand_cmd(t_cmd *cmd, t_builtin type, t_shell *shell)
 	if (!cmd)
 		return ;
 	expand_cmd_args(cmd, shell, type);
+	expand_splitting_phase(&cmd->args);
 	expand_cmd_redirs(cmd, shell->env);
 }
