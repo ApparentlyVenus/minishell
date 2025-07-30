@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 01:07:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 01:48:51 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 13:15:08 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_shell	**get_shell_ref(void)
 {
 	static t_shell	*shell;
 
-	shell = NULL;
+	if (!shell)
+		shell = NULL;
 	return (&shell);
 }
 

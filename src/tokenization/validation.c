@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 01:05:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 09:39:59 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 13:39:07 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 int	validate_tokens(t_shell *shell)
 {
 	if (!redirection_validation(&shell->tokens))
-		return (set_error(shell,
-				"minishell: unexpected token near `redirection`"), 0);
+		return (handle_error(shell,
+				"minishell: unexpected token near `redirection`", EXIT_MISUSE), 0);
 	if (!pipe_validation(&shell->tokens))
-		return (set_error(shell, "minishell: unexpected token near `|`"), 0);
+		return (handle_error(shell, "minishell: unexpected token near `|`", EXIT_MISUSE), 0);
 	if (!valid_heredoc(&shell->tokens))
-		return (set_error(shell,
-				"minishell: unexpected token near `heredoc`"), 0);
+		return (handle_error(shell,
+				"minishell: unexpected token near `heredoc`", EXIT_MISUSE), 0);
 	if (!valid_logic_op(&shell->tokens))
-		return (set_error(shell,
-				"minishell: unexpected token near `logical operator`"), 0);
+		return (handle_error(shell,
+				"minishell: unexpected token near `logical operator`", EXIT_MISUSE), 0);
 	if (!valid_parentheses(&shell->tokens))
-		return (set_error(shell,
-				"minishell: unmatched parentheses"), 0);
+		return (handle_error(shell,
+				"minishell: unmatched parentheses", EXIT_MISUSE), 0);
 	return (1);
 }
 

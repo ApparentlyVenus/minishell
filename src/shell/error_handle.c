@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 07:38:28 by odana             #+#    #+#             */
-/*   Updated: 2025/07/16 17:36:23 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 13:35:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ void	print_error(char *msg)
 		return ;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
-}
-
-int	is_fatal_error(int exit_code)
-{
-	return (exit_code == EXIT_GENERAL_ERROR || exit_code == 1);
 }
 
 void	set_error(t_shell *shell, char *error_msg)
@@ -45,7 +40,5 @@ int	handle_error(t_shell *shell, char *msg, int exit_code)
 	set_error(shell, msg);
 	shell->exit_code = exit_code;
 	print_error(msg);
-	if (is_fatal_error(exit_code))
-		shell_exit(shell, exit_code);
 	return (0);
 }

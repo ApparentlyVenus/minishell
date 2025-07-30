@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:56:34 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 13:49:43 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ int	main(int argc, char **argv, char **envp)
 	shell = shell_init(envp);
 	if (!shell)
 	{
-		ft_putendl_fd("minishell: initialization failed\n", STDERR_FILENO);
-		return (EXIT_GENERAL_ERROR);
+		ft_putendl_fd("minishell: initialization failed", STDERR_FILENO);
+		return (EXIT_FAILURE);
 	}
 	update_shlvl(shell);
 	if (shell->interactive)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 11:41:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:38:10 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 13:46:54 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 	char	*content;
 	int		status;
 	pid_t	pid;
+	t_shell	*shell;
 
 	pid = setup_heredoc_fork(pipe_fd, delimiter, expand, env);
 	if (pid == -1)
@@ -52,7 +53,7 @@ char	*collect_heredoc_content(char *delimiter, int expand, t_env *env)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		close(pipe_fd[0]);
-		return ((char *)-1);
+		return (shell = get_shell(), shell->exit_code = 130, (char *)-1);
 	}
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 42)
 	{
