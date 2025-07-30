@@ -6,19 +6,21 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/18 14:10:21 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 23:05:24 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	is_word_char(char c)
 {
 	return (c != ' ' && c != '|' && c != '<'
-		&& c != '>' && c != '&');
+		&& c != '>' && c != '&' && c != '(' && c != ')'
+		&& c != '\t' && c != '\n' && c != '\r');
 }
 
 int	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '*');
+	return (c == '|' || c == '<' || c == '>'
+		|| c == '&' || c == ')' || c == '(');
 }
 
 int	is_quotes(char c)
@@ -30,6 +32,8 @@ int	has_wildcard(char *word)
 {
 	int	i;
 
+	if (!word)
+		return (0);
 	i = 0;
 	while (word[i])
 	{

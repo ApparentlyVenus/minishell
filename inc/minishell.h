@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 02:00:58 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 21:33:26 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ extern int	g_signal_received;
 # define NO_CHANGE			0
 # define SPLIT_SUCCESS		1
 # define TOKEN_REMOVED		2
-# define BLUE    "\001\033[34m\002"
+# define BLUE    "\033[34m"
+# define GREEN   "\033[1;32m"
+# define WHITE   "\033[1;37m"
 # define RESET   "\001\033[0m\002"
 
 #endif

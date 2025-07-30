@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:21:37 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 03:51:12 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 21:30:10 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ int	perform_wildcard_expand(t_arg ***args, int index)
 	char	**matches;
 	int		match_count;
 	int		result;
+	int		i;
 
-	if (!(*args)[index]->value || !has_wildcard((*args)[index]->value))
+	if (!(*args)[index] || !(*args)[index]->value)
+		return (0);
+	if (!has_wildcard((*args)[index]->value))
 		return (0);
 	match_count = expand_wildcard((*args)[index]->value, &matches);
 	if (match_count <= 0)
@@ -71,6 +74,9 @@ int	perform_wildcard_expand(t_arg ***args, int index)
 			free(matches);
 		return (0);
 	}
+	i = 0;
+	while (i < match_count)
+		i++;
 	result = insert_wildcard_matches(args, index, matches, match_count);
 	free_split(matches);
 	return (result);

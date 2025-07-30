@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phases.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:47:21 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/30 23:08:29 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ void	expand_splitting_phase(t_arg ***args)
 			continue ;
 		}
 		i[1] = perform_wildcard_expand(args, i[0]);
-		i[0] += i[1] + 1;
+		if (i[1] > 0)
+		{
+			i[0] += i[1] + 1;
+			continue ;
+		}
+		i[0]++;
 	}
 }

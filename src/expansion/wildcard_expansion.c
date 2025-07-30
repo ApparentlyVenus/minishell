@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 18:58:04 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 22:31:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 21:25:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ int	count_star_matches(const char *pattern)
 	entry = readdir(dir);
 	while (entry != NULL)
 	{
-		if (entry->d_name[0] == '.' && pattern[0] != '.')
+		if ((entry->d_name[0] == '.' && pattern[0] != '.')
+			|| ft_strcmp(entry->d_name, ".") == 0
+			|| ft_strcmp(entry->d_name, "..") == 0)
 		{
 			entry = readdir(dir);
 			continue ;
@@ -92,6 +94,8 @@ int	expand_wildcard(char *pattern, char ***matches)
 {
 	int	count;
 
+	if (!pattern || !matches)
+		return (0);
 	count = collect_star_matches(pattern, matches);
 	if (count > 1)
 		sort_matches(*matches, count);

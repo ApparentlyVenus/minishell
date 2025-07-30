@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/26 12:18:09 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 21:12:13 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ t_token	*create_next_token(char *input, int *i, t_shell *shell)
 	new_token = NULL;
 	if (is_operator(input[*i]))
 		new_token = extract_operator_token(input, i);
-	else if (is_quotes(input[*i]) || is_word_char(input[*i]))
+	else if (is_quotes(input[*i]) || is_word_char(input[*i])
+		|| input[*i] == '*')
 		new_token = handle_word_token(input, i, shell);
 	else
 		return (handle_error(shell, "unexpected character", EXIT_MISUSE), NULL);

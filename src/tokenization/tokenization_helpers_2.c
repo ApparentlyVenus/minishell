@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:38:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/18 14:12:15 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/30 22:57:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ int	continue_word(char c, int in_single, int in_double)
 {
 	if (in_single || in_double)
 		return (1);
-	return (is_word_char(c));
+	return (is_word_char(c) || c == '*');
 }
