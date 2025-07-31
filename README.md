@@ -82,7 +82,7 @@ Input → Tokenization → Parsing → Expansion → Execution → Cleanup
         <sub><b>Youssef Itani (yitani)</b></sub>
       </a>
       <br />
-      <sub>Tokenization, Builtins</sub>
+      <sub>Tokenization, Builtins, Signals</sub>
     </td>
     <td align="center">
       <a href="https://github.com/ApparentlyVenus">
