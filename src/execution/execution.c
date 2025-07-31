@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/29 18:29:59 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 17:25:12 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 		exit(EXIT_GENERAL_ERROR);
 	type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	expand_cmd(cmd_node->cmd, type, shell);
+	if (type == BUILTIN_NONE && cmd_node->cmd->args && cmd_node->cmd->args[0])
+		type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	setup_redir(cmd_node->cmd);
 	if (type != BUILTIN_NONE)
-	{
-		exit_code = execute_builtin(cmd_node, ctx, shell);
-		exit(exit_code);
-	}
+		return (exit_code = execute_builtin(cmd_node, ctx, shell),
+		exit(exit_code));
 	else
 	{
 		args = convert_args(cmd_node->cmd->args);
