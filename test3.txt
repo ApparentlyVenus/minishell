@@ -1,0 +1,13 @@
+docs
+inc
+libft
+Makefile
+minishell
+obj
+README.md
+src
+test2.txt
+test3.txt
+test.text
+test.txt
+test.xt

@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 17:27:38 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:56:33 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	else if (builtin_type == BUILTIN_ECHO)
 		return (builtin_echo(args + 1));
 	else if (builtin_type == BUILTIN_ENV)
-	{
 		return (builtin_env(ctx->env, args));
-	}
 	else if (builtin_type == BUILTIN_EXIT)
 		return (builtin_exit(args, shell));
 	else if (builtin_type == BUILTIN_EXPORT)

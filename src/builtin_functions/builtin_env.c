@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:45 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 01:45:42 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 23:26:03 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_env(t_env **env, char **args)
 
 	if (!env || !*env)
 		return (EXIT_GENERAL_ERROR);
-	if (args[1] || args[2])
+	if (args && (args[1]))
 		return (env_error(args));
 	current = *env;
 	while (current)
