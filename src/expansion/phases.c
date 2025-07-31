@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phases.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:13:30 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 02:39:44 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 02:26:41 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,22 @@ static void	expand_unquoted_arg(t_arg *arg, t_shell *shell,
 {
 	char	*expanded;
 	char	*unquoted;
+	char	*tilde_expanded;
 
 	expanded = expand_cmd_arg(arg->value, shell, builtin_type, index);
 	if (expanded && expanded != arg->value)
 	{
 		free(arg->value);
 		arg->value = expanded;
+	}
+	if (builtin_type != BUILTIN_CD)
+	{
+		tilde_expanded = expand_tilde(arg->value, shell->env);
+		if (tilde_expanded && tilde_expanded != arg->value)
+		{
+			free(arg->value);
+			arg->value = tilde_expanded;
+		}
 	}
 	unquoted = remove_all_quotes(arg->value);
 	if (unquoted)

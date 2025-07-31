@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 17:47:06 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:16:56 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,9 @@ void	find_adjacent_groups(t_arg **args, int **groups, int *group_count);
 int		get_first_arg_of_group(t_arg **args, int *groups, int group_num);
 char	*concat_group_args(t_arg **args, int *groups, int group_num);
 void	free_old_args(t_arg **old_args);
+
+// Tilde expansion
+
+char	*expand_tilde(char *str, t_env *env);
 
 #endif

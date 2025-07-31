@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 02:39:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 02:33:26 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 	t_redir	*redir;
 	char	*expanded;
 	char	*unquoted;
+	char	*tilde_expanded;
 
 	redir = cmd->redirs;
 	while (redir)
@@ -78,6 +79,15 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 			{
 				free(redir->filename);
 				redir->filename = expanded;
+			}
+			if (!redir->single_quotes && !redir->double_quotes)
+			{
+				tilde_expanded = expand_tilde(redir->filename, env);
+				if (tilde_expanded && tilde_expanded != redir->filename)
+				{
+					free(redir->filename);
+					redir->filename = tilde_expanded;
+				}
 			}
 			unquoted = remove_all_quotes(redir->filename);
 			if (unquoted)

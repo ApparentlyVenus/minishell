@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:55:16 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 02:36:02 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 02:30:19 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct s_redir
 	t_redir_type	type;
 	char			*filename;
 	int				expand_heredoc;
+	int				single_quotes;
+	int				double_quotes;
 	struct s_redir	*next;
 }	t_redir;
 

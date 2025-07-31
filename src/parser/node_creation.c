@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:33:54 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:36:56 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 02:33:09 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,8 @@ t_redir	*create_redir_node(int type, char *filename)
 	redir->type = type;
 	redir->filename = filename;
 	redir->next = NULL;
+	redir->expand_heredoc = 0;
+	redir->single_quotes = 0;
+	redir->double_quotes = 0; 
 	return (redir);
 }

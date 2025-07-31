@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 01:10:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 01:31:07 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:29:34 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,18 @@ t_redir	*parse_redir(t_token **tokens, t_env *env)
 	int		type;
 	char	*filename;
 	t_token	*file_token;
+	t_redir	*redir;
 
 	if (!get_redir_info(tokens, &type, &filename, &file_token))
 		return (NULL);
 	if (type == HERE_DOC)
 		return (process_heredoc(filename, env,
 				file_token->single_quotes, file_token->double_quotes));
-	return (create_redir_node(type, ft_strdup(filename)));
+	redir = create_redir_node(type, ft_strdup(filename));
+	if (!redir)
+		return (NULL);
+	redir->single_quotes = file_token->single_quotes;
+	redir->double_quotes = file_token->double_quotes;
+	
+	return (redir);
 }

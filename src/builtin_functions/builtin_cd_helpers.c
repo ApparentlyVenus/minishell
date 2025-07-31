@@ -6,13 +6,13 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:22:23 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/30 01:20:36 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:18:50 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*expand_floaty(char *value, t_env **env)
+static char	*expand_floaty(char *value)
 {
 	char	*result;
 	char	*home;
@@ -21,7 +21,7 @@ static char	*expand_floaty(char *value, t_env **env)
 	if (!value || value[0] != '~'
 		|| (value[1] != '/' && value[1] != '\0'))
 		return (ft_strdup(value));
-	home = get_env_value(*env, "HOME");
+	home = getenv("HOME");
 	if (!home)
 		return (ft_strdup(value));
 	suffix = ft_strdup(value + 1);
@@ -34,12 +34,12 @@ static char	*expand_floaty(char *value, t_env **env)
 	return (result);
 }
 
-int	handle_floaty(char *path, t_env **env)
+int	handle_floaty(char *path)
 {
 	char	*target_dir;
 	int		result;
 
-	target_dir = expand_floaty(path, env);
+	target_dir = expand_floaty(path);
 	if (!target_dir)
 		return (ft_putendl_fd("cd: expansion failed", STDERR_FILENO), -1);
 	result = chdir(target_dir);
@@ -67,7 +67,7 @@ int	change_directory(char **args, t_env **env, int *print)
 		*print = 1;
 	}
 	else
-		return (handle_floaty(args[0], env));
+		return (handle_floaty(args[0]));
 	result = chdir(target_dir);
 	return (result);
 }

@@ -34,7 +34,8 @@ TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
 
 EXPANSION_SOURCES = cmd_utils.c collect_matches.c copy_split.c expansion.c phases.c \
                     quote_removal.c wildcard_expansion.c wildcards.c word_splitting.c \
-                    expand_exit_code.c expand_variables.c concat.c concat_helpers.c
+                    expand_exit_code.c expand_variables.c concat.c concat_helpers.c \
+					tilde_expansion.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c fork_heredoc.c parse_redir.c \
