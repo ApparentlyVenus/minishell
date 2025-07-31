@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 07:36:25 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 09:07:34 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 22:30:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	execute_or(t_node *node, t_shell *shell)
 		left_exit = execute_parent_node(node->left, shell);
 	else
 		left_exit = execute_children_node(node->left, shell);
+	if (left_exit == EXIT_CTRL_C || g_signal_received == SIGINT)
+		return (left_exit);
 	if (left_exit != EXIT_SUCCESS)
 	{
 		if (run_in_parent(node->right))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/25 07:23:40 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 22:31:36 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	wait_child(t_exec *ctx)
 		else if (WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == SIGINT)
+			{
+				g_signal_received = SIGINT;
 				exit_code = EXIT_CTRL_C;
+			}
 			else if (WTERMSIG(status) == SIGQUIT)
 				exit_code = EXIT_CTRL_BACK;
 			else

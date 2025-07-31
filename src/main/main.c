@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 13:49:43 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:32:14 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main_loop(t_shell *shell)
 		set_shell(shell);
 		if (shell->interactive)
 			signals_prompt();
+		g_signal_received = 0;
 		input = get_input_line(&shell->env);
 		if (!input)
 		{
