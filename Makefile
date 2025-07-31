@@ -30,11 +30,11 @@ BUILTIN_SOURCES = general_helpers.c A_parsing_environment.c builtin_cd.c \
 
 TOKENIZATION_SOURCES = validation.c validation_utils.c tokenize_input.c \
                        tokenization_helpers.c tokenization_helpers_2.c bool_helpers.c \
-					   extract_operator_token.c tokenize_quotes.c
+					   extract_operator_token.c tokenize_quotes.c add_tokens.c
 
 EXPANSION_SOURCES = cmd_utils.c collect_matches.c copy_split.c expansion.c phases.c \
                     quote_removal.c wildcard_expansion.c wildcards.c word_splitting.c \
-                    expand_exit_code.c expand_variables.c concat.c
+                    expand_exit_code.c expand_variables.c concat.c concat_helpers.c
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c fork_heredoc.c parse_redir.c \

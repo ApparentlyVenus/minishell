@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 02:47:29 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 17:27:56 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		pipe_validation(t_token **token);
 int		valid_heredoc(t_token **token);
 int		valid_logic_op(t_token **token);
 int		valid_parentheses(t_token **tokens);
-int     valid_quotes(t_token **tokens);
+int		valid_quotes(t_token **tokens);
 
 // validation utils
 

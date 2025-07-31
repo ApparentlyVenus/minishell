@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 23:49:12 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 02:43:00 by odana            ###   ########.fr       */
+/*   Updated: 2025/07/31 17:46:32 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,13 @@ int	has_adjacent_quotes(char *input, int pos)
 	return (quote_count > 2);
 }
 
-char	*extract_quote_segment(char *input, int *pos, int *s_quote, int *d_quote)
+static char	*handle_quoted_extraction(char *input, int *pos,
+	int *s_quote, int *d_quote)
 {
 	int		start;
 	char	quote_char;
 	char	*result;
 
-	*s_quote = 0;
-	*d_quote = 0;
-	if (!is_quotes(input[*pos]))
-	{
-		start = *pos;
-		while (input[*pos] && !is_quotes(input[*pos]) && is_word_char(input[*pos]))
-			(*pos)++;
-		return (ft_substr(input, start, *pos - start));
-	}
 	quote_char = input[*pos];
 	(*pos)++;
 	start = *pos;
@@ -70,6 +62,24 @@ char	*extract_quote_segment(char *input, int *pos, int *s_quote, int *d_quote)
 	else
 		*d_quote = 1;
 	return (result);
+}
+
+char	*extract_quote_segment(char *input, int *pos,
+	int *s_quote, int *d_quote)
+{
+	int	start;
+
+	*s_quote = 0;
+	*d_quote = 0;
+	if (!is_quotes(input[*pos]))
+	{
+		start = *pos;
+		while (input[*pos] && !is_quotes(input[*pos])
+			&& is_word_char(input[*pos]))
+			(*pos)++;
+		return (ft_substr(input, start, *pos - start));
+	}
+	return (handle_quoted_extraction(input, pos, s_quote, d_quote));
 }
 
 t_token	*create_segment_token(char *segment, int s_quote, int d_quote)
@@ -109,7 +119,7 @@ t_token	*tokenize_complex_word(char *input, int *i, t_shell *shell)
 	{
 		segment = extract_quote_segment(input, i, &quotes[0], &quotes[1]);
 		if (!segment)
-			return (free_tokens(&first_token), 
+			return (free_tokens(&first_token),
 				handle_error(shell, "unclosed quotes", EXIT_MISUSE), NULL);
 		new_token = create_segment_token(segment, quotes[0], quotes[1]);
 		if (!new_token)
@@ -121,36 +131,4 @@ t_token	*tokenize_complex_word(char *input, int *i, t_shell *shell)
 		current_token = new_token;
 	}
 	return (first_token);
-}
-
-void	add_tokens(t_token *new_token, t_shell *shell, int had_space)
-{
-	t_token	*token_list;
-	t_token	*current;
-	int		is_first_in_group;
-
-	if (new_token->next)
-	{
-		token_list = new_token;
-		is_first_in_group = 1;
-		while (token_list)
-		{
-			current = token_list;
-			token_list = token_list->next;
-			current->next = NULL;
-			if (is_first_in_group)
-			{
-				current->concat = !had_space && shell->tokens;
-				is_first_in_group = 0;
-			}
-			else
-				current->concat = 1;
-			token_add_back(&shell->tokens, current);
-		}
-	}
-	else
-	{
-		new_token->concat = !had_space && shell->tokens;
-		token_add_back(&shell->tokens, new_token);
-	}
 }
