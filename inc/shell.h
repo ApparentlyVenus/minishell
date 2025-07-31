@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:08:42 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:11:43 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		shell_execute(t_shell *shell);
 void	signals_prompt(void);
 void	signals_child(void);
 void	signals_parent(void);
+void	signals_child_heredoc(void);
 
 // Cleanup functions
 void	cleanup_tokens(t_shell *shell);

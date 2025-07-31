@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 13:50:41 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 21:34:16 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:10:24 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ void	signal_handler(int sig)
 void	signals_prompt(void)
 {
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+}
+
+void	signals_child_heredoc(void)
+{
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 }

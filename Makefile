@@ -38,7 +38,7 @@ EXPANSION_SOURCES = cmd_utils.c collect_matches.c copy_split.c expansion.c phase
 
 PARSER_SOURCES = node_creation.c utils.c free.c parse.c helpers.c \
                  heredoc.c heredoc_helpers.c fork_heredoc.c parse_redir.c \
-				 parse_command.c
+				 parse_command.c echoctl.c
 
 EXECUTION_SOURCES = execution.c free.c redir.c utils.c utils2.c \
                     pipes.c execution_helpers.c execution_helpers2.c operators.c

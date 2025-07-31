@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 21:47:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:24:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/07/31 22:17:20 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,10 @@ void	free_cmd(t_cmd *cmd);
 void	free_redir(t_redir *redir);
 void	free_node(t_node *node);
 void	free_arg(t_arg *arg_list);
+
+// echoctl
+
+void	disable_echoctl(void);
+void	enable_echoctl(void);
+
 #endif
