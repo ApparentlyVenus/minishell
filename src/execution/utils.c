@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/08/01 02:56:31 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 14:27:17 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ char	**convert_args(t_arg **args)
 	i = 0;
 	while (i < count)
 	{
-		result[i] = ft_strdup(args[i]->value);
+		if (!args[i]->value || !args[i]->value[0])
+			result[i] = ft_strdup("");
+		else
+			result[i] = ft_strdup(args[i]->value);
 		if (!result[i])
-		{
-			free_split(result);
-			return (NULL);
-		}
+			return (free_split(result), NULL);
 		i++;
 	}
 	result[i] = NULL;

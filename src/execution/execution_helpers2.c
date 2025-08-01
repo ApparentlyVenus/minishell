@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_helpers2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:31:05 by odana             #+#    #+#             */
-/*   Updated: 2025/07/30 01:55:25 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 14:30:32 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void	execute_external_command(t_exec *ctx, char **args)
 	char	*path;
 	char	**envp;
 
+	if (!args || !args[0] || args[0][0] == '\0')
+	{
+		if (args)
+			free_split(args);
+		exit(0);
+	}
 	cmd = args[0];
 	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
@@ -62,23 +68,20 @@ void	execute_external_command(t_exec *ctx, char **args)
 	else
 		path = find_path(cmd, *ctx->env);
 	if (!path)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", STDERR_FILENO);
-		free_split(envp);
-		exit(127);
-	}
+		return (ft_putstr_fd(cmd, 2), ft_putendl_fd(": command not found",
+				STDERR_FILENO), free_split(envp), exit(127));
 	if_directory_or_invalid(path, cmd, envp);
 	execve(path, args, envp);
 	ft_putendl_fd("execve failed", STDERR_FILENO);
 	if (path != cmd)
 		free(path);
-	free_split(envp);
-	exit(127);
+	return (free_split(envp), exit(127));
 }
 
 char	**skip_empty_args(char **args)
 {
+	if (!args)
+		return (args);
 	while (args[0] && args[0][0] == '\0')
 		args++;
 	return (args);

@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:57:23 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:33:20 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 14:37:09 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,13 @@ void	parent_process(t_shell *shell, t_exec *ctx)
 	signals_parent();
 	shell->exit_code = wait_child(ctx);
 	free_exec(ctx);
+}
+
+int	is_empty_command(t_arg **args)
+{
+	if (!args || !args[0])
+		return (1);
+	if (!args[0]->value || args[0]->value[0] == '\0')
+		return (1);
+	return (0);
 }

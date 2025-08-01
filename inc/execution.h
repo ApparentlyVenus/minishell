@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/28 22:40:04 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 14:42:19 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void		execute_parent_builtin(t_node *node, t_shell *shell);
 void		execute_children_pipeline(t_node *node, t_shell *shell);
 int			execute_parent_node(t_node *node, t_shell *shell);
 int			execute_children_node(t_node *node, t_shell *shell);
+void		fork_single_command(t_exec *ctx, t_node *cmd_node, int i,
+				t_shell *shell);
 
 // logical operator handeling
 
@@ -71,5 +73,6 @@ int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
 int			run_in_parent(t_node *ast);
 char		**skip_empty_args(char **args);
+int			is_empty_command(t_arg **args);
 
 #endif

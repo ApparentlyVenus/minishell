@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:55:08 by odana             #+#    #+#             */
-/*   Updated: 2025/07/28 21:33:07 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 14:41:07 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,24 @@ void	close_pipes(t_exec *ctx)
 		close(ctx->pipes[i][0]);
 		close(ctx->pipes[i][1]);
 		i++;
+	}
+}
+// added this here cuz i needed to split a function, ma3le
+
+void	kill_child(t_exec *ctx, int i)
+{
+	int	j;
+
+	j = 0;
+	if (ctx->pids[i] == -1)
+		ft_putendl_fd("fork failed", STDERR_FILENO);
+	while (j < i)
+	{
+		if (ctx->pids[j] > 0)
+		{
+			if (kill(ctx->pids[j], SIGTERM) == -1)
+				ft_putendl_fd("kill failed", STDERR_FILENO);
+		}
+		j++;
 	}
 }
