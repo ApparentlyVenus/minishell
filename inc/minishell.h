@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:31:05 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 22:20:13 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:52:30 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ extern int	g_signal_received;
 # define WHITE   "\033[1;37m"
 # define RESET   "\001\033[0m\002"
 
-#ifndef ECHOCTL
-# define ECHOCTL 0x00000040
-#endif
+# ifndef ECHOCTL
+#  define ECHOCTL 0x00000040
+# endif
 
 #endif

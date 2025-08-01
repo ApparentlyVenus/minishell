@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 02:16:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:19:33 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ void	free_old_args(t_arg **old_args);
 // Tilde expansion
 
 char	*expand_tilde(char *str, t_env *env);
+void	set_filename(t_redir *redir, char *new_filename);
 
 #endif

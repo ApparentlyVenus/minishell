@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 01:10:43 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 02:29:34 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:25:16 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ t_redir	*parse_redir(t_token **tokens, t_env *env)
 		return (NULL);
 	redir->single_quotes = file_token->single_quotes;
 	redir->double_quotes = file_token->double_quotes;
-	
 	return (redir);
 }

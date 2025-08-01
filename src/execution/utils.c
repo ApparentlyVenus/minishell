@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 20:52:31 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 22:31:36 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 02:56:31 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ int	wait_child(t_exec *ctx)
 				g_signal_received = SIGINT;
 				exit_code = EXIT_CTRL_C;
 			}
-			else if (WTERMSIG(status) == SIGQUIT)
-				exit_code = EXIT_CTRL_BACK;
 			else
 				exit_code = 128 + WTERMSIG(status);
 		}

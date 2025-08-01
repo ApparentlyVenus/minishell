@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 00:24:38 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 22:11:43 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:23:22 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	free_env(t_env *env);
 // Error handling
 void	set_error(t_shell *shell, char *error_msg);
 void	print_error(char *msg);
-int		is_fatal_error(int exit_code);
 int		handle_error(t_shell *shell, char *msg, int exit_code);
 
 // Main functions + extras

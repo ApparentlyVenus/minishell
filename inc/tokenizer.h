@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 21:59:33 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 17:27:56 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:23:51 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_tokens(t_token **head);
 char	*extract_word(char *input, int *pos);
 void	skip_spaces(char *input, int *pos);
 
-// validation functions
+/* validation functions */
 
 // main validation function for all validations
 

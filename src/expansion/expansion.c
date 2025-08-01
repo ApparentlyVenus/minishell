@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 22:12:59 by odana             #+#    #+#             */
-/*   Updated: 2025/08/01 02:33:26 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:22:23 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,40 +63,29 @@ void	expand_cmd_args(t_cmd *cmd, t_shell *shell, t_builtin builtin_type)
 
 void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 {
-	t_redir	*redir;
 	char	*expanded;
 	char	*unquoted;
 	char	*tilde_expanded;
 
-	redir = cmd->redirs;
-	while (redir)
+	while (cmd->redirs)
 	{
 		expanded = NULL;
-		if (redir->filename)
+		if (cmd->redirs->filename)
 		{
-			expanded = expand_variables(redir->filename, env);
-			if (expanded && expanded != redir->filename)
+			expanded = expand_variables(cmd->redirs->filename, env);
+			if (expanded && expanded != cmd->redirs->filename)
+				set_filename(cmd->redirs, expanded);
+			if (!cmd->redirs->single_quotes && !cmd->redirs->double_quotes)
 			{
-				free(redir->filename);
-				redir->filename = expanded;
+				tilde_expanded = expand_tilde(cmd->redirs->filename, env);
+				if (tilde_expanded && tilde_expanded != cmd->redirs->filename)
+					set_filename(cmd->redirs, tilde_expanded);
 			}
-			if (!redir->single_quotes && !redir->double_quotes)
-			{
-				tilde_expanded = expand_tilde(redir->filename, env);
-				if (tilde_expanded && tilde_expanded != redir->filename)
-				{
-					free(redir->filename);
-					redir->filename = tilde_expanded;
-				}
-			}
-			unquoted = remove_all_quotes(redir->filename);
+			unquoted = remove_all_quotes(cmd->redirs->filename);
 			if (unquoted)
-			{
-				free(redir->filename);
-				redir->filename = unquoted;
-			}
+				set_filename(cmd->redirs, unquoted);
 		}
-		redir = redir->next;
+		cmd->redirs = cmd->redirs->next;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tilde_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 02:15:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 02:37:13 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 03:19:05 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,10 @@ char	*expand_tilde(char *str, t_env *env)
 		return (result);
 	}
 	return (ft_strdup(str));
+}
+
+void	set_filename(t_redir *redir, char *new_filename)
+{
+	free(redir->filename);
+	redir->filename = new_filename;
 }
