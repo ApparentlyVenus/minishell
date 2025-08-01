@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bool_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 15:56:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 00:06:50 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 15:03:37 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,23 @@ int	has_wildcard(char *word)
 int	is_closed(char *input, int pos)
 {
 	int		i;
-	char	q;
+	char	quote_char;
+	int		found_close;
 
 	i = pos;
-	if (!input[i])
-		return (0);
-	if (input[i] == '\'' || input[i] == '\"')
+	found_close = 0;
+	if (!input[i] || !is_quotes(input[i]))
+		return (1);
+	quote_char = input[i];
+	i++;
+	while (input[i])
 	{
-		q = input[i];
-		i++;
-		while (input[i])
+		if (input[i] == quote_char)
 		{
-			i++;
-			if (input[i] == q)
-				return (1);
+			found_close = 1;
+			break ;
 		}
+		i++;
 	}
-	return (0);
+	return (found_close);
 }

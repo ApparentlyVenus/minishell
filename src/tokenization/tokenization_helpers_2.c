@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_helpers_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
+/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:38:10 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 00:06:55 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 17:00:39 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,21 @@ int	continue_word(char c, int in_single, int in_double)
 	if (in_single || in_double)
 		return (1);
 	return (is_word_char(c) || c == '*');
+}
+
+int	valid_quotes(t_token **tokens)
+{
+	t_token	*current;
+
+	current = *tokens;
+	while (current)
+	{
+		if (current->type == TOKEN_WORD)
+		{
+			if (!current->value)
+				return (0);
+		}
+		current = current->next;
+	}
+	return (1);
 }

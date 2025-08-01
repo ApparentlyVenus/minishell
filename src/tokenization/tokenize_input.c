@@ -6,11 +6,35 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 20:38:58 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 02:47:06 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 17:00:01 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+char	*handle_quote(char *input, int *pos, int *len, int i)
+{
+	while (input[*pos])
+	{
+		if (input[*pos] == '\'')
+		{
+			(*pos)++;
+			len++;
+			break ;
+		}
+		if (input[*pos] == '\\' && input[*pos + 1])
+		{
+			(*pos) += 2;
+			len += 2;
+		}
+		else
+		{
+			(*pos)++;
+			len++;
+		}
+	}
+	return (ft_substr(input, i, *len));
+}
 
 char	*extract_word(char *input, int *pos)
 {
@@ -23,6 +47,11 @@ char	*extract_word(char *input, int *pos)
 	len = 0;
 	in_single_quotes = 0;
 	in_double_quotes = 0;
+	if (input[*pos] == '$' && input[*pos + 1] == '\'')
+	{
+		(*pos) += 2;
+		return (len = 2, handle_quote(input, pos, &len, i));
+	}
 	while (input[*pos])
 	{
 		toggle_quotes(input[*pos], &in_single_quotes, &in_double_quotes);
@@ -31,6 +60,8 @@ char	*extract_word(char *input, int *pos)
 		(*pos)++;
 		len++;
 	}
+	if (in_single_quotes || in_double_quotes)
+		return (NULL);
 	return (ft_substr(input, i, len));
 }
 
@@ -44,6 +75,10 @@ t_token	*clean_word_token(char *word)
 	token->single_quotes = 0;
 	token->double_quotes = 0;
 	token->next = NULL;
+	token->concat = 0;
+	if (word[0] == '$' && word[1] == '\'')
+		return (token->value = word, token->type = TOKEN_WORD,
+			token->has_wildcard = 0, token->priority = 0, token);
 	word = trim_quotes(word, token);
 	if (!word)
 		return (free(token), NULL);
@@ -95,21 +130,4 @@ t_token	**tokenize_input(char *input, t_shell *shell)
 		add_tokens(new_token, shell, had_space);
 	}
 	return (&shell->tokens);
-}
-
-int	valid_quotes(t_token **tokens)
-{
-	t_token	*current;
-
-	current = *tokens;
-	while (current)
-	{
-		if (current->type == TOKEN_WORD)
-		{
-			if (!current->value)
-				return (0);
-		}
-		current = current->next;
-	}
-	return (1);
 }

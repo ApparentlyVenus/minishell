@@ -6,7 +6,7 @@
 /*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 07:13:54 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 02:44:32 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 16:55:11 by odana            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ t_token	*handle_word_token(char *input, int *i, t_shell *shell)
 		return (handle_empty_quotes(input, i));
 	if (has_adjacent_quotes(input, *i))
 		return (tokenize_complex_word(input, i, shell));
+	if (is_quotes(input[*i]) && !is_closed(input, *i))
+		return (handle_error(shell, "unclosed quotes", EXIT_MISUSE), NULL);
 	word = extract_word(input, i);
 	if (!word)
-		return (handle_error(shell, "malloc failure",
+		return (handle_error(shell, "unclosed quotes",
 				EXIT_GENERAL_ERROR), NULL);
 	if (is_quotes(input[start]) && !is_closed(input, start))
-		return (free(word), handle_error(shell, "unclose quotes",
+		return (free(word), handle_error(shell, "unclosed quotes",
 				EXIT_MISUSE), NULL);
 	new_token = clean_word_token(word);
 	if (!new_token)
