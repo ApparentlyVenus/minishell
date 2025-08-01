@@ -6,30 +6,24 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 08:59:48 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/27 22:22:52 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 13:17:25 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// im displaying "minishell$" at the start of every prompt;
-// if the user enters CTRL + D this will put buffer to NULL
-// thats why we should clean up and exit;
-// clean up and exit doest have anything specified yet,
-// it should contain the struct and all memory allocations;
-
 #include "../../inc/minishell.h"
 
-char	*get_input_line(t_env **env)
+char	*get_input_line(void)
 {
 	char	*buffer;
 	char	*prompt;
 
-	prompt = get_prompt(env);
+	prompt = "minishell > ";
 	buffer = readline(prompt);
 	if (!buffer)
-		return (free(prompt), NULL);
+		return (NULL);
 	if (ft_strlen(buffer) > 0)
 		add_history(buffer);
-	return (free(prompt), buffer);
+	return (buffer);
 }
 
 void	update_shlvl(t_shell *shell)

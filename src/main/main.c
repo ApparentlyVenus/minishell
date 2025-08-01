@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:50:40 by odana             #+#    #+#             */
-/*   Updated: 2025/07/31 22:32:14 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/01 13:16:48 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,6 @@ int	process_input(t_shell *shell, char *input)
 	return (1);
 }
 
-char	*ft_strjoin3(char *s1, char *s2, char *s3)
-{
-	char	*tmp;
-	char	*res;
-
-	tmp = ft_strjoin(s1, s2);
-	if (!tmp)
-		return (NULL);
-	res = ft_strjoin(tmp, s3);
-	free(tmp);
-	return (res);
-}
-
-char	*get_prompt(t_env **env)
-{
-	char	*cwd;
-	char	*path;
-	char	*temp;
-	char	*prompt;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd)
-		path = cwd;
-	else
-		path = get_env_value(*env, "PWD");
-	if (!path)
-		return (ft_strdup("minishell$ "));
-	temp = ft_strjoin("minishell: @", path);
-	if (cwd)
-		free(cwd);
-	if (!temp)
-		return (ft_strdup("minishell$ "));
-	prompt = ft_strjoin3(BLUE, temp, "$ " RESET);
-	free(temp);
-	if (!prompt)
-		return (ft_strdup("minishell$ "));
-	return (prompt);
-}
-
 int	main_loop(t_shell *shell)
 {
 	char	*input;
@@ -74,7 +35,7 @@ int	main_loop(t_shell *shell)
 		if (shell->interactive)
 			signals_prompt();
 		g_signal_received = 0;
-		input = get_input_line(&shell->env);
+		input = get_input_line();
 		if (!input)
 		{
 			if (shell->interactive)
