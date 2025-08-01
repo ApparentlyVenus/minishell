@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 03:46:17 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/25 02:12:03 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/01 12:49:10 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	is_n_flag(char *arg)
+{
+	int	i;
+
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
+		return (0);
+	i = 2;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static int	new_line_flag(char **args, int *no_newline)
 {
@@ -20,7 +36,7 @@ static int	new_line_flag(char **args, int *no_newline)
 	j = 0;
 	if (!args)
 		return (0);
-	while (args[j] && ft_strcmp(args[j], "-n") == 0)
+	while (args[j] && is_n_flag(args[j]))
 	{
 		*no_newline = 1;
 		j++;
