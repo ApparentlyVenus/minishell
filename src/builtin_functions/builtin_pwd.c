@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:08:03 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/02 21:39:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 22:06:26 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_pwd(t_env **env, char **args)
 	if (count_args(args) > 1)
 	{
 		if (args[1][0] == '-' && args[1][1] != '\0')
-			return(printf("\'%c\': invalid option\n", args[1][1]), 2);
+			return (printf("\'%c\': invalid option\n", args[1][1]), 2);
 	}
 	path = getcwd(NULL, 0);
 	if (!path)
