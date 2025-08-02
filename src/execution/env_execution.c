@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 20:14:07 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/02 20:18:00 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 21:38:50 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	env_execute_builtin(char **cmd_args, t_env *env)
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(cmd_args + 1, &env));
 	else if (builtin_type == BUILTIN_PWD)
-		return (builtin_pwd(&env));
+		return (builtin_pwd(&env, cmd_args));
 	else if (builtin_type == BUILTIN_UNSET)
 		return (builtin_unset(cmd_args + 1, &env));
 	return (-1);

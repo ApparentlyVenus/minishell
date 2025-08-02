@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 22:56:33 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 21:38:35 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	call_builtin_function(t_builtin builtin_type, char **args, t_exec *ctx,
 	else if (builtin_type == BUILTIN_EXPORT)
 		return (builtin_export(args + 1, ctx->env));
 	else if (builtin_type == BUILTIN_PWD)
-		return (builtin_pwd(ctx->env));
+		return (builtin_pwd(ctx->env, args));
 	else if (builtin_type == BUILTIN_UNSET)
 		return (builtin_unset(args + 1, ctx->env));
 	else
