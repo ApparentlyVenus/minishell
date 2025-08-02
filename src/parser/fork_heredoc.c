@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 16:25:19 by yitani            #+#    #+#             */
-/*   Updated: 2025/07/31 22:17:43 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 18:42:17 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	heredoc_child_process(int pipe_fd, char *delimiter, int expand,
 	{
 		line = read_heredoc_line();
 		if (!line)
-			return (close(pipe_fd), exit(42));
+			return (enable_echoctl(), close(pipe_fd), exit(42));
 		if (ft_strcmp(line, delimiter) == 0)
-			return (free(line), close(pipe_fd), exit(0));
+			return (enable_echoctl(), free(line), close(pipe_fd), exit(0));
 		expanded_line = process_heredoc_line(line, expand, env);
 		if (expanded_line)
 		{
@@ -75,7 +75,6 @@ void	heredoc_child_process(int pipe_fd, char *delimiter, int expand,
 		}
 		free(line);
 	}
-	enable_echoctl();
 }
 
 char	*read_from_pipe(int pipe_fd)

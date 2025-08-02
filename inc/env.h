@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/29 00:52:44 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 03:19:22 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/02 20:11:40 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,11 @@ void	handle_fail_new_pwd(char *old_pwd, char *pwd_env);
 int		change_directory(char **args, t_env **env, int *print);
 void	update_pwd(t_env **env, char *old_pwd, char *new_pwd);
 void	concat_args(t_cmd *cmd);
+
+// Environment copying and manipulation
+
+t_env	*env_copy_or_clean(char **args, t_env *original);
+int		env_apply_changes(t_env **env, char **args, int start_idx, int cmd_idx);
+int		env_execute_command(char **cmd_args, t_env *env);
 
 #endif
