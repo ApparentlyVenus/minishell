@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/02 21:38:35 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 22:35:31 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 			exit(exit_code));
 	else
 	{
-		args = convert_args(cmd_node->cmd->args);
-		args = skip_empty_args(args);
+		char **original_args = convert_args(cmd_node->cmd->args);
+		args = skip_empty_args(original_args);
 		if (!args[0])
-			exit(0);
-		execute_external_command(ctx, args);
+			return (free_split(original_args), exit(0));
+		execute_external_command(ctx, original_args);
 		return (free_split(args), exit(127));
 	}
 }
