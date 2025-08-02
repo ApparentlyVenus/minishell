@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:33:24 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/02 22:35:31 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/02 23:06:34 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 {
 	t_builtin	type;
 	char		**args;
-	int			exit_code;
+	int			ex_c;
+	char		**original_args;
 
 	signals_child();
 	setup_pipes(ctx, i);
@@ -66,11 +67,10 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 		type = get_builtin_type(cmd_node->cmd->args[0]->value);
 	setup_redir(cmd_node->cmd);
 	if (type != BUILTIN_NONE)
-		return (exit_code = execute_builtin(cmd_node, ctx, shell),
-			exit(exit_code));
+		return (ex_c = execute_builtin(cmd_node, ctx, shell), exit(ex_c));
 	else
 	{
-		char **original_args = convert_args(cmd_node->cmd->args);
+		original_args = convert_args(cmd_node->cmd->args);
 		args = skip_empty_args(original_args);
 		if (!args[0])
 			return (free_split(original_args), exit(0));
