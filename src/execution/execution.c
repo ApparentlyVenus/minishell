@@ -71,10 +71,10 @@ void	execute_command(t_node *cmd_node, t_exec *ctx, int i, t_shell *shell)
 	else
 	{
 		original_args = convert_args(cmd_node->cmd->args);
-		args = skip_empty_args(original_args);
+		args = skip_empty_args(original_args, cmd_node->cmd->args);
 		if (!args[0])
 			return (free_split(original_args), exit(0));
-		execute_external_command(ctx, original_args);
+		execute_external_command(ctx, args);
 		return (free_split(args), exit(127));
 	}
 }

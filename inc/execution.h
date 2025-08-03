@@ -72,7 +72,7 @@ char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
 int			run_in_parent(t_node *ast);
-char		**skip_empty_args(char **args);
+char		**skip_empty_args(char **args, t_arg **args);
 int			is_empty_command(t_arg **args);
 
 #endif

@@ -58,7 +58,11 @@ void	execute_external_command(t_exec *ctx, char **args)
 	char	**envp;
 
 	if (!args || !args[0] || args[0][0] == '\0')
-		exit(0);
+	{
+		if (args)
+			free_split(args);
+		exit(127);
+	}
 	cmd = args[0];
 	envp = convert_env_to_array(*ctx->env);
 	if (ft_strchr(cmd, '/'))
@@ -76,11 +80,25 @@ void	execute_external_command(t_exec *ctx, char **args)
 	return (free_split(envp), free_split(args), exit(127));
 }
 
-char	**skip_empty_args(char **args)
+char	**skip_empty_args(char **args, t_arg **original_args)
 {
-	if (!args)
+	int	i;
+	int	j;
+
+	if (!args || !original_args)
 		return (args);
-	while (args[0] && args[0][0] == '\0')
-		args++;
-	return (args);
+	
+	i = 0;
+	j = 0;
+	
+	while (args[i] && args[i][0] == '\0')
+	{
+		if (original_args[j] && 
+			(original_args[j]->single_quotes || original_args[j]->double_quotes))
+			break;
+		i++;
+		j++;
+	}
+	return (&args[i]);
 }
+
