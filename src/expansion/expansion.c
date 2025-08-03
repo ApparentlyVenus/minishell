@@ -67,6 +67,8 @@ void	expand_cmd_redirs(t_cmd *cmd, t_env *env)
 	char	*unquoted;
 	char	*tilde_expanded;
 
+	if (!cmd)
+		return ;
 	while (cmd->redirs)
 	{
 		expanded = NULL;

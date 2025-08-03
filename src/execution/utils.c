@@ -132,8 +132,6 @@ int	run_in_parent(t_node *ast)
 		if (type != BUILTIN_CD && type != BUILTIN_EXPORT
 			&& type != BUILTIN_UNSET && type != BUILTIN_EXIT)
 			return (0);
-		if (ast->cmd->redirs)
-			return (0);
 		return (1);
 	}
 	else if (ast->type == NODE_AND || ast->type == NODE_OR)

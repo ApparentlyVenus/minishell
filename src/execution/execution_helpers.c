@@ -12,32 +12,75 @@
 
 #include "../../inc/minishell.h"
 
-void	execute_parent_builtin(t_node *node, t_shell *shell)
+static int	execute_builtin_with_fork(t_node *node, t_shell *shell)
 {
 	t_builtin	type;
 	char		**args;
 	t_exec		ctx;
+	pid_t		pid;
+	int			status;
 
-	if (!node->cmd->args || !node->cmd->args[0]
-		|| !node->cmd->args[0]->value || node->cmd->args[0]->value[0] == '\0')
-	{
-		shell->exit_code = EXIT_SUCCESS;
-		return ;
-	}
 	type = get_builtin_type(node->cmd->args[0]->value);
-	expand_cmd(node->cmd, type, shell);
+	pid = fork();
+	if (pid == 0)
+	{
+		signals_child();
+		setup_redir(node->cmd);
+		args = convert_args(node->cmd->args);
+		if (!args)
+			exit(EXIT_GENERAL_ERROR);
+		ctx.env = &shell->env;
+		ctx.cmd_count = 1;
+		ctx.pipes = NULL;
+		ctx.pids = NULL;
+		exit(call_builtin_function(type, args, &ctx, shell));
+	}
+	else if (pid > 0)
+	{
+		signals_parent();
+		waitpid(pid, &status, 0);
+		signals_prompt();
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			return (128 + WTERMSIG(status));
+	}
+	return (EXIT_GENERAL_ERROR);
+}
+
+static int	execute_builtin_in_parent(t_node *node, t_shell *shell)
+{
+	t_builtin	type;
+	char		**args;
+	t_exec		ctx;
+	int			exit_code;
+
+	type = get_builtin_type(node->cmd->args[0]->value);
 	args = convert_args(node->cmd->args);
 	if (!args)
-	{
-		shell->exit_code = EXIT_GENERAL_ERROR;
-		return ;
-	}
+		return (EXIT_GENERAL_ERROR);
 	ctx.env = &shell->env;
 	ctx.cmd_count = 1;
 	ctx.pipes = NULL;
 	ctx.pids = NULL;
-	shell->exit_code = call_builtin_function(type, args, &ctx, shell);
+	exit_code = call_builtin_function(type, args, &ctx, shell);
 	free_split(args);
+	return (exit_code);
+}
+
+void	execute_parent_builtin(t_node *node, t_shell *shell)
+{
+	if (!node->cmd->args || !node->cmd->args[0] || 
+		!node->cmd->args[0]->value || node->cmd->args[0]->value[0] == '\0')
+	{
+		shell->exit_code = EXIT_SUCCESS;
+		return ;
+	}
+	expand_cmd(node->cmd, get_builtin_type(node->cmd->args[0]->value), shell);
+	if (node->cmd->redirs)
+		shell->exit_code = execute_builtin_with_fork(node, shell);
+	else
+		shell->exit_code = execute_builtin_in_parent(node, shell);
 }
 
 void	fork_single_command(t_exec *ctx, t_node *cmd_node, int i,
