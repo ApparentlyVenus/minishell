@@ -94,10 +94,13 @@ char	**skip_empty_args(char **args, t_arg **original_args)
 	while (args[i] && args[i][0] == '\0')
 	{
 		if (original_args[j] && 
-			(original_args[j]->single_quotes || original_args[j]->double_quotes))
+			!(original_args[j]->single_quotes || original_args[j]->double_quotes))
+		{
+			i++;
+			j++;
+		}
+		else
 			break;
-		i++;
-		j++;
 	}
 	return (&args[i]);
 }

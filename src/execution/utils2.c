@@ -76,7 +76,5 @@ int	is_empty_command(t_arg **args)
 {
 	if (!args || !args[0])
 		return (1);
-	if (!args[0]->value || args[0]->value[0] == '\0')
-		return (1);
 	return (0);
 }
