@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:08:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 03:19:33 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/03 18:40:16 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		contains_whitespace(char *str);
 int		has_wildcard(char *word);
 void	free_split(char **args);
 int		count_args(char **args);
+void	process_single_redir(t_redir *current, t_env *env);
 
 // Concat helpers
 

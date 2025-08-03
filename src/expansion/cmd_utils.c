@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 13:00:56 by odana             #+#    #+#             */
-/*   Updated: 2025/07/29 03:57:11 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/03 18:39:51 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,27 @@ int	count_args(char **args)
 	while (args[i])
 		i++;
 	return (i);
+}
+
+void	process_single_redir(t_redir *current, t_env *env)
+{
+	char	*expanded;
+	char	*unquoted;
+	char	*tilde_expanded;
+
+	expanded = NULL;
+	if (!current->filename)
+		return ;
+	expanded = expand_variables(current->filename, env);
+	if (expanded && expanded != current->filename)
+		set_filename(current, expanded);
+	if (!current->single_quotes && !current->double_quotes)
+	{
+		tilde_expanded = expand_tilde(current->filename, env);
+		if (tilde_expanded && tilde_expanded != current->filename)
+			set_filename(current, tilde_expanded);
+	}
+	unquoted = remove_all_quotes(current->filename);
+	if (unquoted)
+		set_filename(current, unquoted);
 }
