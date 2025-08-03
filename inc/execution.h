@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: odana <odana@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 00:28:12 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/01 14:42:19 by odana            ###   ########.fr       */
+/*   Updated: 2025/08/03 13:28:46 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char		*find_path(char *cmd, t_env *env_list);
 int			count_commands(t_node *node);
 char		**convert_args(t_arg **args);
 int			run_in_parent(t_node *ast);
-char		**skip_empty_args(char **args, t_arg **args);
+char		**skip_empty_args(char **args, t_arg **original_args);
 int			is_empty_command(t_arg **args);
 
 #endif
