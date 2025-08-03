@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 21:31:05 by odana             #+#    #+#             */
-/*   Updated: 2025/08/02 22:37:57 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/03 13:41:05 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	execute_external_command(t_exec *ctx, char **args)
 		path = find_path(cmd, *ctx->env);
 	if (!path)
 		return (ft_putstr_fd(cmd, 2), ft_putendl_fd(": command not found",
-				STDERR_FILENO), free_split(envp), free_split(args), exit(127));
+				STDERR_FILENO), free_split(envp), exit(127));
 	if_directory_or_invalid(path, cmd, envp, args);
 	execve(path, args, envp);
 	ft_putendl_fd("execve failed", STDERR_FILENO);
