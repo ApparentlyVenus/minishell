@@ -11,7 +11,7 @@ A Unix shell implementation written in C, recreating bash behavior with modern f
 - Interactive command line with history
 - Command execution with PATH resolution
 - Signal handling (Ctrl+C, Ctrl+D, Ctrl+\\)
-- Environment variables with `$VAR` and `$?` expansion
+- Environment variables with `$VAR` and `$?` and `~` expansion
 - I/O redirection (`<`, `>`, `>>`)
 - Heredoc (`<<`) with delimiter support
 - Pipes (`|`) for command chaining
