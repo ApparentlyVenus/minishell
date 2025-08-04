@@ -6,7 +6,7 @@
 /*   By: yitani <yitani@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 04:12:36 by yitani            #+#    #+#             */
-/*   Updated: 2025/08/02 23:04:17 by yitani           ###   ########.fr       */
+/*   Updated: 2025/08/05 02:04:16 by yitani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	check_overflow(const char *str)
 	result = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
-	if (str[i - 1] == '-')
+	if (i != 0 && str[i - 1] == '-')
 		sign = -1;
 	while (str[i])
 	{
@@ -78,17 +78,17 @@ int	builtin_exit(char **args, t_shell *shell)
 	printf("exit\n");
 	if (size_of_arr(args) >= 2)
 	{
-		if (size_of_arr(args) > 2)
-		{
-			ft_putendl_fd("minishell: exit: too many arguments", 2);
-			shell->exit_code = EXIT_FAILURE;
-			return (shell->exit_code);
-		}
 		if (!ft_is_numeric(args[1]) || !check_overflow(args[1]))
 		{
 			ft_putendl_fd("minishell: exit: numeric argument required", 2);
 			shell->exit_code = EXIT_MISUSE;
 			shell_exit(shell, shell->exit_code);
+		}
+		if (size_of_arr(args) > 2)
+		{
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
+			shell->exit_code = EXIT_FAILURE;
+			return (shell->exit_code);
 		}
 		code = ft_atoll(args[1]);
 		shell->exit_code = (unsigned int)code;
